@@ -5,23 +5,53 @@
  */
 package view;
 
+import DAO.Conexao;
 import DAO.RevistaDAO;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import model.Revistas;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Michel
  */
+
+    
+
+
 public class DashBoard extends javax.swing.JFrame {
-            
+    
+    
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
     public DashBoard() {
         initComponents();
+        ComboBoxClassificacao();
     }
-
+    
+    private void ComboBoxClassificacao(){
+        try{
+            String SQL = "Select * from sys.Classificação"; 
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                String Nome = rs.getString("Nome");
+                ComboBoxClassificacao.addItem(Nome);
+            }
+            
+            
+        }catch(Exception e){
+            System.out.println("problema na combobox");
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -42,19 +72,21 @@ public class DashBoard extends javax.swing.JFrame {
         lblEspecificacao = new javax.swing.JLabel();
         campoTitulo = new javax.swing.JTextField();
         lblOrigem = new javax.swing.JLabel();
-        campoOrigem = new javax.swing.JTextField();
         lblQuantidade = new javax.swing.JLabel();
         campoQuantidade = new javax.swing.JTextField();
         lblData = new javax.swing.JLabel();
-        campoData = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
-        btnSalvar1 = new javax.swing.JButton();
+        lblOrigem1 = new javax.swing.JLabel();
+        ComboBoxOrigem = new javax.swing.JComboBox<>();
+        campoData = new javax.swing.JFormattedTextField();
+        ComboBoxClassificacao = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        Pane2 = new javax.swing.JPanel();
+        PaneClassificacao = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -66,6 +98,7 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("UEMG Revistas");
 
+        BotaoAdicionarClasse.setBackground(new java.awt.Color(37, 103, 125));
         BotaoAdicionarClasse.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         BotaoAdicionarClasse.setForeground(new java.awt.Color(255, 255, 255));
         BotaoAdicionarClasse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -80,6 +113,7 @@ public class DashBoard extends javax.swing.JFrame {
             }
         });
 
+        BotaoAdicionarRevista.setBackground(new java.awt.Color(37, 103, 125));
         BotaoAdicionarRevista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         BotaoAdicionarRevista.setForeground(new java.awt.Color(255, 255, 255));
         BotaoAdicionarRevista.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -148,7 +182,6 @@ public class DashBoard extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanel3.setOpaque(false);
         jPanel3.setRequestFocusEnabled(false);
         jPanel3.setVerifyInputWhenFocusTarget(false);
@@ -160,6 +193,8 @@ public class DashBoard extends javax.swing.JFrame {
         lblOrigem.setText("Origem");
 
         lblQuantidade.setText("Quantidade");
+
+        campoQuantidade.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), null));
 
         lblData.setText("data");
 
@@ -173,17 +208,18 @@ public class DashBoard extends javax.swing.JFrame {
             }
         });
 
-        btnSalvar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSalvar1.setForeground(new java.awt.Color(29, 31, 40));
-        btnSalvar1.setText("Salvar");
-        btnSalvar1.setBorder(null);
-        btnSalvar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnSalvar1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        btnSalvar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvar1ActionPerformed(evt);
-            }
-        });
+        lblOrigem1.setText("Classificação");
+
+        ComboBoxOrigem.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        ComboBoxOrigem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
+        ComboBoxOrigem.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ComboBoxOrigem.setFocusable(false);
+
+        try {
+            campoData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -191,59 +227,59 @@ public class DashBoard extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblOrigem)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(campoOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(64, 64, 64)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTitulo)
-                                .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(campoEspecificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblEspecificacao))
-                            .addGap(88, 88, 88)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblData)
-                                .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblQuantidade)
-                                .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTitulo)
+                            .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoEspecificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEspecificacao)
+                            .addComponent(lblOrigem)
+                            .addComponent(ComboBoxOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoQuantidade)
+                            .addComponent(lblQuantidade)
+                            .addComponent(lblData)
+                            .addComponent(campoData, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                            .addComponent(lblOrigem1)
+                            .addComponent(ComboBoxClassificacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
-                    .addComponent(lblQuantidade))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTitulo)
+                            .addComponent(lblQuantidade))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
-                        .addComponent(lblEspecificacao)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEspecificacao)
+                            .addComponent(lblData))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEspecificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoEspecificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addComponent(lblOrigem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ComboBoxOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBoxClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(lblData)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addComponent(lblOrigem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campoOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
-                .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblOrigem1)
+                        .addGap(471, 471, 471))))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -310,11 +346,11 @@ public class DashBoard extends javax.swing.JFrame {
 
         PaneMae.add(AdicionarRevista, "card3");
 
-        Pane2.setBackground(new java.awt.Color(255, 255, 255));
+        PaneClassificacao.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(44, 106, 129));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Adicionar e consultar classificações");
 
@@ -335,21 +371,36 @@ public class DashBoard extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout Pane2Layout = new javax.swing.GroupLayout(Pane2);
-        Pane2.setLayout(Pane2Layout);
-        Pane2Layout.setHorizontalGroup(
-            Pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        Pane2Layout.setVerticalGroup(
-            Pane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Pane2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(668, Short.MAX_VALUE))
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 647, Short.MAX_VALUE)
         );
 
-        PaneMae.add(Pane2, "card2");
+        javax.swing.GroupLayout PaneClassificacaoLayout = new javax.swing.GroupLayout(PaneClassificacao);
+        PaneClassificacao.setLayout(PaneClassificacaoLayout);
+        PaneClassificacaoLayout.setHorizontalGroup(
+            PaneClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PaneClassificacaoLayout.setVerticalGroup(
+            PaneClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneClassificacaoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PaneMae.add(PaneClassificacao, "card2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -371,59 +422,55 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoAdicionarRevistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoAdicionarRevistaMouseClicked
         AdicionarRevista.setVisible(true);
-        Pane2.setVisible(false);
+        PaneClassificacao.setVisible(false);
         setLblColor(BotaoAdicionarRevista);
         ResetColor(BotaoAdicionarClasse);
     }//GEN-LAST:event_BotaoAdicionarRevistaMouseClicked
 
     private void BotaoAdicionarClasseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoAdicionarClasseMouseClicked
         AdicionarRevista.setVisible(false);
-        Pane2.setVisible(true);
+        PaneClassificacao.setVisible(true);
         setLblColor(BotaoAdicionarClasse);
         ResetColor(BotaoAdicionarRevista);
     }//GEN-LAST:event_BotaoAdicionarClasseMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(campoTitulo.getText().isEmpty() || campoData.getText().isEmpty() || campoEspecificacao.getText().isEmpty() || campoOrigem.getText().isEmpty() || campoQuantidade.getText().isEmpty()) {
+        if(campoTitulo.getText().isEmpty() || campoData.getText().isEmpty() || campoEspecificacao.getText().isEmpty() /*|| campoClassificacao.getText().isEmpty()*/ || campoQuantidade.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Há campos não preenchidos", "Sistema", JOptionPane.INFORMATION_MESSAGE);
-	}
+        }
         else{
-        Revistas rev = new Revistas();
-        try{
-            
-        rev.getID();
-        rev.setTitulo(campoTitulo.getText());
-        rev.setEspecificacao(campoEspecificacao.getText());
-        rev.setOrigem(campoOrigem.getText());
-        rev.setData(campoData.getText());
-        rev.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
-        
-        RevistaDAO revistaDAO = new RevistaDAO();
-        revistaDAO.InserirRevistas(rev);
-        
-        campoTitulo.setText("");
-        campoEspecificacao.setText("");
-        campoOrigem.setText("");
-        campoData.setText("");
-        campoQuantidade.setText("");
-        
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Azedou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
-        }
-        }
-        
-        
-    }//GEN-LAST:event_btnSalvarActionPerformed
+            Revistas rev = new Revistas();
+            try{
 
-    private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvar1ActionPerformed
+                rev.getID();
+                rev.setTitulo(campoTitulo.getText());
+                rev.setEspecificacao(campoEspecificacao.getText());
+                rev.setClassificacao((String) ComboBoxClassificacao.getSelectedItem());
+                rev.setData(campoData.getText());
+                rev.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
+                rev.setOrigem((String) ComboBoxOrigem.getSelectedItem());
+
+                RevistaDAO revistaDAO = new RevistaDAO();
+                revistaDAO.InserirRevistas(rev);
+
+                campoTitulo.setText("");
+                campoEspecificacao.setText("");
+                //campoClassificacao.setText("");
+                campoData.setText("");
+                campoQuantidade.setText("");
+
+            } catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Azedou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
     
     public void setLblColor(JLabel lbl){
         lbl.setBackground(new Color(150, 150,150));
     }
     public void ResetColor(JLabel lbl){
-        lbl.setBackground(new Color(1, 198,83));
+        lbl.setBackground(new Color(37,103,125));
     }
     
     
@@ -453,15 +500,15 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel AdicionarRevista;
     private javax.swing.JLabel BotaoAdicionarClasse;
     private javax.swing.JLabel BotaoAdicionarRevista;
-    private javax.swing.JPanel Pane2;
+    private javax.swing.JComboBox<String> ComboBoxClassificacao;
+    private javax.swing.JComboBox<String> ComboBoxOrigem;
+    private javax.swing.JPanel PaneClassificacao;
     private javax.swing.JPanel PaneMae;
     private javax.swing.JPanel SideBoard;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton btnSalvar1;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JTextField campoData;
+    private javax.swing.JFormattedTextField campoData;
     private javax.swing.JTextField campoEspecificacao;
-    private javax.swing.JTextField campoOrigem;
     private javax.swing.JTextField campoQuantidade;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.JLabel jLabel1;
@@ -471,12 +518,14 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblEspecificacao;
     private javax.swing.JLabel lblOrigem;
+    private javax.swing.JLabel lblOrigem1;
     private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
