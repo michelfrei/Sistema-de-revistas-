@@ -17,9 +17,9 @@ public static String status = "Não conectou...";
       
 public static java.sql.Connection getConexaoMySQL() {
       Connection connection = null;
-try {
-String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver
-Class.forName(driverName);
+        try {
+        String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver
+        Class.forName(driverName);
 
           //String serverName = "localhost";
           //String mydatabase ="sys";

@@ -10,29 +10,24 @@ import javax.swing.JOptionPane;
 
 import model.*;
 
-public class RevistaDAO {
+public class ClasseDAO {
 
-    public boolean InserirRevistas(Revistas rev) {
+    public boolean InserirClasse(Classe classe) {
 		
-	String SQL = "INSERT INTO sys.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Classificacao) values (?, ?, ?, ?, ?, ?, ?)"; 
+	String SQL = "INSERT INTO sys.Classificação (idClassificação, Nome) values (?, ?)"; 
 
         try {
-        System.out.println("entrou no try do inserir RevistaDAO");
+        System.out.println("entrou aqui inserir da classificacao");
 	PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-	stmt.setInt(1, rev.getID());
-	stmt.setString(2, rev.getTitulo());
-        stmt.setString(3, rev.getEspecificacao());
-	stmt.setInt(4, rev.getQuantidade());
-	stmt.setString(5, rev.getOrigem());
-	stmt.setString(6, rev.getData());
-        stmt.setString(7, rev.getClassificacao());
+	stmt.setInt(1, classe.getIdClasse());
+	stmt.setString(2, classe.getNome());
         
         stmt.execute();
         stmt.close();
         
         } catch(SQLException ex) {
-	   System.out.println("Azedou no try do inserir RevistaDAO");
+	   System.out.println("Azedou");
 	return false;
 }
 return false;	
