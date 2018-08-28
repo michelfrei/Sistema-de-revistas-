@@ -12,7 +12,7 @@ import model.*;
 
 public class RevistaDAO {
 
-    public boolean InserirRevistas(Revistas rev) {
+    public boolean InserirNovaRevistas(Revistas rev) { //funcionando
 		
 	String SQL = "INSERT INTO sys.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Classificacao) values (?, ?, ?, ?, ?, ?, ?)"; 
 
@@ -38,8 +38,8 @@ public class RevistaDAO {
 return false;	
 }
     
-    public boolean BuscarRevista(Revistas rev){
-        String SQL = "SELECT * FROM sys.revista WHERE id = ?";
+    public boolean BuscarRevista(Revistas rev){ //terminar
+        String SQL = "SELECT * FROM sys.revista WHERE nome = ?";
 	
 	try {
                 System.out.println("entrou aqui buscador");
@@ -54,11 +54,90 @@ return false;
                     System.out.println(Especificacao);
     }                
                 
-        }catch(Exception e){
+        }catch(SQLException e){
             System.out.println("azedou");
         }
         return true;
     }
     
+    public boolean InserirRevista(Revistas rev) throws SQLException{ //funcionando
+        
+        String SQL = "Select id from sys.revista where Titulo = ?";
+        
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        stmt.setString(1, rev.getTitulo());
+        ResultSet rs = stmt.executeQuery();
+        
+        if(!rs.next()){
+            return false;
+        }
+        
+        SQL = "update sys.revista set Quantidade = Quantidade + ? where Titulo = ?";
+        try{
+            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            System.out.println("Entrou no inserirRevistas");
+            stmt.setInt(1, rev.getQuantidade());
+            stmt.setString(2, rev.getTitulo());
+	
+            stmt.execute();
+            stmt.close();
+        }catch(SQLException ex){
+            System.out.println("Azedou no inserirRevistas");
+        }
+        
+        return true;
+    }
     
+    public boolean SubtrairRevista(Revistas rev) throws SQLException{
+        String SQL = "Select id from sys.revista where Titulo = ?";
+        
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        stmt.setString(1, rev.getTitulo());
+        ResultSet rs = stmt.executeQuery();
+        
+        if(!rs.next()){
+            return false;
+        }
+        
+        SQL = "update sys.revista set Quantidade = Quantidade - ? where Titulo = ?";
+        try{
+            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            System.out.println("Entrou no inserirRevistas");
+            stmt.setInt(1, rev.getQuantidade());
+            stmt.setString(2, rev.getTitulo());
+	
+            stmt.execute();
+            stmt.close();
+        }catch(SQLException ex){
+            System.out.println("Azedou no inserirRevistas");
+        }
+        
+        return true;
+    }
+    
+    public boolean RemoverRevista(Revistas rev) throws SQLException{
+        String SQL = "Select id from sys.revista where Titulo = ?";
+        
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        stmt.setString(1, rev.getTitulo());
+        ResultSet rs = stmt.executeQuery();
+        
+        if(!rs.next()){
+            return false;
+        }
+        
+        try{
+            SQL = "Delete from sys.revista where Titulo=?";
+            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            System.out.println("Entrou no RemoverRevista");
+            stmt.setString(1, rev.getTitulo());
+	
+            stmt.execute();
+            stmt.close();
+            
+        }catch(SQLException ex){
+            System.out.println("Azedou no RemoverRevista");
+        }
+        return true;
+    }
 }
