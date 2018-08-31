@@ -134,8 +134,7 @@ return false;
             rev.setData(rs.getString("Data"));
             rev.setQuantidade(rs.getInt("Quantidade"));
             rev.setOrigem(rs.getString("Origem"));
-            System.out.println(rs.getString("Titulo"));
-            System.out.println("quantidade " + rs.getInt("Quantidade"));
+            
             stmt.close();
         }
         }catch(SQLException e){

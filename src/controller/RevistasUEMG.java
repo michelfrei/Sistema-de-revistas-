@@ -16,20 +16,5 @@ public class RevistasUEMG {
         DashBoard dash = new DashBoard();
         dash.setVisible(true);
         
-        /*Revistas rev = new Revistas();
-        rev.setID(0);
-        rev.setTitulo("nome");
-        rev.setEspecificacao("Espc");
-        rev.setQuantidade(10);
-        rev.setOrigem("não sei");
-        rev.setData("121212");
-        
-        RevistaDAO revistaDAO = new RevistaDAO();
-        revistaDAO.InserirRevistas(rev);
-        
-        
-        revistaDAO.BuscarRevista(rev);*/
-        
-        
         }
     }
