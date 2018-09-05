@@ -42,6 +42,21 @@ public class DashBoard extends javax.swing.JFrame {
         
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private void limpaCampos(){
                 campoTitulo.setText("");
                 campoData.setText("");
@@ -150,6 +165,13 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoNovaRevista = new javax.swing.JButton();
         lblEspecificacao = new javax.swing.JLabel();
         lblQuantidade = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        BotaoBuscaRevistas = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        BotaoSalvaRevistas = new javax.swing.JButton();
+        BotaoRemoverRevistas = new javax.swing.JButton();
+        BotaoSubtrairRevistas = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
         PaneGuiaAlteraRevista = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         ComboBoxOrigem1 = new javax.swing.JComboBox<>();
@@ -164,17 +186,12 @@ public class DashBoard extends javax.swing.JFrame {
         lblEspecificacao2 = new javax.swing.JLabel();
         lblQuantidade1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        BotaoBuscaRevistas1 = new javax.swing.JButton();
+        BotaoBuscaAlterarOuRemoverRevista = new javax.swing.JButton();
         BotaoAlterarRevistas = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jPanel7 = new javax.swing.JPanel();
-        BotaoBuscaRevistas = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        BotaoSalvaRevistas = new javax.swing.JButton();
-        BotaoRemoverRevistas = new javax.swing.JButton();
-        BotaoSubtrairRevistas = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TabelaAlterarOuRemoverRevista = new javax.swing.JTable();
         PaneClassificacao = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -297,7 +314,7 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel2)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -321,7 +338,7 @@ public class DashBoard extends javax.swing.JFrame {
         ComboBoxOrigem.setMinimumSize(new java.awt.Dimension(25, 25));
 
         try {
-            campoData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            campoData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -329,7 +346,7 @@ public class DashBoard extends javax.swing.JFrame {
         campoData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         lblData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData.setText("Data");
+        lblData.setText("Ano");
 
         lblOrigem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblOrigem.setText("Origem");
@@ -455,6 +472,84 @@ public class DashBoard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Nova revista", PaneGuiaNovaRevista);
 
+        BotaoBuscaRevistas.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoBuscaRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoBuscaRevistas.setText("Busca revista");
+        BotaoBuscaRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(379, 379, 379)
+                .addComponent(BotaoBuscaRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(426, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addComponent(BotaoBuscaRevistas)
+                .addContainerGap(703, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab3", jPanel7);
+
+        BotaoSalvaRevistas.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoSalvaRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoSalvaRevistas.setText("Adicionar revista");
+        BotaoSalvaRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        BotaoRemoverRevistas.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoRemoverRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoRemoverRevistas.setText("Remover revista");
+        BotaoRemoverRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        BotaoSubtrairRevistas.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoSubtrairRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoSubtrairRevistas.setText("Subtrair revista");
+        BotaoSubtrairRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(419, 419, 419)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BotaoRemoverRevistas)
+                    .addComponent(BotaoSalvaRevistas)
+                    .addComponent(BotaoSubtrairRevistas))
+                .addContainerGap(443, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addComponent(BotaoSalvaRevistas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BotaoSubtrairRevistas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BotaoRemoverRevistas)
+                .addContainerGap(542, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("tab4", jPanel8);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 995, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 926, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab5", jPanel9);
+
         PaneGuiaAlteraRevista.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
@@ -476,7 +571,7 @@ public class DashBoard extends javax.swing.JFrame {
         lblOrigem3.setText("Origem");
 
         try {
-            campoData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            campoData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -484,9 +579,9 @@ public class DashBoard extends javax.swing.JFrame {
         campoData1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         lblData1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData1.setText("Data");
+        lblData1.setText("Ano");
 
-        campoTitulo2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        campoTitulo2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         campoTitulo2.setMaximumSize(new java.awt.Dimension(25, 25));
         campoTitulo2.setMinimumSize(new java.awt.Dimension(25, 25));
 
@@ -530,14 +625,14 @@ public class DashBoard extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTextField1.setEnabled(false);
 
-        BotaoBuscaRevistas1.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoBuscaRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoBuscaRevistas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Search_30px.png"))); // NOI18N
-        BotaoBuscaRevistas1.setText("Busca revista");
-        BotaoBuscaRevistas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BotaoBuscaRevistas1.addActionListener(new java.awt.event.ActionListener() {
+        BotaoBuscaAlterarOuRemoverRevista.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoBuscaAlterarOuRemoverRevista.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoBuscaAlterarOuRemoverRevista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Search_30px.png"))); // NOI18N
+        BotaoBuscaAlterarOuRemoverRevista.setText("Busca revista");
+        BotaoBuscaAlterarOuRemoverRevista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoBuscaAlterarOuRemoverRevista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoBuscaRevistas1ActionPerformed(evt);
+                BotaoBuscaAlterarOuRemoverRevistaActionPerformed(evt);
             }
         });
 
@@ -549,177 +644,131 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
         jLabel5.setText("Escolha uma revista para alterar:");
 
+        jSeparator2.setForeground(new java.awt.Color(37, 103, 125));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        TabelaAlterarOuRemoverRevista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(TabelaAlterarOuRemoverRevista);
 
         javax.swing.GroupLayout PaneGuiaAlteraRevistaLayout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista);
         PaneGuiaAlteraRevista.setLayout(PaneGuiaAlteraRevistaLayout);
         PaneGuiaAlteraRevistaLayout.setHorizontalGroup(
             PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(52, 52, 52)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addComponent(lblTitulo2)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblOrigem4))
+                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(lblTitulo2)
+                                    .addComponent(campoTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                        .addComponent(ComboBoxAreaAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(47, 47, 47)
+                                        .addComponent(ComboBoxEspecificacaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18))
                             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addComponent(lblQuantidade1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BotaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(campoTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotaoBuscaRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                                .addComponent(lblOrigem4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblEspecificacao2)
+                                .addGap(138, 138, 138))))
                     .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
                         .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData1)
-                            .addComponent(campoData1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(128, 128, 128)
-                        .addComponent(lblOrigem3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addGap(126, 126, 126)
+                                .addComponent(BotaoBuscaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(7, 7, 7)))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addGap(0, 286, Short.MAX_VALUE)
+                                .addComponent(ComboBoxOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46))
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
                                 .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComboBoxAreaAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                        .addComponent(ComboBoxEspecificacaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ComboBoxOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(93, 93, 93))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addComponent(lblEspecificacao2)
-                                .addGap(163, 163, 163))))))
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblQuantidade1))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblData1)
+                                    .addComponent(campoData1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(128, 128, 128)
+                                .addComponent(lblOrigem3)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(BotaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         PaneGuiaAlteraRevistaLayout.setVerticalGroup(
             PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
                         .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addComponent(BotaoBuscaRevistas1)
-                        .addGap(35, 35, 35)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblQuantidade1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotaoAlterarRevistas))
-                        .addGap(87, 87, 87)
-                        .addComponent(ComboBoxAreaAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ComboBoxEspecificacaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboBoxOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addComponent(lblEspecificacao2)
-                        .addGap(5, 5, 5)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTitulo2)
-                            .addComponent(lblOrigem4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblOrigem3)
                             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addComponent(lblData1)
+                                .addGap(33, 33, 33)
+                                .addComponent(lblQuantidade1)
+                                .addGap(34, 34, 34)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(73, 73, 73)
+                                .addComponent(ComboBoxOrigem1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(166, 166, 166)
+                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblOrigem3)
+                                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                        .addComponent(lblData1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(campoData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(campoData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(BotaoAlterarRevistas))
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(lblTitulo2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblOrigem4)
+                                    .addComponent(lblEspecificacao2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(ComboBoxAreaAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ComboBoxEspecificacaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(BotaoBuscaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addGap(0, 212, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Alterar revistas", PaneGuiaAlteraRevista);
-
-        BotaoBuscaRevistas.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoBuscaRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoBuscaRevistas.setText("Busca revista");
-        BotaoBuscaRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(379, 379, 379)
-                .addComponent(BotaoBuscaRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(426, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(BotaoBuscaRevistas)
-                .addContainerGap(691, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab3", jPanel7);
-
-        BotaoSalvaRevistas.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoSalvaRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoSalvaRevistas.setText("Adicionar revista");
-        BotaoSalvaRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        BotaoRemoverRevistas.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoRemoverRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoRemoverRevistas.setText("Remover revista");
-        BotaoRemoverRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        BotaoSubtrairRevistas.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoSubtrairRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoSubtrairRevistas.setText("Subtrair revista");
-        BotaoSubtrairRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(419, 419, 419)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BotaoRemoverRevistas)
-                    .addComponent(BotaoSalvaRevistas)
-                    .addComponent(BotaoSubtrairRevistas))
-                .addContainerGap(443, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(285, 285, 285)
-                .addComponent(BotaoSalvaRevistas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BotaoSubtrairRevistas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BotaoRemoverRevistas)
-                .addContainerGap(530, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("tab4", jPanel8);
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 995, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 914, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab5", jPanel9);
+        jTabbedPane1.addTab("Alterar ou remover", PaneGuiaAlteraRevista);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -733,7 +782,8 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 953, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout AdicionarRevistaLayout = new javax.swing.GroupLayout(AdicionarRevista);
@@ -871,9 +921,9 @@ public class DashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBoxAreaNovaRevistaActionPerformed
 
-    private void BotaoBuscaRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaRevistas1ActionPerformed
+    private void BotaoBuscaAlterarOuRemoverRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverRevistaActionPerformed
 
-    }//GEN-LAST:event_BotaoBuscaRevistas1ActionPerformed
+    }//GEN-LAST:event_BotaoBuscaAlterarOuRemoverRevistaActionPerformed
 
     private void ComboBoxEspecificacaoAlterarRevistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEspecificacaoAlterarRevistasActionPerformed
         // TODO add your handling code here:
@@ -897,8 +947,8 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel BotaoAdicionarRevista1;
     private javax.swing.JLabel BotaoAdicionarRevista2;
     private javax.swing.JButton BotaoAlterarRevistas;
+    private javax.swing.JButton BotaoBuscaAlterarOuRemoverRevista;
     private javax.swing.JButton BotaoBuscaRevistas;
-    private javax.swing.JButton BotaoBuscaRevistas1;
     private javax.swing.JButton BotaoNovaRevista;
     private javax.swing.JButton BotaoRemoverRevistas;
     private javax.swing.JButton BotaoSalvaRevistas;
@@ -914,6 +964,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel PaneGuiaNovaRevista;
     private javax.swing.JPanel PaneMae;
     private javax.swing.JPanel SideBoard;
+    private javax.swing.JTable TabelaAlterarOuRemoverRevista;
     private javax.swing.JFormattedTextField campoData;
     private javax.swing.JFormattedTextField campoData1;
     private javax.swing.JTextField campoQuantidade;
@@ -931,6 +982,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;

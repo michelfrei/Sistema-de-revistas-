@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -168,5 +170,21 @@ return false;
         }
         
         return true;
+    }
+        public List<Revistas> ListaCliente() throws SQLException{
+        List<Revistas> listaCliente;
+        listaCliente = new ArrayList<>();
+        
+        String SQL = "select* from sys.cliente order by codigoCliente DESC";
+        try (PreparedStatement pst = Conexao.getConexaoMySQL().prepareStatement(SQL)) {
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                listaCliente.add(new Revistas(rs.getInt("codigoCliente"), rs.getString("nomeCliente"), rs.getString("enderecoCliente"), rs.getString("bairroCliente")));
+                
+            }
+             pst.close();
+             return listaCliente;
+        }
+ 
     }
 }
