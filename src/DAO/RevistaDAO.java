@@ -125,7 +125,7 @@ return false;
         try{
         
         
-        String SQL = "Select * from sys.revista where Titulo = ?";
+        String SQL = "Select * from sys.revista where id = ?";
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         stmt.setString(1, rev.getTitulo());
         ResultSet rs = stmt.executeQuery();
@@ -171,19 +171,19 @@ return false;
         
         return true;
     }
-        public List<Revistas> ListaCliente() throws SQLException{
-        List<Revistas> listaCliente;
-        listaCliente = new ArrayList<>();
+        public List<Revistas> ListaRevista() throws SQLException{
+        List<Revistas> ListaRevista;
+        ListaRevista = new ArrayList<>();
         
-        String SQL = "select* from sys.cliente order by codigoCliente DESC";
+        String SQL = "select* from sys.revista order by id DESC";
         try (PreparedStatement pst = Conexao.getConexaoMySQL().prepareStatement(SQL)) {
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                listaCliente.add(new Revistas(rs.getInt("codigoCliente"), rs.getString("nomeCliente"), rs.getString("enderecoCliente"), rs.getString("bairroCliente")));
+                ListaRevista.add(new Revistas(rs.getInt("id"), rs.getString("Titulo"), rs.getString("Especificacao"),rs.getInt("Quantidade"), rs.getString("Origem"), rs.getString("Data"), rs.getString("Classificacao")));
                 
             }
              pst.close();
-             return listaCliente;
+             return ListaRevista;
         }
  
     }
