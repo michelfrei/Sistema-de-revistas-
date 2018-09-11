@@ -649,19 +649,18 @@
                                                           </Group>
                                                       </Group>
                                                       <Component id="lblTitulo2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="BuscaTituloMenuRevistas" min="-2" pref="441" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jScrollPane1" min="-2" pref="566" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jScrollPane1" alignment="1" min="-2" pref="566" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
+                                              <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="200" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                                          <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="200" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="BuscaTituloMenuRevistas" alignment="1" min="-2" pref="546" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jSeparator2" min="-2" pref="14" max="-2" attributes="0"/>
@@ -702,7 +701,7 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                           <Component id="BotaoAlterarRevistas" min="-2" pref="199" max="-2" attributes="0"/>
-                                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                                          <EmptySpace pref="26" max="32767" attributes="0"/>
                                           <Component id="BotaoRemoverRevistas1" min="-2" pref="199" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       </Group>
@@ -732,7 +731,7 @@
                                               <Component id="BuscaAreaMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                               <Component id="BuscaEspecificacaoMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                           <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="29" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
@@ -955,6 +954,9 @@
                               <Color id="Cursor Padr&#xe3;o"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAlterarRevistasActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel5">
                           <Properties>
@@ -1122,6 +1124,9 @@
                               <Color id="Cursor Padr&#xe3;o"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoRemoverRevistas1ActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblOrigem2">
                           <Properties>

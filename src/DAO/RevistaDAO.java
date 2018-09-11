@@ -97,72 +97,75 @@ return false;
     }
     
     public boolean RemoverRevista(Revistas rev) throws SQLException{ // funcionando
-        String SQL = "Select id from sys.revista where Titulo = ?";
-        
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        stmt.setString(1, rev.getTitulo());
-        ResultSet rs = stmt.executeQuery();
-        
-        if(!rs.next()){
-            return false;
-        }
-        
+        String SQL = "Delete from sys.revista where id=?";
+
         try{
-            SQL = "Delete from sys.revista where Titulo=?";
-            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            stmt.setInt(1, rev.getID());
             System.out.println("Entrou no RemoverRevista");
-            stmt.setString(1, rev.getTitulo());
 	
             stmt.execute();
             stmt.close();
+            
+            /*        String sql = "DELETE FROM PRODUTO where COD_PRODUTO=?";
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        stmt.setInt(1, reg.getCOD_PRODUTO());
+        stmt.execute();
+        stmt.close();*/
+            
+            
             
         }catch(SQLException ex){
             System.out.println("Azedou no RemoverRevista");
         }
         return true;
     }
-    public boolean BuscarRevista(Revistas rev) throws SQLException{ //não ta funcionando
-        try{
+    /*public Revistas BuscarRevista(int Id) throws SQLException{ //não ta funcionando
         
-        
+        Revistas rev = null;
+        int i = 0;
         String SQL = "Select * from sys.revista where id = ?";
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        stmt.setString(1, rev.getTitulo());
+               
+        stmt.setInt(1, Id);
         ResultSet rs = stmt.executeQuery();
-        if(rs.next()){
-            rev.setTitulo(rs.getString("Titulo"));
-            rev.setEspecificacao(rs.getString("Especificacao"));
-            rev.setClassificacao(rs.getString("Classificacao"));
-            rev.setData(rs.getString("Data"));
-            rev.setQuantidade(rs.getInt("Quantidade"));
-            rev.setOrigem(rs.getString("Origem"));
+        
+        
+        while(rs.next()){
+            rev = new Revistas(
+            rs.getInt("id"),
+            rs.getString("Titulo"),
+            rs.getString("Especificacao"),
+            rs.getInt("Quantidade"),
+            rs.getString("Data"),
+            rs.getString("Classificacao"),
+            rs.getString("Origem"));
             
-            stmt.close();
+            i++;
         }
-        }catch(SQLException e){
-            System.out.println("Azedou dms mds pt1 " + e.getMessage());
+        stmt.close();
+        if(i==0){
+            return null;
+        }else{
+            return rev;
         }
-        return true;
-    }    
+        
+    }*/    
      public boolean AlterarRevista(Revistas rev) throws SQLException{// não ta funcionando
-        String SQL = "Select id from sys.revista where Titulo = ?";
+        String SQL =  SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Classificacao=? where id = ?";
         
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        stmt.setString(1, rev.getTitulo());
-        ResultSet rs = stmt.executeQuery();
-        int aux = rs.getInt("id");
-        
-        SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Classificacao=? where id = aux";
+             
         try{
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);  
             stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             System.out.println("Entrou no inserirRevistas");
 
-            stmt.setString(2, rev.getTitulo());
-            stmt.setString(3, rev.getEspecificacao());
-            stmt.setString(5, rev.getOrigem());
-            stmt.setString(6, rev.getData());
-            stmt.setString(7, rev.getClassificacao());
-	
+            stmt.setString(1, rev.getTitulo());
+            stmt.setString(2, rev.getEspecificacao());
+            stmt.setString(3, rev.getOrigem());
+            stmt.setString(4, rev.getData());
+            stmt.setString(5, rev.getClassificacao());
+            stmt.setInt(6, rev.getID());
             stmt.execute();
             stmt.close();
         }catch(SQLException ex){
