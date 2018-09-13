@@ -179,15 +179,37 @@ return false;
         ListaRevista = new ArrayList<>();
         
         String SQL = "select* from sys.revista order by id DESC";
-        try (PreparedStatement pst = Conexao.getConexaoMySQL().prepareStatement(SQL)) {
-            ResultSet rs = pst.executeQuery();
+        try{
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+            ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 ListaRevista.add(new Revistas(rs.getInt("id"), rs.getString("Titulo"), rs.getString("Especificacao"),rs.getInt("Quantidade"), rs.getString("Origem"), rs.getString("Data"), rs.getString("Classificacao")));
                 
             }
-             pst.close();
-             return ListaRevista;
+        }catch(Exception e){
+            
         }
+        return ListaRevista;
  
     }
-}
+        
+    public List<Revistas> BuscaRevistaComFiltro(Revistas rev) throws SQLException{
+        List<Revistas> ListaBuscaRevista;
+        ListaBuscaRevista = new ArrayList<>();
+        
+        String SQL = "select* from sys.revista where ((Titulo like '%"+rev.getTitulo()+"%')or('%"+rev.getTitulo()+"%' is null) and (Especificacao like '%"+rev.getEspecificacao()+"%') or ('%"+rev.getEspecificacao()+"%' is null)  and (Classificacao like '%"+rev.getClassificacao()+"%') or ('%"+rev.getClassificacao()+"%' is null)) order by id DESC";
+        try{
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);          
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                ListaBuscaRevista.add(new Revistas(rs.getInt("id"), rs.getString("Titulo"), rs.getString("Especificacao"),rs.getInt("Quantidade"), rs.getString("Origem"), rs.getString("Data"), rs.getString("Classificacao")));
+                
+            } 
+        stmt.close();
+        }catch(Exception e){
+                System.out.println(e.getMessage());
+            }            
+             return ListaBuscaRevista;
+        }
+    }

@@ -33,7 +33,7 @@ public static java.sql.Connection getConexaoMySQL() {
           connection = DriverManager.getConnection(url, username, password);
 
           if (connection != null) {
-              System.out.println("Conectou");
+              //System.out.println("Conectou");
               status = ("STATUS--->Conectado com sucesso!");
           } else {
               System.out.println("Não conectou");

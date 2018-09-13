@@ -493,7 +493,9 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="0"/>
+                              <StringArray count="1">
+                                <StringItem index="0" value="Selecione"/>
+                              </StringArray>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
@@ -558,7 +560,9 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="0"/>
+                              <StringArray count="1">
+                                <StringItem index="0" value="Selecione"/>
+                              </StringArray>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
@@ -629,40 +633,47 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="BuscaAreaMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
-                                                              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                                              <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
-                                                          </Group>
-                                                          <Group type="102" alignment="0" attributes="0">
-                                                              <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace max="32767" attributes="0"/>
-                                                              <Component id="lblEspecificacao2" min="-2" max="-2" attributes="0"/>
-                                                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                                      <Group type="102" attributes="0">
+                                                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                                          <Group type="103" groupAlignment="0" attributes="0">
+                                                              <Component id="lblTitulo2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                              <Group type="102" alignment="0" attributes="0">
+                                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                                      <Component id="BuscaAreaMenuRevistas" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
+                                                                      <Group type="102" alignment="0" attributes="0">
+                                                                          <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
+                                                                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                                                      </Group>
+                                                                  </Group>
+                                                                  <EmptySpace max="32767" attributes="0"/>
+                                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                                      <Component id="lblEspecificacao2" min="-2" pref="165" max="-2" attributes="0"/>
+                                                                      <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
+                                                                  </Group>
+                                                              </Group>
                                                           </Group>
                                                       </Group>
-                                                      <Component id="lblTitulo2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                                   </Group>
+                                                  <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                                               </Group>
+                                              <Component id="jScrollPane1" min="-2" pref="566" max="-2" attributes="0"/>
+                                              <Component id="BuscaTituloMenuRevistas" alignment="1" min="-2" pref="546" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jScrollPane1" alignment="1" min="-2" pref="566" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
-                                              <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="200" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                                          <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista" min="-2" pref="199" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="BuscaTituloMenuRevistas" alignment="1" min="-2" pref="546" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jSeparator2" min="-2" pref="14" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -732,7 +743,10 @@
                                               <Component id="BuscaEspecificacaoMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                          <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="29" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="BotaoBuscaAlterarOuRemoverRevista" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                              <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
                                       </Group>
@@ -844,9 +858,6 @@
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="14" style="0"/>
-                            </Property>
-                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="0"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
@@ -1167,6 +1178,23 @@
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                           </AuxValues>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="BotaoResetaPesquisaAlterarOuRemoverRevista">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Segoe UI" size="14" style="0"/>
+                            </Property>
+                            <Property name="text" type="java.lang.String" value="Alterar revista"/>
+                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                              <Color id="Cursor Padr&#xe3;o"/>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
