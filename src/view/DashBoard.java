@@ -43,7 +43,7 @@ public class DashBoard extends javax.swing.JFrame {
         ComboBoxEspecificacaoNovaRevista();
         BuscaAreaMenuRevistas();
         BuscaEspecificacaoMenuRevistas();
-        //atualizarTabelaCliente();
+        atualizarTabelaRevista();
         AlteraAreaMenuRevistas();
         AlteraEspecificacaoMenuRevistas();
         ResetaCamposAlterarRevistas();
@@ -98,7 +98,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }   
     //------Pane Guia Altera Revista
-    public void atualizarTabelaCliente(){
+    public void atualizarTabelaRevista(){
             
                Revistas rev = new Revistas();
                RevistaDAO revistasDAO = new RevistaDAO();
@@ -123,7 +123,7 @@ public class DashBoard extends javax.swing.JFrame {
                tabelaCliente.setDataVector(dados, tituloColuna);
                TabelaAlterarOuRemoverRevista.setModel(new DefaultTableModel(dados, tituloColuna) {
                        boolean[] canEdit = new boolean[]{
-                       false, false, false, false,false, false,
+                       true, true, true, true,true, true,
                        };
                        
                        public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -152,12 +152,7 @@ public class DashBoard extends javax.swing.JFrame {
         public void BuscaRevistaComFiltro(){
             
                Revistas rev = new Revistas();
-               RevistaDAO revistasDAO = new RevistaDAO();
-               try {
-                   ListaBuscaRevista = revistasDAO.ListaRevista();
-               } catch (SQLException ex) {
-                   Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
-               }
+
                String dados[][] = new String[ListaBuscaRevista.size()][6];
                int i = 0;
                for (Revistas revistas : ListaBuscaRevista){
@@ -782,7 +777,7 @@ public class DashBoard extends javax.swing.JFrame {
 
         BotaoResetaPesquisaAlterarOuRemoverRevista.setBackground(new java.awt.Color(255, 255, 255));
         BotaoResetaPesquisaAlterarOuRemoverRevista.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BotaoResetaPesquisaAlterarOuRemoverRevista.setText("Alterar revista");
+        BotaoResetaPesquisaAlterarOuRemoverRevista.setText("Limpar pesquisa");
         BotaoResetaPesquisaAlterarOuRemoverRevista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BotaoResetaPesquisaAlterarOuRemoverRevista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -808,9 +803,7 @@ public class DashBoard extends javax.swing.JFrame {
                                             .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
                                                 .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(BuscaAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                                        .addComponent(lblOrigem4)
-                                                        .addGap(66, 66, 66)))
+                                                    .addComponent(lblOrigem4))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(lblEspecificacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1156,19 +1149,23 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxAreaNovaRevistaActionPerformed
 
     private void BotaoBuscaAlterarOuRemoverRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverRevistaActionPerformed
-        
+        ListaRevista = null;
         Revistas rev = new Revistas();
-        
-        
+        RevistaDAO revistaDAO = new RevistaDAO();
         
         try{
             rev.setTitulo(BuscaTituloMenuRevistas.getText());
             rev.setEspecificacao((String)BuscaAreaMenuRevistas.getSelectedItem());
             rev.setClassificacao((String) BuscaEspecificacaoMenuRevistas.getSelectedItem());
             
-            RevistaDAO revistaDAO = new RevistaDAO();
-            revistaDAO.BuscaRevistaComFiltro(rev);
-            BuscaRevistaComFiltro();
+            
+            ListaRevista = revistaDAO.ListaRevista(BuscaTituloMenuRevistas.getText(),
+            BuscaAreaMenuRevistas.getSelectedItem().toString(),
+            BuscaEspecificacaoMenuRevistas.getSelectedItem().toString());
+            
+            atualizarTabelaRevista();
+            //revistaDAO.BuscaRevistaComFiltro(rev);
+            //BuscaRevistaComFiltro();
         }catch(Exception E){
             JOptionPane.showMessageDialog(null, "Problema no BotaoNovaRevistaActionPerformed do DashBoard, criação de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1222,7 +1219,7 @@ public class DashBoard extends javax.swing.JFrame {
                 revistaDAO.AlterarRevista(rev);
                 JOptionPane.showMessageDialog(null, "Revista alterada com sucesso", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 limpaCampos();
-                atualizarTabelaCliente();
+                //atualizarTabelaCliente();
                 
             } catch(Exception e){
                 JOptionPane.showMessageDialog(null, "Problema no BotaoAlterarRevistasActionPerformed, alteração da revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -1242,7 +1239,7 @@ public class DashBoard extends javax.swing.JFrame {
             revistaDAO.RemoverRevista(rev);
             JOptionPane.showMessageDialog(null, "Revista Removida com sucesso", "Sistema", JOptionPane.INFORMATION_MESSAGE);
             limpaCampos();
-            atualizarTabelaCliente();
+            //atualizarTabelaCliente();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Problema no BotaoRemoverRevistas1ActionPerformed, remoção de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1250,7 +1247,7 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed
         ResetaCamposAlterarRevistas();
-        atualizarTabelaCliente();
+        //atualizarTabelaCliente();
     }//GEN-LAST:event_BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed
     
     public void setLblColor(JLabel lbl){

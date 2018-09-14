@@ -175,15 +175,24 @@ return false;
         return true;
     }
         public List<Revistas> ListaRevista() throws SQLException{
+            
         List<Revistas> ListaRevista;
         ListaRevista = new ArrayList<>();
         
         String SQL = "select* from sys.revista order by id DESC";
         try{
+            
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             ResultSet rs = stmt.executeQuery();
+            
             while(rs.next()){
-                ListaRevista.add(new Revistas(rs.getInt("id"), rs.getString("Titulo"), rs.getString("Especificacao"),rs.getInt("Quantidade"), rs.getString("Origem"), rs.getString("Data"), rs.getString("Classificacao")));
+                ListaRevista.add(new Revistas(rs.getInt("id"), 
+                        rs.getString("Titulo"), 
+                        rs.getString("Especificacao"),
+                        rs.getInt("Quantidade"), 
+                        rs.getString("Origem"), 
+                        rs.getString("Data"), 
+                        rs.getString("Classificacao")));
                 
             }
         }catch(Exception e){
@@ -193,7 +202,7 @@ return false;
  
     }
         
-    public List<Revistas> BuscaRevistaComFiltro(Revistas rev) throws SQLException{
+    /*public List<Revistas> BuscaRevistaComFiltro(Revistas rev) throws SQLException{
         List<Revistas> ListaBuscaRevista;
         ListaBuscaRevista = new ArrayList<>();
         
@@ -211,5 +220,54 @@ return false;
                 System.out.println(e.getMessage());
             }            
              return ListaBuscaRevista;
-        }
-    }
+        }*/
+
+    public List<Revistas> ListaRevista(String titulo, String area, String especificacao) throws SQLException {
+                
+        String tit = "rev"; 
+        String are = "Sistemas de informações";
+        String esp = "Inquérito Policial";
+        
+        List<Revistas> ListaRevista;
+        ListaRevista = new ArrayList<>();
+
+        
+        String SQL = "select * from sys.revista";
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        
+        try{  
+            if(tit.equals(null)){
+            }
+            else if(!tit.equals(null)){
+                SQL = SQL+" where Titulo like ?";
+            }
+            if(are.equals(null)){
+            }
+            else if(!are.equals(null)){
+                SQL = SQL+" and Classificacao like ?";
+            }
+            if(esp.equals(null)){
+            }
+            else if(!esp.equals(null)){
+                SQL = SQL+" and Especificacao like ''";
+            }
+            
+            System.out.println(SQL);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                ListaRevista.add(new Revistas(rs.getInt("id"), 
+                        rs.getString("Titulo"), 
+                        rs.getString("Especificacao"),
+                        rs.getInt("Quantidade"), 
+                        rs.getString("Origem"), 
+                        rs.getString("Data"), 
+                        rs.getString("Classificacao")));               
+            } 
+        stmt.close();
+        return ListaRevista;  
+        }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }            
+             return null;      }
+}
