@@ -633,44 +633,39 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" attributes="0">
-                                                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="0" attributes="0">
-                                                              <Component id="lblTitulo2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                              <Group type="102" alignment="0" attributes="0">
-                                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                                      <Component id="BuscaAreaMenuRevistas" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                                                      <Component id="lblOrigem4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                                  <EmptySpace max="32767" attributes="0"/>
-                                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                                      <Component id="lblEspecificacao2" min="-2" pref="165" max="-2" attributes="0"/>
-                                                                      <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
-                                                                  </Group>
-                                                              </Group>
-                                                          </Group>
-                                                      </Group>
-                                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
+                                                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                                  <Component id="lblTitulo2" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jScrollPane1" min="-2" pref="566" max="-2" attributes="0"/>
-                                              <Component id="BuscaTituloMenuRevistas" alignment="1" min="-2" pref="546" max="-2" attributes="0"/>
+                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="jScrollPane1" min="-2" pref="566" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                                           <Component id="BotaoBuscaAlterarOuRemoverRevista" min="-2" pref="200" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista" min="-2" pref="199" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
+                                                  <Component id="lblEspecificacao2" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="BuscaTituloMenuRevistas" alignment="1" min="-2" pref="546" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jSeparator2" min="-2" pref="14" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -688,12 +683,13 @@
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                                           <Component id="AlteraEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
-                                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                                              <Component id="AlteraAreaMenuRevistas" alignment="0" min="-2" pref="170" max="-2" attributes="0"/>
-                                                              <Component id="lblOrigem5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                          <Group type="102" alignment="1" attributes="0">
+                                                              <Component id="lblOrigem5" min="-2" max="-2" attributes="0"/>
+                                                              <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                                                           </Group>
                                                       </Group>
                                                       <Component id="lblEspecificacao3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="AlteraAreaMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -730,26 +726,30 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="BuscaTituloMenuRevistas" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="lblOrigem4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="lblEspecificacao2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                      <Component id="BotaoBuscaAlterarOuRemoverRevista" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                                      <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                                                  <Component id="lblEspecificacao2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="BuscaAreaMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                              <Component id="BuscaEspecificacaoMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="BotaoBuscaAlterarOuRemoverRevista" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                              <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
                                                   <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="3" attributes="0">
                                                       <Component id="IDTravadoAlteraRevista" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
@@ -758,34 +758,36 @@
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Component id="lblTitulo3" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                                  <Component id="AlteraTituloMenuRevistas" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="lblData1" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace max="-2" attributes="0"/>
-                                                          <Group type="103" groupAlignment="3" attributes="0">
-                                                              <Component id="AlteraAreaMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                                                              <Component id="AlteraAnoMenuRevistas" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          </Group>
-                                                      </Group>
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                                          <Component id="lblOrigem5" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
                                               </Group>
-                                              <Component id="jLabel4" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel4" min="-2" pref="50" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                          <Component id="AlteraTituloMenuRevistas" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="lblData1" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="AlteraAnoMenuRevistas" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                                  <Component id="lblOrigem5" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="AlteraEspecificacaoMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="lblEspecificacao3" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblOrigem2" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="AlteraEspecificacaoMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                               <Component id="AlteraOrigemMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                              <Component id="AlteraAreaMenuRevistas" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">

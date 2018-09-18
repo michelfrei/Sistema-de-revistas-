@@ -196,48 +196,63 @@ return false;
                 
             }
         }catch(Exception e){
-            
+            System.out.println(e.getMessage());
         }
         return ListaRevista;
  
     }
+
+    public List<Revistas> ListaBuscaRevista(Revistas rev) throws SQLException {      
+              
+        List<Revistas> ListaRevista = new ArrayList<>();
+        int i = 0;
+        String SQL = "select * from sys.revista";
+        if(!rev.getEspecificacao().equals(null)){
+                SQL = SQL+" where Especificacao = ?";
+                i=i+1;
+            }
+        else if(i==1){
+                SQL = SQL+" and Classificação = ?";
+        }
         
-    /*public List<Revistas> BuscaRevistaComFiltro(Revistas rev) throws SQLException{
-        List<Revistas> ListaBuscaRevista;
-        ListaBuscaRevista = new ArrayList<>();
         
-        String SQL = "select* from sys.revista where ((Titulo like '%"+rev.getTitulo()+"%')or('%"+rev.getTitulo()+"%' is null) and (Especificacao like '%"+rev.getEspecificacao()+"%') or ('%"+rev.getEspecificacao()+"%' is null)  and (Classificacao like '%"+rev.getClassificacao()+"%') or ('%"+rev.getClassificacao()+"%' is null)) order by id DESC";
-        try{
-            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);          
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                ListaBuscaRevista.add(new Revistas(rs.getInt("id"), rs.getString("Titulo"), rs.getString("Especificacao"),rs.getInt("Quantidade"), rs.getString("Origem"), rs.getString("Data"), rs.getString("Classificacao")));
-                
+        
+        System.out.println(SQL);
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+        stmt.setString(1, rev.getEspecificacao());
+        if(i==1){
+            stmt.setString(2, rev.getClassificacao());
+        }
+        ResultSet rs = stmt.executeQuery();
+        try{    
+        while(rs.next()){
+            ListaRevista.add(new Revistas(
+                rs.getInt("id"), 
+                rs.getString("Titulo"), 
+                rs.getString("Especificacao"),
+                rs.getInt("Quantidade"), 
+                rs.getString("Origem"), 
+                rs.getString("Data"), 
+                rs.getString("Classificacao")));               
             } 
         stmt.close();
+        return ListaRevista;
         }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        /*}catch(SQLException e){
                 System.out.println(e.getMessage());
-            }            
-             return ListaBuscaRevista;
-        }*/
-
-    public List<Revistas> ListaRevista(String titulo, String area, String especificacao) throws SQLException {
-                
-        String tit = "rev"; 
-        String are = "Sistemas de informações";
-        String esp = "Inquérito Policial";
-        
-        List<Revistas> ListaRevista;
-        ListaRevista = new ArrayList<>();
-
-        
-        String SQL = "select * from sys.revista";
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        
-        try{  
-            if(tit.equals(null)){
+            } */          
+             //return null;
+             /*try{  
+            if(1==1){
+                SQL = SQL+" where Titulo = ?";
             }
+            
+            
+            !tit.equals(null)
+            
             else if(!tit.equals(null)){
                 SQL = SQL+" where Titulo like ?";
             }
@@ -250,24 +265,7 @@ return false;
             }
             else if(!esp.equals(null)){
                 SQL = SQL+" and Especificacao like ''";
-            }
-            
-            System.out.println(SQL);
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                ListaRevista.add(new Revistas(rs.getInt("id"), 
-                        rs.getString("Titulo"), 
-                        rs.getString("Especificacao"),
-                        rs.getInt("Quantidade"), 
-                        rs.getString("Origem"), 
-                        rs.getString("Data"), 
-                        rs.getString("Classificacao")));               
-            } 
-        stmt.close();
-        return ListaRevista;  
-        }catch(SQLException e){
-                System.out.println(e.getMessage());
-            }            
-             return null;      }
+            }*/
+             return null;
+    }
 }
