@@ -16,7 +16,7 @@ public class RevistaDAO {
 
     public boolean InserirNovaRevistas(Revistas rev) { //funcionando
 		
-	String SQL = "INSERT INTO sys.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Classificacao) values (?, ?, ?, ?, ?, ?, ?)"; 
+	String SQL = "INSERT INTO sys.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Area) values (?, ?, ?, ?, ?, ?, ?)"; 
 
         try {
         System.out.println("entrou no try do inserir RevistaDAO");
@@ -28,7 +28,7 @@ public class RevistaDAO {
 	stmt.setInt(4, rev.getQuantidade());
 	stmt.setString(5, rev.getOrigem());
 	stmt.setString(6, rev.getData());
-        stmt.setString(7, rev.getClassificacao());
+        stmt.setString(7, rev.getArea());
         
         stmt.execute();
         stmt.close();
@@ -120,39 +120,9 @@ return false;
         }
         return true;
     }
-    /*public Revistas BuscarRevista(int Id) throws SQLException{ //não ta funcionando
-        
-        Revistas rev = null;
-        int i = 0;
-        String SQL = "Select * from sys.revista where id = ?";
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-               
-        stmt.setInt(1, Id);
-        ResultSet rs = stmt.executeQuery();
-        
-        
-        while(rs.next()){
-            rev = new Revistas(
-            rs.getInt("id"),
-            rs.getString("Titulo"),
-            rs.getString("Especificacao"),
-            rs.getInt("Quantidade"),
-            rs.getString("Data"),
-            rs.getString("Classificacao"),
-            rs.getString("Origem"));
-            
-            i++;
-        }
-        stmt.close();
-        if(i==0){
-            return null;
-        }else{
-            return rev;
-        }
-        
-    }*/    
+    
      public boolean AlterarRevista(Revistas rev) throws SQLException{// não ta funcionando
-        String SQL =  SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Classificacao=? where id = ?";
+        String SQL =  SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=? where id = ?";
         
              
         try{
@@ -164,7 +134,7 @@ return false;
             stmt.setString(2, rev.getEspecificacao());
             stmt.setString(3, rev.getOrigem());
             stmt.setString(4, rev.getData());
-            stmt.setString(5, rev.getClassificacao());
+            stmt.setString(5, rev.getArea());
             stmt.setInt(6, rev.getID());
             stmt.execute();
             stmt.close();
@@ -192,7 +162,7 @@ return false;
                         rs.getInt("Quantidade"), 
                         rs.getString("Origem"), 
                         rs.getString("Data"), 
-                        rs.getString("Classificacao")));
+                        rs.getString("Area")));
                 
             }
         }catch(Exception e){
@@ -202,70 +172,61 @@ return false;
  
     }
 
-    public List<Revistas> ListaBuscaRevista(Revistas rev) throws SQLException {      
-              
-        List<Revistas> ListaRevista = new ArrayList<>();
-        int i = 0;
-        String SQL = "select * from sys.revista";
-        if(!rev.getEspecificacao().equals(null)){
-                SQL = SQL+" where Especificacao = ?";
-                i=i+1;
-            }
-        else if(i==1){
-                SQL = SQL+" and Classificação = ?";
+    public List<Revistas> ListaBuscaRevista(Revistas rev) throws SQLException {
+        List<Revistas> retorno = new ArrayList<Revistas>();
+        
+        String SQL = "select * from sys.revista ";
+        
+        if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null){
+            SQL += " where Titulo like ? ";
         }
+        else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null){
+            SQL += " where Area like ? ";
+        }
+        else if (rev.getArea()== null && rev.getTitulo() == null && rev.getEspecificacao() != null){
+            SQL += " where Especificacao like ? ";
+        }
+        /*else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
+            SQL += " where Titulo like ? and Area like ? ";
+        }*/
         
         
         
-        System.out.println(SQL);
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-        stmt.setString(1, rev.getEspecificacao());
-        if(i==1){
-            stmt.setString(2, rev.getClassificacao());
+        
+        if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null){
+            stmt.setString(1, "%" + rev.getTitulo() + "%");
         }
+        else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null){
+            stmt.setString(1, "%" + rev.getArea()+ "%");
+        }
+        else if (rev.getArea()== null && rev.getTitulo() == null && rev.getEspecificacao() != null){
+            stmt.setString(1, "%" + rev.getEspecificacao()+ "%");
+        }
+        /*else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
+            stmt.setString(1, "%" + rev.getTitulo() + "%");
+            stmt.setString(2, rev.getArea());
+        }*/
+        
+        
         ResultSet rs = stmt.executeQuery();
-        try{    
+        
         while(rs.next()){
-            ListaRevista.add(new Revistas(
+            retorno.add(new Revistas(
                 rs.getInt("id"), 
                 rs.getString("Titulo"), 
                 rs.getString("Especificacao"),
                 rs.getInt("Quantidade"), 
                 rs.getString("Origem"), 
                 rs.getString("Data"), 
-                rs.getString("Classificacao")));               
-            } 
-        stmt.close();
-        return ListaRevista;
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+                rs.getString("Area")));               
         }
-        /*}catch(SQLException e){
-                System.out.println(e.getMessage());
-            } */          
-             //return null;
-             /*try{  
-            if(1==1){
-                SQL = SQL+" where Titulo = ?";
-            }
-            
-            
-            !tit.equals(null)
-            
-            else if(!tit.equals(null)){
-                SQL = SQL+" where Titulo like ?";
-            }
-            if(are.equals(null)){
-            }
-            else if(!are.equals(null)){
-                SQL = SQL+" and Classificacao like ?";
-            }
-            if(esp.equals(null)){
-            }
-            else if(!esp.equals(null)){
-                SQL = SQL+" and Especificacao like ''";
-            }*/
-             return null;
+        
+        
+        stmt.close();
+        Conexao.getConexaoMySQL().close();
+        
+        return retorno;
     }
+    
 }

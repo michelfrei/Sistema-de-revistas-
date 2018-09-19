@@ -338,13 +338,6 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="lblData" min="-2" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="campoData" min="-2" pref="105" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                                                  <Component id="ComboBoxAreaNovaRevista" min="-2" pref="170" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
-                                                  <Component id="ComboBoxEspecificacaoNovaRevista" min="-2" pref="170" max="-2" attributes="0"/>
-                                              </Group>
                                               <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                                   <Component id="campoTitulo" min="-2" pref="827" max="-2" attributes="0"/>
@@ -356,9 +349,17 @@
                                                               <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
                                                               <Component id="lblOrigem1" min="-2" max="-2" attributes="0"/>
                                                           </Group>
+                                                          <Group type="102" alignment="0" attributes="0">
+                                                              <Component id="campoData" min="-2" pref="105" max="-2" attributes="0"/>
+                                                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                                              <Component id="ComboBoxEspecificacaoNovaRevista" min="-2" pref="170" max="-2" attributes="0"/>
+                                                          </Group>
                                                       </Group>
-                                                      <EmptySpace min="-2" pref="227" max="-2" attributes="0"/>
-                                                      <Component id="lblEspecificacao" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                                                      <Group type="103" groupAlignment="0" attributes="0">
+                                                          <Component id="ComboBoxAreaNovaRevista" min="-2" pref="170" max="-2" attributes="0"/>
+                                                          <Component id="lblEspecificacao" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
                                                       <EmptySpace max="32767" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="campoQuantidade" min="-2" pref="50" max="-2" attributes="0"/>
@@ -392,21 +393,19 @@
                                       <Component id="lblQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ComboBoxEspecificacaoNovaRevista" alignment="1" max="32767" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                          <Component id="campoQuantidade" alignment="3" max="32767" attributes="0"/>
-                                          <Component id="campoData" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="ComboBoxAreaNovaRevista" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="campoQuantidade" alignment="3" max="32767" attributes="0"/>
+                                      <Component id="campoData" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="ComboBoxEspecificacaoNovaRevista" alignment="3" max="32767" attributes="0"/>
+                                      <Component id="ComboBoxAreaNovaRevista" alignment="3" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                   <Component id="lblOrigem" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="ComboBoxOrigem" min="-2" pref="32" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                                   <Component id="BotaoNovaRevista" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="706" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="700" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -484,7 +483,7 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="18" style="0"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="&#xc1;rea"/>
+                            <Property name="text" type="java.lang.String" value="Especifica&#xe7;&#xe3;o"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JComboBox" name="ComboBoxAreaNovaRevista">
@@ -493,9 +492,7 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="1">
-                                <StringItem index="0" value="Selecione"/>
-                              </StringArray>
+                              <StringArray count="0"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
@@ -560,9 +557,7 @@
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                              <StringArray count="1">
-                                <StringItem index="0" value="Selecione"/>
-                              </StringArray>
+                              <StringArray count="0"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
@@ -600,7 +595,7 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="18" style="0"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Especifica&#xe7;&#xe3;o"/>
+                            <Property name="text" type="java.lang.String" value="&#xc1;rea"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblQuantidade">
@@ -653,11 +648,11 @@
                                           <Group type="102" alignment="1" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
+                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
+                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="170" max="-2" attributes="0"/>
                                                   <Component id="lblEspecificacao2" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
@@ -730,7 +725,7 @@
                                               <Group type="102" attributes="0">
                                                   <Component id="lblOrigem4" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
+                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="3" attributes="0">
                                                       <Component id="BotaoBuscaAlterarOuRemoverRevista" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
@@ -743,7 +738,7 @@
                                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                                   <Component id="lblEspecificacao2" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="BuscaAreaMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
+                                                  <Component id="BuscaEspecificacaoMenuRevistas" min="-2" pref="25" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -757,13 +752,10 @@
                                                   </Group>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                                   <Component id="lblTitulo3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel4" min="-2" pref="50" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="jLabel4" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                           <Component id="AlteraTituloMenuRevistas" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -853,7 +845,7 @@
                             <Property name="text" type="java.lang.String" value="Titulo da revista"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="BuscaAreaMenuRevistas">
+                        <Component class="javax.swing.JComboBox" name="BuscaEspecificacaoMenuRevistas">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="14" style="0"/>
@@ -871,7 +863,7 @@
                             <Property name="name" type="java.lang.String" value="Selecione" noResource="true"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscaAreaMenuRevistasActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscaEspecificacaoMenuRevistasActionPerformed"/>
                           </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -885,7 +877,7 @@
                             <Property name="text" type="java.lang.String" value="&#xc1;rea"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="BuscaEspecificacaoMenuRevistas">
+                        <Component class="javax.swing.JComboBox" name="BuscaAreaMenuRevistas">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="14" style="0"/>
@@ -901,7 +893,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscaEspecificacaoMenuRevistasActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscaAreaMenuRevistasActionPerformed"/>
                           </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

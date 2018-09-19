@@ -16,21 +16,21 @@ public class Revistas {
     private int quantidade;
     private String origem;
     private String data;
-    private String classificacao;
+    private String area;
     //classificação
     
     public Revistas(){
     
     }
     
-    public Revistas(int ID,String titulo, String especificacao, int quantidade, String origem, String data, String classificacao) {
+    public Revistas(int ID,String titulo, String especificacao, int quantidade, String origem, String data, String area) {
         this.ID = ID;
         this.titulo = titulo;
         this.especificacao = especificacao;
         this.quantidade = quantidade;
         this.origem = origem;
         this.data = data;
-        this.classificacao = classificacao;
+        this.area = area;
     }
 
     public int getID() {
@@ -41,12 +41,12 @@ public class Revistas {
         this.ID = ID;
     }
 
-    public String getClassificacao() {
-        return classificacao;
+    public String getArea() {
+        return area;
     }
 
-    public void setClassificacao(String classificacao) {
-        this.classificacao = classificacao;
+    public void setArea(String area) {
+        this.area = area;
     }    
     
     public String getTitulo() {
@@ -88,9 +88,4 @@ public class Revistas {
     public void setData(String data) {
         this.data = data;
     }
-
-    public void getID(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-     
 }
