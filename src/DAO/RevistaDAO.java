@@ -186,9 +186,22 @@ return false;
         else if (rev.getArea()== null && rev.getTitulo() == null && rev.getEspecificacao() != null){
             SQL += " where Especificacao like ? ";
         }
-        /*else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
+        else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
             SQL += " where Titulo like ? and Area like ? ";
-        }*/
+        } 
+        else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null){
+            SQL += " where Titulo like ? and Especificacao like ? ";
+        }
+        else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null){
+            SQL += " where Titulo like ? and Area like ? and Especificacao like ?";
+        }//--------------------------------- funcionando até aqui
+        else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null){
+            SQL += " where Area like ? and Especificacao like ? ";
+        }
+        
+        
+        
+        
         
         
         
@@ -203,10 +216,26 @@ return false;
         else if (rev.getArea()== null && rev.getTitulo() == null && rev.getEspecificacao() != null){
             stmt.setString(1, "%" + rev.getEspecificacao()+ "%");
         }
-        /*else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
+        else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null){
             stmt.setString(1, "%" + rev.getTitulo() + "%");
             stmt.setString(2, rev.getArea());
-        }*/
+        }
+        else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null){
+            stmt.setString(1, "%" + rev.getTitulo() + "%");
+            stmt.setString(2, rev.getEspecificacao());
+        }
+        else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null){
+            stmt.setString(1, "%" + rev.getTitulo() + "%");
+            stmt.setString(2, rev.getArea());
+            stmt.setString(3, rev.getEspecificacao());
+        }//---------funcionando até aqui
+        else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null){
+            stmt.setString(1, rev.getArea());
+            stmt.setString(2, rev.getEspecificacao());
+        }
+        
+        
+        
         
         
         ResultSet rs = stmt.executeQuery();
