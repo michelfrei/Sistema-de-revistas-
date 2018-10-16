@@ -2,9 +2,8 @@
 package controller;
 
 import view.*;
-import model.*;
-import DAO.*;
 import java.sql.SQLException;
+import java.awt.Frame;
 /**
  *
  * @author Michel
@@ -15,6 +14,8 @@ public class RevistasUEMG {
         
         DashBoard dash = new DashBoard();
         dash.setVisible(true);
+        dash.setLocationRelativeTo(null);
+        dash.setExtendedState(Frame.MAXIMIZED_BOTH);
         
         }
     }
