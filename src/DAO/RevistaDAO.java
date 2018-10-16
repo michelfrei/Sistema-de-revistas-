@@ -23,7 +23,7 @@ public class RevistaDAO {
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-            stmt.setInt(1, rev.getID());
+            stmt.setInt(1, 0);
             stmt.setString(2, rev.getTitulo());
             stmt.setString(3, rev.getEspecificacao());
             stmt.setInt(4, rev.getQuantidade());
