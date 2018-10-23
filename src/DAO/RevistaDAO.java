@@ -41,60 +41,6 @@ public class RevistaDAO {
         return false;
     }
 
-    public boolean AdicaoDeRevista(Revistas rev) throws SQLException {  //não utilizado 21/09
-
-        String SQL = "Select id from sys.revista where Titulo = ?";
-
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        stmt.setString(1, rev.getTitulo());
-        ResultSet rs = stmt.executeQuery();
-
-        if (!rs.next()) {
-            return false;
-        }
-
-        SQL = "update sys.revista set Quantidade = Quantidade + ? where Titulo = ?";
-        try {
-            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-            System.out.println("Entrou no inserirRevistas");
-            stmt.setInt(1, rev.getQuantidade());
-            stmt.setString(2, rev.getTitulo());
-
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException ex) {
-            System.out.println("Azedou no inserirRevistas");
-        }
-
-        return true;
-    }
-
-    public boolean SubtraicaoDeRevista(Revistas rev) throws SQLException { //não utilizado 21/09
-        String SQL = "Select id from sys.revista where Titulo = ?";
-
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-        stmt.setString(1, rev.getTitulo());
-        ResultSet rs = stmt.executeQuery();
-
-        if (!rs.next()) {
-            return false;
-        }
-
-        try {
-            SQL = "update sys.revista set Quantidade = Quantidade - ? where Titulo = ?";
-            stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-            stmt.setInt(1, rev.getQuantidade());
-            stmt.setString(2, rev.getTitulo());
-
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return true;
-    }
-
     public boolean RemoverRevista(Revistas rev) throws SQLException {
         String SQL = "Delete from sys.revista where id=?";
 
@@ -112,7 +58,7 @@ public class RevistaDAO {
     }
 
     public boolean AlterarRevista(Revistas rev) throws SQLException {// não ta funcionando
-        String SQL = SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=? where id = ?";
+        String SQL = SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=?, Quantidade=? where id = ?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -123,7 +69,8 @@ public class RevistaDAO {
             stmt.setString(3, rev.getOrigem());
             stmt.setString(4, rev.getData());
             stmt.setString(5, rev.getArea());
-            stmt.setInt(6, rev.getID());
+            stmt.setInt(6, rev.getQuantidade());
+            stmt.setInt(7, rev.getID());
             stmt.execute();
             stmt.close();
         } catch (SQLException ex) {
@@ -155,6 +102,7 @@ public class RevistaDAO {
 
             }
         } catch (Exception e) {
+            System.out.println("Problema tal:");
             System.out.println(e.getMessage());
         }
         return ListaRevista;
@@ -204,18 +152,21 @@ public class RevistaDAO {
             stmt.setString(1, rev.getArea());
             stmt.setString(2, rev.getEspecificacao());
         }
-
+        try{
         ResultSet rs = stmt.executeQuery();
-
         while (rs.next()) {
-            retorno.add(new Revistas(
-                rs.getInt("id"),
-                rs.getString("Titulo"),
-                rs.getString("Especificacao"),
-                rs.getInt("Quantidade"),
-                rs.getString("Origem"),
-                rs.getString("Data"),
-                rs.getString("Area")));
+
+            retorno.add(new Revistas(rs.getInt("id"),
+                        rs.getString("Titulo"),
+                        rs.getString("Especificacao"),
+                        rs.getInt("Quantidade"),
+                        rs.getString("Origem"),
+                        rs.getString("Data"),
+                        rs.getString("Area")));
+        }
+        }catch(Exception e){
+            System.out.println("Problema tal:");
+            System.out.println(e.getMessage());
         }
 
         stmt.close();

@@ -14,8 +14,8 @@ public class RevistasUEMG {
         
         DashBoard dash = new DashBoard();
         dash.setVisible(true);
-        dash.setLocationRelativeTo(null);
-        dash.setExtendedState(Frame.MAXIMIZED_BOTH);
+        //dash.setLocationRelativeTo(null);
+        //dash.setExtendedState(Frame.MAXIMIZED_BOTH);
         
         }
     }
