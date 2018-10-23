@@ -28,7 +28,7 @@ public class RevistaDAO {
             stmt.setString(3, rev.getEspecificacao());
             stmt.setInt(4, rev.getQuantidade());
             stmt.setString(5, rev.getOrigem());
-            stmt.setString(6, rev.getData());
+            stmt.setInt(6, rev.getData());
             stmt.setString(7, rev.getArea());
 
             stmt.execute();
@@ -67,7 +67,7 @@ public class RevistaDAO {
             stmt.setString(1, rev.getTitulo());
             stmt.setString(2, rev.getEspecificacao());
             stmt.setString(3, rev.getOrigem());
-            stmt.setString(4, rev.getData());
+            stmt.setInt(4, rev.getData());
             stmt.setString(5, rev.getArea());
             stmt.setInt(6, rev.getQuantidade());
             stmt.setInt(7, rev.getID());
@@ -97,7 +97,7 @@ public class RevistaDAO {
                         rs.getString("Especificacao"),
                         rs.getInt("Quantidade"),
                         rs.getString("Origem"),
-                        rs.getString("Data"),
+                        rs.getInt("Data"),
                         rs.getString("Area")));
 
             }
@@ -161,7 +161,7 @@ public class RevistaDAO {
                         rs.getString("Especificacao"),
                         rs.getInt("Quantidade"),
                         rs.getString("Origem"),
-                        rs.getString("Data"),
+                        rs.getInt("Data"),
                         rs.getString("Area")));
         }
         }catch(Exception e){

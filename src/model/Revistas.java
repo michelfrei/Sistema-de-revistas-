@@ -15,7 +15,7 @@ public class Revistas {
     private String especificacao;
     private int quantidade;
     private String origem;
-    private String data;
+    private int data;
     private String area;
     //classificação
     
@@ -23,7 +23,7 @@ public class Revistas {
     
     }
     
-    public Revistas(int ID,String titulo, String especificacao, int quantidade, String origem, String data, String area) {
+    public Revistas(int ID,String titulo, String especificacao, int quantidade, String origem, int data, String area) {
         this.ID = ID;
         this.titulo = titulo;
         this.especificacao = especificacao;
@@ -81,11 +81,11 @@ public class Revistas {
         this.origem = origem;
     }
 
-    public String getData() {
+    public int getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(int data) {
         this.data = data;
     }
 }
