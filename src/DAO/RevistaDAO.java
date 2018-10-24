@@ -115,19 +115,19 @@ public class RevistaDAO {
         String SQL = "select * from sys.revista ";
 
         if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null) {
-            SQL += " where Titulo like ? ";
+            SQL += " where Titulo like ? order by id DESC";
         } else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null) {
-            SQL += " where Area like ? ";
+            SQL += " where Area like ? order by id DESC";
         } else if (rev.getArea() == null && rev.getTitulo() == null && rev.getEspecificacao() != null) {
-            SQL += " where Especificacao like ? ";
+            SQL += " where Especificacao like ? order by id DESC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? ";
+            SQL += " where Titulo like ? and Area like ? order by id DESC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null) {
-            SQL += " where Titulo like ? and Especificacao like ? ";
+            SQL += " where Titulo like ? and Especificacao like ? order by id DESC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? and Especificacao like ?";
+            SQL += " where Titulo like ? and Area like ? and Especificacao like ? order by id DESC";
         } else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Area like ? and Especificacao like ? ";
+            SQL += " where Area like ? and Especificacao like ? order by id DESC";
         }
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
