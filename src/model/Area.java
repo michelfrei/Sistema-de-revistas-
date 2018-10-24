@@ -5,21 +5,21 @@ package model;
  *
  * @author Michel
  */
-public class Classe {
-    private int idClasse;
+public class Area {
+    private int id;
     private String nome;
 
-    public Classe(String nome, int idClasse) {
+    public Area(int id, String nome) {
+        this.id = id;
         this.nome = nome;
-        this.idClasse = idClasse;
     }
 
-    public int getIdClasse() {
-        return idClasse;
+    public int getId() {
+        return id;
     }
 
-    public void setIdClasse(int idClasse) {
-        this.idClasse = idClasse;
+    public void setIdClasse(int id) {
+        this.id = id;
     }
     
     

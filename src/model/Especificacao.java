@@ -6,20 +6,20 @@ package model;
  * @author Michel
  */
 public class Especificacao {
-    private int idEspecificacao;
+    private int id;
     private String nome;
 
-    public Especificacao(String nome, int idEspecificacao) {
-        this.nome = nome;
-        this.idEspecificacao = idEspecificacao;
+    public Especificacao(int id, String nome) {
+        this.id = id;
+        this.nome = nome; 
     }
 
-    public int getIdEspecificacao() {
-        return idEspecificacao;
+    public int getId() {
+        return id;
     }
 
-    public void setIdEspecificacao(int idEspecificacao) {
-        this.idEspecificacao = idEspecificacao;
+    public void setId(int id) {
+        this.id = id;
     }
     
     

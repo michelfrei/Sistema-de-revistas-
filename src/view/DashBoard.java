@@ -36,7 +36,17 @@ public class DashBoard extends javax.swing.JFrame {
 
     public DashBoard() {
         initComponents();
-
+        inicioRevista();
+    }
+    
+    
+    private void inicioRevista() {
+        PaneRevista.setVisible(true);
+        PaneArea.setVisible(false);
+        PaneEspecificacao.setVisible(false);
+        setLblColor(BotaoAdicionarRevista);
+        ResetColor(BotaoAdicionarArea);
+        ResetColor(BotaoAdicionarEspecificacao);
         ComboBoxAreaNovaRevista();
         ComboBoxEspecificacaoNovaRevista();
         BuscaAreaMenuRevistas();
@@ -47,7 +57,7 @@ public class DashBoard extends javax.swing.JFrame {
         ResetaCamposAlterarRevistas();
         TravaCamposDoNovaRevista();
         limpaCamposNovaRevista();
-        TravaCamposDoPesquisarRevistasParaAlteração();
+        TravaCamposDoPesquisarRevistasParaAlteracao();
         IDTravadoAlteraRevista.setVisible(false);
         lblIDAlteraRevista.setVisible(false);
         LimpaCamposAlteraRevista();
@@ -59,16 +69,6 @@ public class DashBoard extends javax.swing.JFrame {
         LimpaCamposConsultaRevista();
         TravaCamposConsultaRevista();
         TravaBotoesCadRevista();
-        inicio();
-    }
-
-    private void inicio() {
-        AdicionarRevista.setVisible(true);
-        PaneArea.setVisible(false);
-        PaneEspecificacao.setVisible(false);
-        setLblColor(BotaoAdicionarRevista);
-        ResetColor(BotaoAdicionarArea);
-        ResetColor(BotaoAdicionarEspecificacao);
     }
 
     private void TravaBotoesCadRevista() {
@@ -79,11 +79,6 @@ public class DashBoard extends javax.swing.JFrame {
     private void DestravaBotoesCadRevista() {
         BotaoNovaRevista.setEnabled(true);
         BotaoNovaRevista2.setEnabled(true);
-    }
-
-    private void travs() {
-        BotaoRemoverRevistas.setEnabled(false);
-        BotaoAlterarRevistas.setEnabled(false);
     }
 
     private void limpaCamposNovaRevista() {
@@ -111,27 +106,25 @@ public class DashBoard extends javax.swing.JFrame {
         ComboBoxAreaNovaRevista.setEnabled(true);
         ComboBoxEspecificacaoNovaRevista.setEnabled(true);
     }
-//--------------------------------------------------------------------
+    //--------------------------------------------------------------------
 
-    private void TravaCamposDoPesquisarRevistasParaAlteração() {
+    private void TravaCamposDoPesquisarRevistasParaAlteracao() {
         BuscaTituloMenuRevistas.setEnabled(false);
         BuscaAreaMenuRevistas.setEnabled(false);
         BuscaEspecificacaoMenuRevistas.setEnabled(false);
     }
 
-    private void DestravaCamposDoPesquisarRevistasParaAlteração() {
+    private void DestravaCamposDoPesquisarRevistasParaAlteracao() {
         BuscaTituloMenuRevistas.setEnabled(true);
         BuscaAreaMenuRevistas.setEnabled(true);
         BuscaEspecificacaoMenuRevistas.setEnabled(true);
     }
-//---------------------------------------------------------------------
 
     private void ResetaCamposAlterarRevistas() {
         BuscaTituloMenuRevistas.setText("");
         BuscaEspecificacaoMenuRevistas.setSelectedItem(null);
         BuscaAreaMenuRevistas.setSelectedItem(null);
     }
-//---------------------------------------------------------------------
 
     private void TravaCamposAlteraRevista() {
         AlteraTituloMenuRevistas.setEnabled(false);
@@ -173,6 +166,7 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoLimpaCamposAlterarRevistas.setEnabled(true);
     }
 
+    //---------------------------------------------------------------------
     private void TravaCamposConsultaRevista() {
         ConsultaTituloMenuRevistas.setEnabled(false);
         ConsultaAreaMenuRevistas.setEnabled(false);
@@ -190,8 +184,9 @@ public class DashBoard extends javax.swing.JFrame {
         ConsultaAreaMenuRevistas.setEnabled(true);
         ConsultaEspecificacaoMenuRevistas.setEnabled(true);
     }
+    //---------------------------------------------------------------------
 
-    //ComboBox do jTabbedPane, referente a aba PaneGuiaNovaRevista
+    //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxAreaNovaRevista() {
         try {
             String SQL = "Select * from sys.Area ";
@@ -208,7 +203,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
-    //ComboBox do jTabbedPane, referente a aba PaneGuiaNovaRevista
+    //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxEspecificacaoNovaRevista() {
         try {
             String SQL = "Select * from sys.Especificação";
@@ -225,7 +220,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
-    //ComboBox do jTabbedPane(referente a aba PaneGuiaAlteraRevista) que BUSCA especificacao.
+    //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void BuscaEspecificacaoMenuRevistas() {
         try {
             String SQL = "Select * from sys.Especificação ";
@@ -243,7 +238,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
-    //ComboBox do jTabbedPane(referente a aba PaneGuiaAlteraRevista) que BUSCA area.
+    //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void BuscaAreaMenuRevistas() {
         try {
             String SQL = "Select * from sys.Area";
@@ -260,7 +255,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
-    //ComboBox do jTabbedPane(referente a aba PaneGuiaAlteraRevista) que ALTERA a area.
+    //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void AlteraAreaMenuRevistas() {
         try {
             String SQL = "Select * from sys.Area ";
@@ -277,7 +272,7 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
-    //ComboBox do jTabbedPane(referente a aba PaneGuiaAlteraRevista) que ALTERA a especificacao.
+    //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void AlteraEspecificacaoMenuRevistas() {
         try {
             String SQL = "Select * from sys.Especificação";
@@ -293,7 +288,7 @@ public class DashBoard extends javax.swing.JFrame {
             System.out.println("problema na combobox");
         }
     }
-
+    //ComboBox do PaneRevista(referente a aba PaneGuiaConsulta).
     private void ConsultaAreaMenuRevistas() {
         try {
             String SQL = "Select * from sys.Area ";
@@ -309,7 +304,7 @@ public class DashBoard extends javax.swing.JFrame {
             System.out.println("problema na combobox");
         }
     }
-
+    //ComboBox do PaneRevista(referente a aba PaneGuiaConsulta).
     private void ConsultaEspecificacaoRevistas() {
         try {
             String SQL = "Select * from sys.Especificação";
@@ -326,8 +321,8 @@ public class DashBoard extends javax.swing.JFrame {
         }
     }
 
+    //Tava do PaneRevista, referente a aba PaneGuiaAlteraRevista
     public void atualizarTabelaRevista() {
-
         Revistas rev = new Revistas();
         RevistaDAO revistasDAO = new RevistaDAO();
         try {
@@ -378,7 +373,7 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaAlterarOuRemoverRevista.updateUI();
 
     }
-
+    //Tava do PaneRevista, referente a aba PaneGuiaAlteraRevista
     public void BuscaRevistaComFiltro() {
 
         Revistas revistas = new Revistas();
@@ -424,8 +419,7 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaAlterarOuRemoverRevista.setRowHeight(25);
         TabelaAlterarOuRemoverRevista.updateUI();
     }
-
-    //------------------------------------ fim das tabelas de gerencia de revista e inicio das tabelas de consultas
+    //Tava do PaneRevista, referente a aba PaneGuiaConsulta
     public void atualizarConsultaRevista() {
 
         Revistas rev = new Revistas();
@@ -477,7 +471,7 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
-
+    //Tava do PaneRevista, referente a aba PaneGuiaConsulta
     public void ConsultaRevistaComFiltro() {
 
         Revistas revistas = new Revistas();
@@ -523,7 +517,8 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
-
+    //------------------------------------ fim das operacoes referente a revista
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -538,7 +533,7 @@ public class DashBoard extends javax.swing.JFrame {
         PaneEspecificacao = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        AdicionarRevista = new javax.swing.JPanel();
+        PaneRevista = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -608,6 +603,53 @@ public class DashBoard extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel7 = new javax.swing.JPanel();
+        PaneGuiaConsulta1 = new javax.swing.JPanel();
+        ConsultaTituloMenuRevistas1 = new javax.swing.JTextField();
+        lblTitulo6 = new javax.swing.JLabel();
+        lblOrigem8 = new javax.swing.JLabel();
+        ConsultaAreaMenuRevistas1 = new javax.swing.JComboBox<>();
+        ConsultaEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
+        lblEspecificacao6 = new javax.swing.JLabel();
+        BotaoBuscaConsultaRevista1 = new javax.swing.JButton();
+        BotaoNovaBuscaConsultaRevista1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TabelaConsultaRevista1 = new javax.swing.JTable();
+        BotaoCancelaConsultaRevista2 = new javax.swing.JButton();
+        PaneGuiaAlteraRevista1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        lblData5 = new javax.swing.JLabel();
+        BuscaTituloMenuRevistas1 = new javax.swing.JTextField();
+        lblTitulo4 = new javax.swing.JLabel();
+        BuscaEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
+        lblOrigem9 = new javax.swing.JLabel();
+        BuscaAreaMenuRevistas1 = new javax.swing.JComboBox<>();
+        lblEspecificacao7 = new javax.swing.JLabel();
+        lblIDAlteraRevista1 = new javax.swing.JLabel();
+        IDTravadoAlteraRevista1 = new javax.swing.JTextField();
+        BotaoBuscaAlterarOuRemoverRevista1 = new javax.swing.JButton();
+        BotaoAlterarRevistas1 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TabelaAlterarOuRemoverRevista1 = new javax.swing.JTable();
+        lblTitulo7 = new javax.swing.JLabel();
+        AlteraTituloMenuRevistas1 = new javax.swing.JTextField();
+        lblOrigem10 = new javax.swing.JLabel();
+        AlteraAreaMenuRevistas1 = new javax.swing.JComboBox<>();
+        AlteraEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
+        lblEspecificacao8 = new javax.swing.JLabel();
+        BotaoRemoverRevistas1 = new javax.swing.JButton();
+        lblOrigem11 = new javax.swing.JLabel();
+        AlteraOrigemMenuRevistas1 = new javax.swing.JComboBox<>();
+        BotaoResetaPesquisaAlterarOuRemoverRevista1 = new javax.swing.JButton();
+        lblEspecificacao9 = new javax.swing.JLabel();
+        AlteraQuantidadeMenuRevistas1 = new javax.swing.JTextField();
+        BotaoLimpaCamposAlterarRevistas2 = new javax.swing.JButton();
+        AlteraAnoMenuRevistas1 = new javax.swing.JTextField();
+        BotaoCancelaConsultaRevista3 = new javax.swing.JButton();
+        BotaoLimpaCamposAlterarRevistas3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -733,7 +775,7 @@ public class DashBoard extends javax.swing.JFrame {
 
         PaneMae.add(PaneEspecificacao, "card4");
 
-        AdicionarRevista.setBackground(new java.awt.Color(255, 255, 255));
+        PaneRevista.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -871,7 +913,7 @@ public class DashBoard extends javax.swing.JFrame {
 
         BotaoNovaRevista2.setBackground(new java.awt.Color(255, 255, 255));
         BotaoNovaRevista2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BotaoNovaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Clear Search_24px.png"))); // NOI18N
+        BotaoNovaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Remove Book_24px.png"))); // NOI18N
         BotaoNovaRevista2.setText("Cancelar");
         BotaoNovaRevista2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BotaoNovaRevista2.addActionListener(new java.awt.event.ActionListener() {
@@ -1306,6 +1348,7 @@ public class DashBoard extends javax.swing.JFrame {
 
         BotaoLimpaCamposAlterarRevistas.setBackground(new java.awt.Color(255, 255, 255));
         BotaoLimpaCamposAlterarRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoLimpaCamposAlterarRevistas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Broom_24px.png"))); // NOI18N
         BotaoLimpaCamposAlterarRevistas.setText("Limpar");
         BotaoLimpaCamposAlterarRevistas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BotaoLimpaCamposAlterarRevistas.addActionListener(new java.awt.event.ActionListener() {
@@ -1400,18 +1443,18 @@ public class DashBoard extends javax.swing.JFrame {
                                 .addComponent(lblOrigem2)
                                 .addComponent(AlteraAnoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(BotaoLimpaCamposAlterarRevistas1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
                                     .addComponent(lblIDAlteraRevista)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(IDTravadoAlteraRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(BotaoLimpaCamposAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(BotaoLimpaCamposAlterarRevistas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(BotaoRemoverRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(BotaoAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(3, 3, 3))
-                        .addComponent(BotaoLimpaCamposAlterarRevistas1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(3, 3, 3))))
                 .addGap(17, 17, 17))
         );
         PaneGuiaAlteraRevistaLayout.setVerticalGroup(
@@ -1502,20 +1545,20 @@ public class DashBoard extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1))
         );
 
-        javax.swing.GroupLayout AdicionarRevistaLayout = new javax.swing.GroupLayout(AdicionarRevista);
-        AdicionarRevista.setLayout(AdicionarRevistaLayout);
-        AdicionarRevistaLayout.setHorizontalGroup(
-            AdicionarRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PaneRevistaLayout = new javax.swing.GroupLayout(PaneRevista);
+        PaneRevista.setLayout(PaneRevistaLayout);
+        PaneRevistaLayout.setHorizontalGroup(
+            PaneRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        AdicionarRevistaLayout.setVerticalGroup(
-            AdicionarRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AdicionarRevistaLayout.createSequentialGroup()
+        PaneRevistaLayout.setVerticalGroup(
+            PaneRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneRevistaLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        PaneMae.add(AdicionarRevista, "card3");
+        PaneMae.add(PaneRevista, "card3");
 
         PaneArea.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1535,7 +1578,7 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1545,17 +1588,582 @@ public class DashBoard extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
+        jTabbedPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jTabbedPane2.setAutoscrolls(true);
+        jTabbedPane2.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jTabbedPane2.setDoubleBuffered(true);
+        jTabbedPane2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTabbedPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane2MouseClicked(evt);
+            }
+        });
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1082, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 681, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Cadastrar", jPanel7);
+
+        PaneGuiaConsulta1.setBackground(new java.awt.Color(255, 255, 255));
+
+        ConsultaTituloMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaTituloMenuRevistas1.setMaximumSize(new java.awt.Dimension(25, 25));
+        ConsultaTituloMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+
+        lblTitulo6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo6.setText("Titulo da revista");
+
+        lblOrigem8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblOrigem8.setText("Área");
+
+        ConsultaAreaMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaAreaMenuRevistas1.setToolTipText("Selecione");
+        ConsultaAreaMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        ConsultaAreaMenuRevistas1.setFocusable(false);
+        ConsultaAreaMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaAreaMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaAreaMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        ConsultaEspecificacaoMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaEspecificacaoMenuRevistas1.setToolTipText("Selecione");
+        ConsultaEspecificacaoMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        ConsultaEspecificacaoMenuRevistas1.setDoubleBuffered(true);
+        ConsultaEspecificacaoMenuRevistas1.setEditor(null);
+        ConsultaEspecificacaoMenuRevistas1.setFocusable(false);
+        ConsultaEspecificacaoMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaEspecificacaoMenuRevistas1.setName("Selecione"); // NOI18N
+        ConsultaEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaEspecificacaoMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        lblEspecificacao6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao6.setText("Especificação");
+
+        BotaoBuscaConsultaRevista1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoBuscaConsultaRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoBuscaConsultaRevista1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Search_24px.png"))); // NOI18N
+        BotaoBuscaConsultaRevista1.setText("Busca revista");
+        BotaoBuscaConsultaRevista1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoBuscaConsultaRevista1.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaConsultaRevista1.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaConsultaRevista1.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaConsultaRevista1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoBuscaConsultaRevista1ActionPerformed(evt);
+            }
+        });
+
+        BotaoNovaBuscaConsultaRevista1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoNovaBuscaConsultaRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoNovaBuscaConsultaRevista1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Zoom In_24px.png"))); // NOI18N
+        BotaoNovaBuscaConsultaRevista1.setText("Nova pesquisa");
+        BotaoNovaBuscaConsultaRevista1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoNovaBuscaConsultaRevista1.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoNovaBuscaConsultaRevista1.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoNovaBuscaConsultaRevista1.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoNovaBuscaConsultaRevista1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoNovaBuscaConsultaRevista1ActionPerformed(evt);
+            }
+        });
+
+        TabelaConsultaRevista1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        TabelaConsultaRevista1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        TabelaConsultaRevista1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaConsultaRevista1MouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(TabelaConsultaRevista1);
+
+        BotaoCancelaConsultaRevista2.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoCancelaConsultaRevista2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoCancelaConsultaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Clear Search_24px.png"))); // NOI18N
+        BotaoCancelaConsultaRevista2.setText("Limpa busca");
+        BotaoCancelaConsultaRevista2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoCancelaConsultaRevista2.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista2.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista2.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoCancelaConsultaRevista2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PaneGuiaConsulta1Layout = new javax.swing.GroupLayout(PaneGuiaConsulta1);
+        PaneGuiaConsulta1.setLayout(PaneGuiaConsulta1Layout);
+        PaneGuiaConsulta1Layout.setHorizontalGroup(
+            PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                        .addComponent(BotaoNovaBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotaoBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BotaoCancelaConsultaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 924, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                            .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblTitulo6)
+                                .addComponent(ConsultaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ConsultaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblEspecificacao6))
+                            .addGap(18, 18, 18)
+                            .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblOrigem8)
+                                .addComponent(ConsultaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(79, Short.MAX_VALUE))
+        );
+        PaneGuiaConsulta1Layout.setVerticalGroup(
+            PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                                .addComponent(lblEspecificacao6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ConsultaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                                .addComponent(lblOrigem8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ConsultaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaConsulta1Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(lblTitulo6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ConsultaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(53, 53, 53)
+                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotaoBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoCancelaConsultaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotaoNovaBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Consultar", PaneGuiaConsulta1);
+
+        PaneGuiaAlteraRevista1.setBackground(new java.awt.Color(255, 255, 255));
+        PaneGuiaAlteraRevista1.setToolTipText("Limpa os campos acima");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
+        jLabel7.setText("Faça as alterações na revista:");
+        jLabel7.setPreferredSize(new java.awt.Dimension(407, 41));
+
+        lblData5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblData5.setText("Ano");
+
+        BuscaTituloMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BuscaTituloMenuRevistas1.setMaximumSize(new java.awt.Dimension(25, 25));
+        BuscaTituloMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+
+        lblTitulo4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo4.setText("Titulo da revista");
+
+        BuscaEspecificacaoMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BuscaEspecificacaoMenuRevistas1.setToolTipText("Selecione");
+        BuscaEspecificacaoMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        BuscaEspecificacaoMenuRevistas1.setDoubleBuffered(true);
+        BuscaEspecificacaoMenuRevistas1.setEditor(null);
+        BuscaEspecificacaoMenuRevistas1.setFocusable(false);
+        BuscaEspecificacaoMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        BuscaEspecificacaoMenuRevistas1.setName("Selecione"); // NOI18N
+        BuscaEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscaEspecificacaoMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        lblOrigem9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblOrigem9.setText("Área");
+
+        BuscaAreaMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BuscaAreaMenuRevistas1.setToolTipText("Selecione");
+        BuscaAreaMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        BuscaAreaMenuRevistas1.setFocusable(false);
+        BuscaAreaMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        BuscaAreaMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscaAreaMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        lblEspecificacao7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao7.setText("Especificação");
+
+        lblIDAlteraRevista1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblIDAlteraRevista1.setText("ID:");
+
+        IDTravadoAlteraRevista1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        IDTravadoAlteraRevista1.setEnabled(false);
+
+        BotaoBuscaAlterarOuRemoverRevista1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoBuscaAlterarOuRemoverRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoBuscaAlterarOuRemoverRevista1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Search_24px.png"))); // NOI18N
+        BotaoBuscaAlterarOuRemoverRevista1.setText("Busca revista");
+        BotaoBuscaAlterarOuRemoverRevista1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoBuscaAlterarOuRemoverRevista1.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaAlterarOuRemoverRevista1.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaAlterarOuRemoverRevista1.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoBuscaAlterarOuRemoverRevista1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoBuscaAlterarOuRemoverRevista1ActionPerformed(evt);
+            }
+        });
+
+        BotaoAlterarRevistas1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoAlterarRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoAlterarRevistas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Save as_24px.png"))); // NOI18N
+        BotaoAlterarRevistas1.setText("Alterar");
+        BotaoAlterarRevistas1.setToolTipText("Altera a revista selecionada");
+        BotaoAlterarRevistas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoAlterarRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoAlterarRevistas1ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
+        jLabel8.setText("Escolha uma revista para alterar:");
+
+        jSeparator3.setForeground(new java.awt.Color(37, 103, 125));
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        TabelaAlterarOuRemoverRevista1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        TabelaAlterarOuRemoverRevista1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        TabelaAlterarOuRemoverRevista1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaAlterarOuRemoverRevista1MouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(TabelaAlterarOuRemoverRevista1);
+
+        lblTitulo7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo7.setText("Titulo da revista");
+
+        AlteraTituloMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraTituloMenuRevistas1.setMaximumSize(new java.awt.Dimension(25, 25));
+        AlteraTituloMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+
+        lblOrigem10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblOrigem10.setText("Especificação");
+
+        AlteraAreaMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraAreaMenuRevistas1.setToolTipText("Selecione");
+        AlteraAreaMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        AlteraAreaMenuRevistas1.setDoubleBuffered(true);
+        AlteraAreaMenuRevistas1.setEditor(null);
+        AlteraAreaMenuRevistas1.setFocusable(false);
+        AlteraAreaMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        AlteraAreaMenuRevistas1.setName("Selecione"); // NOI18N
+        AlteraAreaMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlteraAreaMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        AlteraEspecificacaoMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraEspecificacaoMenuRevistas1.setToolTipText("Selecione");
+        AlteraEspecificacaoMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        AlteraEspecificacaoMenuRevistas1.setFocusable(false);
+        AlteraEspecificacaoMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+        AlteraEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlteraEspecificacaoMenuRevistas1ActionPerformed(evt);
+            }
+        });
+
+        lblEspecificacao8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao8.setText("Área");
+
+        BotaoRemoverRevistas1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoRemoverRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoRemoverRevistas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Trash_24px.png"))); // NOI18N
+        BotaoRemoverRevistas1.setText("Remover");
+        BotaoRemoverRevistas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoRemoverRevistas1.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoRemoverRevistas1.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoRemoverRevistas1.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoRemoverRevistas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoRemoverRevistas1ActionPerformed(evt);
+            }
+        });
+
+        lblOrigem11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblOrigem11.setText("Origem");
+
+        AlteraOrigemMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraOrigemMenuRevistas1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
+        AlteraOrigemMenuRevistas1.setBorder(null);
+        AlteraOrigemMenuRevistas1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        AlteraOrigemMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        AlteraOrigemMenuRevistas1.setEditor(null);
+        AlteraOrigemMenuRevistas1.setFocusCycleRoot(true);
+        AlteraOrigemMenuRevistas1.setFocusable(false);
+        AlteraOrigemMenuRevistas1.setLightWeightPopupEnabled(false);
+        AlteraOrigemMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
+
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/Zoom In_24px.png"))); // NOI18N
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setText("Nova Busca");
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoResetaPesquisaAlterarOuRemoverRevista1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed(evt);
+            }
+        });
+
+        lblEspecificacao9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao9.setText("Quantidade");
+
+        AlteraQuantidadeMenuRevistas1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+
+        BotaoLimpaCamposAlterarRevistas2.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoLimpaCamposAlterarRevistas2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoLimpaCamposAlterarRevistas2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Broom_24px.png"))); // NOI18N
+        BotaoLimpaCamposAlterarRevistas2.setText("Limpar");
+        BotaoLimpaCamposAlterarRevistas2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoLimpaCamposAlterarRevistas2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoLimpaCamposAlterarRevistas2ActionPerformed(evt);
+            }
+        });
+
+        AlteraAnoMenuRevistas1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+
+        BotaoCancelaConsultaRevista3.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoCancelaConsultaRevista3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoCancelaConsultaRevista3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Clear Search_24px.png"))); // NOI18N
+        BotaoCancelaConsultaRevista3.setText("Limpa busca");
+        BotaoCancelaConsultaRevista3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoCancelaConsultaRevista3.setMaximumSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista3.setMinimumSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista3.setPreferredSize(new java.awt.Dimension(145, 33));
+        BotaoCancelaConsultaRevista3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoCancelaConsultaRevista3ActionPerformed(evt);
+            }
+        });
+
+        BotaoLimpaCamposAlterarRevistas3.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoLimpaCamposAlterarRevistas3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BotaoLimpaCamposAlterarRevistas3.setText("Liberar ações");
+        BotaoLimpaCamposAlterarRevistas3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoLimpaCamposAlterarRevistas3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoLimpaCamposAlterarRevistas3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PaneGuiaAlteraRevista1Layout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista1);
+        PaneGuiaAlteraRevista1.setLayout(PaneGuiaAlteraRevista1Layout);
+        PaneGuiaAlteraRevista1Layout.setHorizontalGroup(
+            PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotaoCancelaConsultaRevista3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblOrigem9)
+                                            .addComponent(BuscaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblEspecificacao7))
+                                        .addGap(66, 66, 66))
+                                    .addComponent(BuscaTituloMenuRevistas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(lblTitulo4))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(14, 14, 14)))))
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEspecificacao9)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTitulo7)
+                    .addComponent(AlteraTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AlteraQuantidadeMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblOrigem10)
+                                .addComponent(lblEspecificacao8)
+                                .addComponent(AlteraAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(AlteraEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(112, 112, 112)
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblData5)
+                                .addComponent(AlteraOrigemMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblOrigem11)
+                                .addComponent(AlteraAnoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(BotaoLimpaCamposAlterarRevistas3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                    .addComponent(lblIDAlteraRevista1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(IDTravadoAlteraRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(BotaoLimpaCamposAlterarRevistas2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BotaoRemoverRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BotaoAlterarRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(3, 3, 3))))
+                .addGap(17, 17, 17))
+        );
+        PaneGuiaAlteraRevista1Layout.setVerticalGroup(
+            PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTitulo4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BuscaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addComponent(lblOrigem9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BuscaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(lblEspecificacao7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoCancelaConsultaRevista3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTitulo7)
+                        .addGap(4, 4, 4)
+                        .addComponent(AlteraTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addComponent(lblOrigem10)
+                                .addGap(3, 3, 3)
+                                .addComponent(AlteraEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                                .addComponent(lblData5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(AlteraAnoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEspecificacao8)
+                            .addComponent(lblOrigem11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(AlteraAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AlteraOrigemMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEspecificacao9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AlteraQuantidadeMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(BotaoLimpaCamposAlterarRevistas3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotaoLimpaCamposAlterarRevistas2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoRemoverRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotaoAlterarRevistas1))
+                        .addGap(46, 46, 46)
+                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(IDTravadoAlteraRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIDAlteraRevista1))))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Gerenciar", PaneGuiaAlteraRevista1);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1089, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1089, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 728, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneAreaLayout = new javax.swing.GroupLayout(PaneArea);
@@ -1589,9 +2197,9 @@ public class DashBoard extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+//-------------------------Inicio das ações de revista ------------------------------------//
     private void BotaoAdicionarRevistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoAdicionarRevistaMouseClicked
-        AdicionarRevista.setVisible(true);
+        PaneRevista.setVisible(true);
         PaneArea.setVisible(false);
         PaneEspecificacao.setVisible(false);
         setLblColor(BotaoAdicionarRevista);
@@ -1600,7 +2208,7 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoAdicionarRevistaMouseClicked
 
     private void BotaoAdicionarAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoAdicionarAreaMouseClicked
-        AdicionarRevista.setVisible(false);
+        PaneRevista.setVisible(false);
         PaneArea.setVisible(true);
         PaneEspecificacao.setVisible(false);
         setLblColor(BotaoAdicionarArea);
@@ -1664,7 +2272,7 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistasActionPerformed
 
     private void BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed
-        DestravaCamposDoPesquisarRevistasParaAlteração();
+        DestravaCamposDoPesquisarRevistasParaAlteracao();
         TravaCamposAlteraRevista();
         TravaBotoeAlteraRevista();
         ResetaCamposAlterarRevistas();
@@ -1691,7 +2299,9 @@ public class DashBoard extends javax.swing.JFrame {
                     atualizarTabelaRevista();
                     LimpaCamposAlteraRevista();
                     TravaCamposAlteraRevista();
+                    atualizarConsultaRevista();
                     TravaBotoeAlteraRevista();
+                    ResetaCamposAlterarRevistas();
 
                     //atualizarTabelaCliente();
                 } catch (Exception e) {
@@ -1746,9 +2356,12 @@ public class DashBoard extends javax.swing.JFrame {
                     revistaDAO.AlterarRevista(rev);
                     JOptionPane.showMessageDialog(null, "Revista alterada com sucesso", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                     atualizarTabelaRevista();
+                   
                     LimpaCamposAlteraRevista();
                     TravaCamposAlteraRevista();
                     TravaBotoeAlteraRevista();
+                    atualizarConsultaRevista();
+                    ResetaCamposAlterarRevistas();
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Problema no BotaoAlterarRevistasActionPerformed, alteração da revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -1828,6 +2441,7 @@ public class DashBoard extends javax.swing.JFrame {
                 limpaCamposNovaRevista();
                 TravaCamposDoNovaRevista();
                 atualizarTabelaRevista();
+                atualizarConsultaRevista();
                 TravaBotoesCadRevista();
                 BotaoNovaRevista1.setEnabled(true);
             } catch (Exception e) {
@@ -1859,7 +2473,7 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoNovaRevista2ActionPerformed
 
     private void BotaoAdicionarEspecificacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotaoAdicionarEspecificacaoMouseClicked
-        AdicionarRevista.setVisible(false);
+        PaneRevista.setVisible(false);
         PaneArea.setVisible(false);
         PaneEspecificacao.setVisible(true);
         setLblColor(BotaoAdicionarEspecificacao);
@@ -1882,7 +2496,82 @@ public class DashBoard extends javax.swing.JFrame {
         DesravaCamposAlteraRevista();
     }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistas1ActionPerformed
 
-//-------------------------fim do codigo da tela de cadastro e inicio de outra tela codigo de outro botão ------------------------------------//
+    private void ConsultaAreaMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaAreaMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConsultaAreaMenuRevistas1ActionPerformed
+
+    private void ConsultaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaEspecificacaoMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConsultaEspecificacaoMenuRevistas1ActionPerformed
+
+    private void BotaoBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaConsultaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoBuscaConsultaRevista1ActionPerformed
+
+    private void BotaoNovaBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
+
+    private void TabelaConsultaRevista1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaConsultaRevista1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TabelaConsultaRevista1MouseClicked
+
+    private void BotaoCancelaConsultaRevista2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelaConsultaRevista2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoCancelaConsultaRevista2ActionPerformed
+
+    private void BuscaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+
+    private void BuscaAreaMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaAreaMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscaAreaMenuRevistas1ActionPerformed
+
+    private void BotaoBuscaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
+
+    private void BotaoAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAlterarRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoAlterarRevistas1ActionPerformed
+
+    private void TabelaAlterarOuRemoverRevista1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaAlterarOuRemoverRevista1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TabelaAlterarOuRemoverRevista1MouseClicked
+
+    private void AlteraAreaMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraAreaMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraAreaMenuRevistas1ActionPerformed
+
+    private void AlteraEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraEspecificacaoMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraEspecificacaoMenuRevistas1ActionPerformed
+
+    private void BotaoRemoverRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoRemoverRevistas1ActionPerformed
+
+    private void BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
+
+    private void BotaoLimpaCamposAlterarRevistas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaCamposAlterarRevistas2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistas2ActionPerformed
+
+    private void BotaoCancelaConsultaRevista3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelaConsultaRevista3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoCancelaConsultaRevista3ActionPerformed
+
+    private void BotaoLimpaCamposAlterarRevistas3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaCamposAlterarRevistas3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistas3ActionPerformed
+
+    private void jTabbedPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane2MouseClicked
+//-------------------------fim das ações de revista ------------------------------------//
     public void setLblColor(JLabel lbl) {
         lbl.setBackground(new Color(150, 150, 150));
     }
@@ -1892,48 +2581,75 @@ public class DashBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel AdicionarRevista;
     private javax.swing.JTextField AlteraAnoMenuRevistas;
+    private javax.swing.JTextField AlteraAnoMenuRevistas1;
     private javax.swing.JComboBox<String> AlteraAreaMenuRevistas;
+    private javax.swing.JComboBox<String> AlteraAreaMenuRevistas1;
     private javax.swing.JComboBox<String> AlteraEspecificacaoMenuRevistas;
+    private javax.swing.JComboBox<String> AlteraEspecificacaoMenuRevistas1;
     private javax.swing.JComboBox<String> AlteraOrigemMenuRevistas;
+    private javax.swing.JComboBox<String> AlteraOrigemMenuRevistas1;
     private javax.swing.JTextField AlteraQuantidadeMenuRevistas;
+    private javax.swing.JTextField AlteraQuantidadeMenuRevistas1;
     private javax.swing.JTextField AlteraTituloMenuRevistas;
+    private javax.swing.JTextField AlteraTituloMenuRevistas1;
     private javax.swing.JLabel BotaoAdicionarArea;
     private javax.swing.JLabel BotaoAdicionarEspecificacao;
     private javax.swing.JLabel BotaoAdicionarRevista;
     private javax.swing.JButton BotaoAlterarRevistas;
+    private javax.swing.JButton BotaoAlterarRevistas1;
     private javax.swing.JButton BotaoBuscaAlterarOuRemoverRevista;
+    private javax.swing.JButton BotaoBuscaAlterarOuRemoverRevista1;
     private javax.swing.JButton BotaoBuscaConsultaRevista;
+    private javax.swing.JButton BotaoBuscaConsultaRevista1;
     private javax.swing.JButton BotaoCancelaConsultaRevista;
     private javax.swing.JButton BotaoCancelaConsultaRevista1;
+    private javax.swing.JButton BotaoCancelaConsultaRevista2;
+    private javax.swing.JButton BotaoCancelaConsultaRevista3;
     private javax.swing.JButton BotaoLimpaCamposAlterarRevistas;
     private javax.swing.JButton BotaoLimpaCamposAlterarRevistas1;
+    private javax.swing.JButton BotaoLimpaCamposAlterarRevistas2;
+    private javax.swing.JButton BotaoLimpaCamposAlterarRevistas3;
     private javax.swing.JButton BotaoNovaBuscaConsultaRevista;
+    private javax.swing.JButton BotaoNovaBuscaConsultaRevista1;
     private javax.swing.JButton BotaoNovaRevista;
     private javax.swing.JButton BotaoNovaRevista1;
     private javax.swing.JButton BotaoNovaRevista2;
     private javax.swing.JButton BotaoRemoverRevistas;
+    private javax.swing.JButton BotaoRemoverRevistas1;
     private javax.swing.JButton BotaoResetaPesquisaAlterarOuRemoverRevista;
+    private javax.swing.JButton BotaoResetaPesquisaAlterarOuRemoverRevista1;
     private javax.swing.JComboBox<String> BuscaAreaMenuRevistas;
+    private javax.swing.JComboBox<String> BuscaAreaMenuRevistas1;
     private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas;
+    private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas1;
     private javax.swing.JTextField BuscaTituloMenuRevistas;
+    private javax.swing.JTextField BuscaTituloMenuRevistas1;
     private javax.swing.JComboBox<String> ComboBoxAreaNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxEspecificacaoNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxOrigem;
     private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas;
+    private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas1;
     private javax.swing.JComboBox<String> ConsultaEspecificacaoMenuRevistas;
+    private javax.swing.JComboBox<String> ConsultaEspecificacaoMenuRevistas1;
     private javax.swing.JTextField ConsultaTituloMenuRevistas;
+    private javax.swing.JTextField ConsultaTituloMenuRevistas1;
     private javax.swing.JTextField IDTravadoAlteraRevista;
+    private javax.swing.JTextField IDTravadoAlteraRevista1;
     private javax.swing.JPanel PaneArea;
     private javax.swing.JPanel PaneEspecificacao;
     private javax.swing.JPanel PaneGuiaAlteraRevista;
+    private javax.swing.JPanel PaneGuiaAlteraRevista1;
     private javax.swing.JPanel PaneGuiaConsulta;
+    private javax.swing.JPanel PaneGuiaConsulta1;
     private javax.swing.JPanel PaneGuiaNovaRevista;
     private javax.swing.JPanel PaneMae;
+    private javax.swing.JPanel PaneRevista;
     private javax.swing.JPanel SideBoard;
     private javax.swing.JTable TabelaAlterarOuRemoverRevista;
+    private javax.swing.JTable TabelaAlterarOuRemoverRevista1;
     private javax.swing.JTable TabelaConsultaRevista;
+    private javax.swing.JTable TabelaConsultaRevista1;
     private javax.swing.JTextField campoData;
     private javax.swing.JTextField campoQuantidade;
     private javax.swing.JTextField campoTitulo;
@@ -1942,36 +2658,56 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblData1;
     private javax.swing.JLabel lblData2;
+    private javax.swing.JLabel lblData5;
     private javax.swing.JLabel lblEspecificacao;
     private javax.swing.JLabel lblEspecificacao2;
     private javax.swing.JLabel lblEspecificacao3;
     private javax.swing.JLabel lblEspecificacao4;
     private javax.swing.JLabel lblEspecificacao5;
+    private javax.swing.JLabel lblEspecificacao6;
+    private javax.swing.JLabel lblEspecificacao7;
+    private javax.swing.JLabel lblEspecificacao8;
+    private javax.swing.JLabel lblEspecificacao9;
     private javax.swing.JLabel lblIDAlteraRevista;
+    private javax.swing.JLabel lblIDAlteraRevista1;
     private javax.swing.JLabel lblOrigem;
     private javax.swing.JLabel lblOrigem1;
+    private javax.swing.JLabel lblOrigem10;
+    private javax.swing.JLabel lblOrigem11;
     private javax.swing.JLabel lblOrigem2;
     private javax.swing.JLabel lblOrigem4;
     private javax.swing.JLabel lblOrigem5;
     private javax.swing.JLabel lblOrigem6;
+    private javax.swing.JLabel lblOrigem8;
+    private javax.swing.JLabel lblOrigem9;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JLabel lblTitulo3;
+    private javax.swing.JLabel lblTitulo4;
     private javax.swing.JLabel lblTitulo5;
+    private javax.swing.JLabel lblTitulo6;
+    private javax.swing.JLabel lblTitulo7;
     // End of variables declaration//GEN-END:variables
 
 }
