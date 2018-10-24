@@ -20,7 +20,7 @@ public class EspecificacaoDAO {
         System.out.println("entrou aqui inserir da especificacao");
 	PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-	stmt.setInt(1, especificacao.getIdEspecificacao());
+	stmt.setInt(1, especificacao.getId());
 	stmt.setString(2, especificacao.getNome());
         
         stmt.execute();
