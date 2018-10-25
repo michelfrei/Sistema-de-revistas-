@@ -13,6 +13,10 @@ public class Area {
         this.id = id;
         this.nome = nome;
     }
+    
+    public Area(){
+        
+    }
 
     public int getId() {
         return id;

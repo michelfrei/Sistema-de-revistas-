@@ -14,7 +14,7 @@ public class EspecificacaoDAO {
 
     public boolean InserirEspecificacao(Especificacao especificacao) {
 		
-	String SQL = "INSERT INTO sys.Especificação (idEspecificação, Nome) values (?, ?)"; 
+	String SQL = "INSERT INTO sys.Especificação (id, Nome) values (?, ?)"; 
 
         try {
         System.out.println("entrou aqui inserir da especificacao");

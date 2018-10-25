@@ -13,6 +13,10 @@ public class Especificacao {
         this.id = id;
         this.nome = nome; 
     }
+    
+    public Especificacao(){
+        
+    }
 
     public int getId() {
         return id;

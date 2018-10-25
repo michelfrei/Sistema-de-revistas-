@@ -72,7 +72,7 @@ public class AreaDAO {
         List<Area> ListaArea;
         ListaArea = new ArrayList<>();
 
-        String SQL = "select* from sys.Area order by id DESC";
+        String SQL = "select* from sys.Area";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -93,24 +93,11 @@ public class AreaDAO {
     public List<Area> ListaBuscaArea(Area area) throws SQLException {
         List<Area> retorno = new ArrayList<Area>();
 
-        String SQL = "select * from sys.Area ";
-
-        /*if (area.getTitulo() != null && area.getEspecificacao() == null && area.getArea() == null) {
-            SQL += " where Titulo like ? order by id DESC";
-        } else if (area.getArea() != null && area.getTitulo() == null && area.getEspecificacao() == null) {
-            SQL += " where Area like ? order by id DESC";
-        } else if (area.getArea() == null && area.getTitulo() == null && area.getEspecificacao() != null) {
-            SQL += " where Especificacao like ? order by id DESC";
-        }*/
+        String SQL = "select * from sys.Area where Nome like ?";
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-        /*if (area.getTitulo() != null && area.getEspecificacao() == null && area.getArea() == null) {
-            stmt.setString(1, "%" + area.getTitulo() + "%");
-        } else if (area.getArea() != null && area.getTitulo() == null && area.getEspecificacao() == null) {
-            stmt.setString(1, "%" + area.getArea() + "%");
-        } else if (area.getArea() == null && area.getTitulo() == null && area.getEspecificacao() != null) {
-            stmt.setString(1, "%" + area.getEspecificacao() + "%");
-        }*/
+               
+        stmt.setString(1, "%" + area.getNome() + "%");
+        
         try {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
