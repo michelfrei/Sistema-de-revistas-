@@ -33,8 +33,8 @@ public class EspecificacaoDAO {
         }
         return false;
     }
-    
-            public boolean RemoverEspecificacao(Especificacao especificacao) throws SQLException {
+
+    public boolean RemoverEspecificacao(Especificacao especificacao) throws SQLException {
         String SQL = "Delete from sys.Especificação where id=?";
 
         try {
@@ -94,27 +94,48 @@ public class EspecificacaoDAO {
     public List<Especificacao> ListaBuscaEspecificacao(Especificacao especificacao) throws SQLException {
         List<Especificacao> retorno = new ArrayList<Especificacao>();
 
-        String SQL = "select * from sys.Especificação where Nome like ?";
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        if (especificacao.getNome() == null) {
+            String SQL = "select * from sys.Especificação";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-        stmt.setString(1, "%" + especificacao.getNome() + "%");
+            try {
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
 
-        try {
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
+                    retorno.add(new Especificacao(rs.getInt("id"),
+                            rs.getString("Nome")));
+                }
+            } catch (Exception e) {
+                System.out.println("Problema tal:");
+                System.out.println(e.getMessage());
+                stmt.close();
+                Conexao.getConexaoMySQL().close();
 
-                retorno.add(new Especificacao(rs.getInt("id"),
-                        rs.getString("Nome")));
+                return retorno;
             }
-        } catch (Exception e) {
-            System.out.println("Problema tal:");
-            System.out.println(e.getMessage());
+        } else {
+            String SQL = "select * from sys.Especificação where Nome like ?";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            stmt.setString(1, "%" + especificacao.getNome() + "%");
+
+            try {
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+
+                    retorno.add(new Especificacao(rs.getInt("id"),
+                            rs.getString("Nome")));
+                }
+            } catch (Exception e) {
+                System.out.println("Problema tal:");
+                System.out.println(e.getMessage());
+            }
+
+            stmt.close();
+            Conexao.getConexaoMySQL().close();
+
+            return retorno;
         }
-
-        stmt.close();
-        Conexao.getConexaoMySQL().close();
-
-        return retorno;
+        return null;
     }
-
 }
