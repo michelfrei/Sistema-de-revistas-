@@ -57,7 +57,7 @@ public class RevistaDAO {
         return true;
     }
 
-    public boolean AlterarRevista(Revistas rev) throws SQLException {// não ta funcionando
+    public boolean AlterarRevista(Revistas rev) throws SQLException {
         String SQL = SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=?, Quantidade=? where id = ?";
 
         try {

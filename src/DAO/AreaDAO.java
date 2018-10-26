@@ -49,8 +49,8 @@ public class AreaDAO {
         return true;
     }
 
-    public boolean AlterarArea(Area area) throws SQLException {// não ta funcionando
-        String SQL = SQL = "update sys.Area set Nome=? where id = ?";
+    public boolean AlterarArea(Area area) throws SQLException {
+        String SQL = "update sys.Area set Nome=? where id = ?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);

@@ -22,7 +22,7 @@ public class Area {
         return id;
     }
 
-    public void setIdClasse(int id) {
+    public void setId(int id) {
         this.id = id;
     }
     
