@@ -9,7 +9,7 @@ import java.sql.SQLException;
  *
  * @author Michel
  */
-public class Conexao {
+/*public class Conexao {
 
 public static String status = "Não conectou...";
       public Conexao() {
@@ -67,9 +67,9 @@ public static java.sql.Connection ReiniciarConexao() {
       FecharConexao();
       return Conexao.getConexaoMySQL();
   }
-}
+}*/
 
-/*public class Conexao{ 
+public class Conexao{ 
 
 public static String status = "Não conectou...";
       public Conexao() {
@@ -121,4 +121,4 @@ public static java.sql.Connection ReiniciarConexao() {
       FecharConexao();
       return Conexao.getConexaoMySQL();
   }
-} */
+} 

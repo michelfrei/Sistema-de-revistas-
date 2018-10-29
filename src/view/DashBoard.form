@@ -460,7 +460,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -500,7 +500,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -735,7 +735,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="-1"/>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -754,7 +754,7 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -927,7 +927,7 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Limpa os campos acima"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -1165,7 +1165,7 @@
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="14" style="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -1200,7 +1200,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="-1"/>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1279,7 +1279,7 @@
                               <Image iconType="3" name="/view/img/EntradaRevista/Save as_24px.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Alterar"/>
-                            <Property name="toolTipText" type="java.lang.String" value="Altera a revista selecionada"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                               <Color id="Cursor Padr&#xe3;o"/>
                             </Property>
@@ -1393,7 +1393,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -1420,7 +1420,7 @@
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1970,7 +1970,7 @@
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="BotaoConsultaArea" min="-2" pref="200" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="BotaoCancelaConsultaRevista2" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="BotaoLimpaConsulta" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jScrollPane3" alignment="1" min="-2" pref="924" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
@@ -2013,7 +2013,7 @@
                                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="BotaoConsultaArea" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="BotaoCancelaConsultaRevista2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="BotaoLimpaConsulta" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="BotaoNovaConsultaArea" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -2056,7 +2056,7 @@
                                 <StringItem index="1" value="Especifica&#xe7;&#xe3;o"/>
                               </StringArray>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Selecione"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="debugGraphicsOptions" type="int" value="4"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">
@@ -2175,7 +2175,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JButton" name="BotaoCancelaConsultaRevista2">
+                        <Component class="javax.swing.JButton" name="BotaoLimpaConsulta">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2201,7 +2201,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoCancelaConsultaRevista2ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaConsultaActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -2211,7 +2211,7 @@
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="toolTipText" type="java.lang.String" value="Limpa os campos acima"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -2242,7 +2242,7 @@
                                                   <EmptySpace pref="106" max="32767" attributes="0"/>
                                                   <Component id="BotaoBuscaAlterarOuRemoverArea" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="BotaoCancelaConsultaArea" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoLimpaAlterarOuRemoverArea" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -2261,7 +2261,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <Component id="lblIDAlteraRevista1" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblIDAlteraArea" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="AlteraIDMenuArea" min="-2" pref="40" max="-2" attributes="0"/>
                                               </Group>
@@ -2296,7 +2296,7 @@
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="BotaoBuscaAlterarOuRemoverArea" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="BotaoResetaPesquisaAlterarOuRemoverArea" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="BotaoCancelaConsultaArea" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="BotaoLimpaAlterarOuRemoverArea" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                           <Component id="jScrollPane4" min="-2" pref="463" max="-2" attributes="0"/>
@@ -2318,7 +2318,7 @@
                                           <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="AlteraIDMenuArea" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                              <Component id="lblIDAlteraRevista1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="lblIDAlteraArea" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -2360,7 +2360,7 @@
                             <Property name="text" type="java.lang.String" value="Titulo da Area"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="lblIDAlteraRevista1">
+                        <Component class="javax.swing.JLabel" name="lblIDAlteraArea">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Segoe UI" size="18" style="0"/>
@@ -2417,7 +2417,7 @@
                               <Image iconType="3" name="/view/img/EntradaRevista/Save as_24px.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Alterar"/>
-                            <Property name="toolTipText" type="java.lang.String" value="Altera a revista selecionada"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                               <Color id="Cursor Padr&#xe3;o"/>
                             </Property>
@@ -2593,7 +2593,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaCamposAlterarAreaActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="BotaoCancelaConsultaArea">
+                        <Component class="javax.swing.JButton" name="BotaoLimpaAlterarOuRemoverArea">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2619,7 +2619,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoCancelaConsultaAreaActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaAlterarOuRemoverAreaActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="BotaoLiberaCamposAlterarArea">
@@ -2682,7 +2682,7 @@
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" value="Limpa os campos acima"/>
+                            <Property name="toolTipText" type="java.lang.String" value=""/>
                           </Properties>
 
                           <Layout>
@@ -2693,7 +2693,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="BuscaTituloMenueEspecificacao" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="BuscaTituloMenuEspecificacao" alignment="0" max="32767" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -2702,11 +2702,11 @@
                                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista2" min="-2" pref="154" max="-2" attributes="0"/>
+                                                      <Component id="BotaoResetaPesquisaAlterarOuRemoverEsp" min="-2" pref="154" max="-2" attributes="0"/>
                                                       <EmptySpace pref="106" max="32767" attributes="0"/>
-                                                      <Component id="BotaoBuscaAlterarOuRemoverRevista2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="BotaoBuscaAlterarOuRemoverEsp" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="BotaoCancelaConsultaRevista4" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="BotaoLimpaAlterarOuRemoverEsp" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -2725,19 +2725,19 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="1" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="lblIDAlteraRevista2" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="lblIDAlteraEsp" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="AlteraIDMenuEspecificacao" min="-2" pref="40" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="BotaoLimpaCamposAlterarRevistas5" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="BotaoLimpaCamposAlterarRevistas4" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
+                                                      <Component id="BotaoLiberarAcoesEsp" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="BotaoLimpaCamposAlterarEsp" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="BotaoRemoverRevistas2" min="-2" pref="148" max="-2" attributes="0"/>
+                                              <Component id="BotaoRemoverEsp" min="-2" pref="148" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="BotaoAlterarRevistas2" min="-2" pref="148" max="-2" attributes="0"/>
+                                              <Component id="BotaoAlterarEsp" min="-2" pref="148" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
@@ -2755,12 +2755,12 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="lblTitulo8" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="BuscaTituloMenueEspecificacao" min="-2" max="-2" attributes="0"/>
+                                              <Component id="BuscaTituloMenuEspecificacao" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="BotaoBuscaAlterarOuRemoverRevista2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="BotaoResetaPesquisaAlterarOuRemoverRevista2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="BotaoCancelaConsultaRevista4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoBuscaAlterarOuRemoverEsp" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoResetaPesquisaAlterarOuRemoverEsp" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoLimpaAlterarOuRemoverEsp" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                               <Component id="jScrollPane5" min="-2" pref="463" max="-2" attributes="0"/>
@@ -2772,17 +2772,17 @@
                                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                                               <Component id="AlteraNomeMenuEspecificacao" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                              <Component id="BotaoLimpaCamposAlterarRevistas5" min="-2" pref="33" max="-2" attributes="0"/>
+                                              <Component id="BotaoLiberarAcoesEsp" min="-2" pref="33" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="3" attributes="0">
-                                                  <Component id="BotaoLimpaCamposAlterarRevistas4" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                                                  <Component id="BotaoRemoverRevistas2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="BotaoAlterarRevistas2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoLimpaCamposAlterarEsp" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                                                  <Component id="BotaoRemoverEsp" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="BotaoAlterarEsp" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="3" attributes="0">
                                                   <Component id="AlteraIDMenuEspecificacao" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                                                  <Component id="lblIDAlteraRevista2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="lblIDAlteraEsp" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -2803,7 +2803,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JTextField" name="BuscaTituloMenueEspecificacao">
+                            <Component class="javax.swing.JTextField" name="BuscaTituloMenuEspecificacao">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="14" style="0"/>
@@ -2824,7 +2824,7 @@
                                 <Property name="text" type="java.lang.String" value="Titulo da Especifica&#xe7;&#xe3;o"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="lblIDAlteraRevista2">
+                            <Component class="javax.swing.JLabel" name="lblIDAlteraEsp">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Segoe UI" size="18" style="0"/>
@@ -2840,7 +2840,7 @@
                                 <Property name="enabled" type="boolean" value="false"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoBuscaAlterarOuRemoverRevista2">
+                            <Component class="javax.swing.JButton" name="BotaoBuscaAlterarOuRemoverEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2866,10 +2866,10 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoBuscaAlterarOuRemoverRevista2ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoBuscaAlterarOuRemoverEspActionPerformed"/>
                               </Events>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoAlterarRevistas2">
+                            <Component class="javax.swing.JButton" name="BotaoAlterarEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2881,13 +2881,13 @@
                                   <Image iconType="3" name="/view/img/EntradaRevista/Save as_24px.png"/>
                                 </Property>
                                 <Property name="text" type="java.lang.String" value="Alterar"/>
-                                <Property name="toolTipText" type="java.lang.String" value="Altera a revista selecionada"/>
+                                <Property name="toolTipText" type="java.lang.String" value=""/>
                                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                                   <Color id="Cursor Padr&#xe3;o"/>
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAlterarRevistas2ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoAlterarEspActionPerformed"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="jLabel10">
@@ -2979,7 +2979,7 @@
                                 </Property>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoRemoverRevistas2">
+                            <Component class="javax.swing.JButton" name="BotaoRemoverEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3005,10 +3005,10 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoRemoverRevistas2ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoRemoverEspActionPerformed"/>
                               </Events>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoResetaPesquisaAlterarOuRemoverRevista2">
+                            <Component class="javax.swing.JButton" name="BotaoResetaPesquisaAlterarOuRemoverEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3034,10 +3034,10 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoResetaPesquisaAlterarOuRemoverRevista2ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoResetaPesquisaAlterarOuRemoverEspActionPerformed"/>
                               </Events>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoLimpaCamposAlterarRevistas4">
+                            <Component class="javax.swing.JButton" name="BotaoLimpaCamposAlterarEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3054,10 +3054,10 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaCamposAlterarRevistas4ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaCamposAlterarEspActionPerformed"/>
                               </Events>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoCancelaConsultaRevista4">
+                            <Component class="javax.swing.JButton" name="BotaoLimpaAlterarOuRemoverEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3083,10 +3083,10 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoCancelaConsultaRevista4ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaAlterarOuRemoverEspActionPerformed"/>
                               </Events>
                             </Component>
-                            <Component class="javax.swing.JButton" name="BotaoLimpaCamposAlterarRevistas5">
+                            <Component class="javax.swing.JButton" name="BotaoLiberarAcoesEsp">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3100,7 +3100,7 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLimpaCamposAlterarRevistas5ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoLiberarAcoesEspActionPerformed"/>
                               </Events>
                             </Component>
                           </SubComponents>

@@ -85,7 +85,7 @@ public class RevistaDAO {
         List<Revistas> ListaRevista;
         ListaRevista = new ArrayList<>();
 
-        String SQL = "select* from sys.revista order by id DESC";
+        String SQL = "select* from sys.revista order by id ASC";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -115,19 +115,19 @@ public class RevistaDAO {
         String SQL = "select * from sys.revista ";
 
         if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null) {
-            SQL += " where Titulo like ? order by id DESC";
+            SQL += " where Titulo like ? order by id ASC";
         } else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null) {
-            SQL += " where Area like ? order by id DESC";
+            SQL += " where Area like ? order by id ASC";
         } else if (rev.getArea() == null && rev.getTitulo() == null && rev.getEspecificacao() != null) {
-            SQL += " where Especificacao like ? order by id DESC";
+            SQL += " where Especificacao like ? order by id ASC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? order by id DESC";
+            SQL += " where Titulo like ? and Area like ? order by id ASC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null) {
-            SQL += " where Titulo like ? and Especificacao like ? order by id DESC";
+            SQL += " where Titulo like ? and Especificacao like ? order by id ASC";
         } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? and Especificacao like ? order by id DESC";
+            SQL += " where Titulo like ? and Area like ? and Especificacao like ? order by id ASC";
         } else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Area like ? and Especificacao like ? order by id DESC";
+            SQL += " where Area like ? and Especificacao like ? order by id ASC";
         }
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
