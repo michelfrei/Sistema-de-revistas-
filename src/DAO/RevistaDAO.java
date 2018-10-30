@@ -18,7 +18,7 @@ import model.Revistas;
 public class RevistaDAO {
 
     public boolean InserirNovaRevistas(Revistas rev) {
-        String SQL = "INSERT INTO sys.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Area) values (?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO revista.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Area) values (?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -42,7 +42,7 @@ public class RevistaDAO {
     }
 
     public boolean RemoverRevista(Revistas rev) throws SQLException {
-        String SQL = "Delete from sys.revista where id=?";
+        String SQL = "Delete from revista.revista where id=?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -58,7 +58,7 @@ public class RevistaDAO {
     }
 
     public boolean AlterarRevista(Revistas rev) throws SQLException {
-        String SQL = SQL = "update sys.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=?, Quantidade=? where id = ?";
+        String SQL = SQL = "update revista.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=?, Quantidade=? where id = ?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -85,7 +85,7 @@ public class RevistaDAO {
         List<Revistas> ListaRevista;
         ListaRevista = new ArrayList<>();
 
-        String SQL = "select* from sys.revista order by id ASC";
+        String SQL = "select* from revista.revista order by id ASC";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -112,7 +112,7 @@ public class RevistaDAO {
     public List<Revistas> ListaBuscaRevista(Revistas rev) throws SQLException {
         List<Revistas> retorno = new ArrayList<Revistas>();
 
-        String SQL = "select * from sys.revista ";
+        String SQL = "select * from revista.revista ";
 
         if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null) {
             SQL += " where Titulo like ? order by id ASC";
@@ -165,7 +165,6 @@ public class RevistaDAO {
                         rs.getString("Area")));
         }
         }catch(Exception e){
-            System.out.println("Problema tal:");
             System.out.println(e.getMessage());
         }
 

@@ -15,10 +15,9 @@ public class EspecificacaoDAO {
 
     public boolean InserirEspecificacao(Especificacao especificacao) {
 
-        String SQL = "INSERT INTO sys.Especificação (id, Nome) values (?, ?)";
+        String SQL = "INSERT INTO revista.Especificação (id, Nome) values (?, ?)";
 
         try {
-            System.out.println("entrou aqui inserir da especificacao");
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             stmt.setInt(1, especificacao.getId());
@@ -28,14 +27,14 @@ public class EspecificacaoDAO {
             stmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Azedou especificacao");
+            System.out.println(ex.getMessage());
             return false;
         }
         return false;
     }
 
     public boolean RemoverEspecificacao(Especificacao especificacao) throws SQLException {
-        String SQL = "Delete from sys.Especificação where id=?";
+        String SQL = "Delete from revista.Especificação where id=?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -51,7 +50,7 @@ public class EspecificacaoDAO {
     }
 
     public boolean AlterarEspecificacao(Especificacao especificacao) throws SQLException {
-        String SQL = "update sys.Especificação set Nome=? where id = ?";
+        String SQL = "update revista.Especificação set Nome=? where id = ?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -73,7 +72,7 @@ public class EspecificacaoDAO {
         List<Especificacao> ListaEspecificacao;
         ListaEspecificacao = new ArrayList<>();
 
-        String SQL = "select* from sys.Especificação";
+        String SQL = "select* from revista.Especificação";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -85,7 +84,6 @@ public class EspecificacaoDAO {
 
             }
         } catch (Exception e) {
-            System.out.println("Problema tal:");
             System.out.println(e.getMessage());
         }
         return ListaEspecificacao;
@@ -95,7 +93,7 @@ public class EspecificacaoDAO {
         List<Especificacao> retorno = new ArrayList<Especificacao>();
 
         if (especificacao.getNome() == null) {
-            String SQL = "select * from sys.Especificação";
+            String SQL = "select * from revista.Especificação";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             try {
@@ -106,7 +104,6 @@ public class EspecificacaoDAO {
                             rs.getString("Nome")));
                 }
             } catch (Exception e) {
-                System.out.println("Problema tal:");
                 System.out.println(e.getMessage());
                 stmt.close();
                 Conexao.getConexaoMySQL().close();
@@ -114,7 +111,7 @@ public class EspecificacaoDAO {
                 return retorno;
             }
         } else {
-            String SQL = "select * from sys.Especificação where Nome like ?";
+            String SQL = "select * from revista.Especificação where Nome like ?";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             stmt.setString(1, "%" + especificacao.getNome() + "%");
@@ -127,7 +124,6 @@ public class EspecificacaoDAO {
                             rs.getString("Nome")));
                 }
             } catch (Exception e) {
-                System.out.println("Problema tal:");
                 System.out.println(e.getMessage());
             }
 

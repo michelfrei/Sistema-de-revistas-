@@ -8,10 +8,8 @@ package view;
 import DAO.Conexao;
 import DAO.*;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import model.*;
 import java.sql.*;
 import java.util.List;
@@ -324,17 +322,29 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoAlterarArea.setEnabled(false);
     }
 
-    //---------------------------------------------------------------------
+    //----------------Limpa todas combobox da tela de cadastro de revista-----------------
+    public void LimpaCombos() {
+        ComboBoxAreaNovaRevista.setSelectedItem(null);
+        ComboBoxEspecificacaoNovaRevista.setSelectedItem(null);
+        BuscaEspecificacaoMenuRevistas.setSelectedItem(null);
+        BuscaAreaMenuRevistas.setSelectedItem(null);
+        AlteraAreaMenuRevistas.setSelectedItem(null);
+        AlteraEspecificacaoMenuRevistas.setSelectedItem(null);
+        ConsultaAreaMenuRevistas.setSelectedItem(null);
+        ConsultaEspecificacaoMenuRevistas.setSelectedItem(null);
+    }
+
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxAreaNovaRevista() { //ok
         try {
-            String SQL = "Select * from sys.Area ";
+            String SQL = "Select * from revista.Area order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
             while (rs.next()) {
                 String Nome = rs.getString("Nome");
                 ComboBoxAreaNovaRevista.addItem(Nome);
+
             }
 
         } catch (Exception e) {
@@ -345,7 +355,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxEspecificacaoNovaRevista() {//ok
         try {
-            String SQL = "Select * from sys.Especificação";
+            String SQL = "Select * from revista.Especificação order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -362,7 +372,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void BuscaEspecificacaoMenuRevistas() {//ok
         try {
-            String SQL = "Select * from sys.Especificação ";
+            String SQL = "Select * from revista.Especificação order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -380,7 +390,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void BuscaAreaMenuRevistas() { //ok
         try {
-            String SQL = "Select * from sys.Area";
+            String SQL = "Select * from revista.Area order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -397,7 +407,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void AlteraAreaMenuRevistas() { //ok
         try {
-            String SQL = "Select * from sys.Area ";
+            String SQL = "Select * from revista.Area order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -414,7 +424,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void AlteraEspecificacaoMenuRevistas() {//ok
         try {
-            String SQL = "Select * from sys.Especificação";
+            String SQL = "Select * from revista.Especificação order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -431,7 +441,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaConsulta).
     private void ConsultaAreaMenuRevistas() {//ok
         try {
-            String SQL = "Select * from sys.Area ";
+            String SQL = "Select * from revista.Area order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -448,7 +458,7 @@ public class DashBoard extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaConsulta).
     private void ConsultaEspecificacaoRevistas() {//ok
         try {
-            String SQL = "Select * from sys.Especificação";
+            String SQL = "Select * from revista.Especificação order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -868,32 +878,6 @@ public class DashBoard extends javax.swing.JFrame {
 
         TabelaConsultaRevista1.setRowHeight(25);
         TabelaConsultaRevista1.updateUI();
-        /*Especificacao especificacao = new Especificacao();
-        String dados[][] = new String[ListaBuscaEspecificacao.size()][1];
-        int i = 0;
-        for (Especificacao esp : ListaBuscaEspecificacao) {
-            dados[i][1] = esp.getNome();
-
-            i++;
-        }
-        String tituloColuna[] = {"Nome"};
-        DefaultTableModel tabelaCliente = new DefaultTableModel();
-        tabelaCliente.setDataVector(dados, tituloColuna);
-        TabelaConsultaRevista1.setModel(new DefaultTableModel(dados, tituloColuna) {
-            boolean[] canEdit = new boolean[]{
-                false};
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
-
-        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
-        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
-        TabelaConsultaRevista1.getColumnModel().getColumn(0).setCellRenderer(centralizado);
-
-        TabelaConsultaRevista1.setRowHeight(25);
-        TabelaConsultaRevista1.updateUI();*/
     }
 
     //------------------------------------------------------------------------------------
@@ -1052,7 +1036,7 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoAdicionarArea.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
         BotaoAdicionarArea.setForeground(new java.awt.Color(255, 255, 255));
         BotaoAdicionarArea.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        BotaoAdicionarArea.setText("Áreas");
+        BotaoAdicionarArea.setText("Tipo");
         BotaoAdicionarArea.setMaximumSize(new java.awt.Dimension(139, 25));
         BotaoAdicionarArea.setMinimumSize(new java.awt.Dimension(139, 25));
         BotaoAdicionarArea.setOpaque(true);
@@ -2741,15 +2725,13 @@ public class DashBoard extends javax.swing.JFrame {
             if (ConsultaAreaMenuRevistas.getSelectedItem() != null) {
                 rev.setArea((String) ConsultaAreaMenuRevistas.getSelectedItem());
             }
-
-            //System.out.println(BuscaAreaMenuRevistas.getSelectedItem());
             ListaBuscaRevista = revistaDAO.ListaBuscaRevista(rev);
 
             ConsultaRevistaComFiltro();
-            //TravaCamposConsultaRevista();
         } catch (Exception E) {
             System.out.println(E.getMessage());
             JOptionPane.showMessageDialog(null, "Problema no BotaoBuscaConsultaRevista do DashBoard, consulta de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(E.getMessage());
         }
     }//GEN-LAST:event_BotaoBuscaConsultaRevistaActionPerformed
 
@@ -2799,9 +2781,9 @@ public class DashBoard extends javax.swing.JFrame {
                     atualizarConsultaRevista();
                     TravaBotoeAlteraRevista();
                     ResetaCamposAlterarRevistas();
-                    //atualizarTabelaCliente();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Problema no BotaoRemoverRevistas1ActionPerformed, remoção de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Problema no BotaoRemoverRevistas, remoção de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -2860,7 +2842,8 @@ public class DashBoard extends javax.swing.JFrame {
                     ResetaCamposAlterarRevistas();
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Problema no BotaoAlterarRevistasActionPerformed, alteração da revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Problema no BotaoAlterarRevistas, alteração da revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(e.getMessage());
             }
         }
     }//GEN-LAST:event_BotaoAlterarRevistasActionPerformed
@@ -2943,6 +2926,7 @@ public class DashBoard extends javax.swing.JFrame {
                 atualizarConsultaRevista();
                 TravaBotoesCadRevista();
                 BotaoAdicionarNovaRevista.setEnabled(true);
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Problema no BotaoNovaRevistaActionPerformed do DashBoard, criação de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(e.getMessage());
@@ -2973,7 +2957,6 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoLimpaConsultaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevistaActionPerformed
         LimpaCamposConsultaRevista();
-        //TravaCamposConsultaRevista();
     }//GEN-LAST:event_BotaoLimpaConsultaRevistaActionPerformed
 
     private void BotaoLimpaBuscaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaBuscaRevistaActionPerformed
@@ -3004,13 +2987,11 @@ public class DashBoard extends javax.swing.JFrame {
             try {
 
                 area.setNome(ConsultaNomeMenuTipo.getText());
-
                 ListaBuscaArea = areaDAO.ListaBuscaArea(area);
 
                 ConsultaAreaEspecificacaoAlterar();
             } catch (Exception E) {
                 System.out.println(E.getMessage());
-
             }
         } else if (ConsultaTipoComboBox.getModel().getSelectedItem() == "Especificação") {
 
@@ -3024,7 +3005,6 @@ public class DashBoard extends javax.swing.JFrame {
                 ConsultaEspecificacaoAreaAlterar();
             } catch (Exception E) {
                 System.out.println(E.getMessage());
-
             }
         }
     }//GEN-LAST:event_BotaoConsultaAreaActionPerformed
@@ -3056,8 +3036,8 @@ public class DashBoard extends javax.swing.JFrame {
 
             ConsultaAreaAlterar();
         } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Problema no botão BotaoBuscaAlterarOuRemoverArea", "Sistema", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(E.getMessage());
-
         }
 
 
@@ -3077,15 +3057,26 @@ public class DashBoard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Area alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 atualizarConsultaArea();
 
-                ComboBoxAreaNovaRevista();
-                BuscaAreaMenuRevistas();
-                AlteraAreaMenuRevistas();
-                ConsultaAreaMenuRevistas();
-
                 LimpaCamposAreaAlterarOuRemover();
                 TravaTudoAreaAlterarOuRemover();
                 BotaoLiberaCamposAlterarArea.setEnabled(true);
+
+                ComboBoxAreaNovaRevista.removeAllItems();
+                BuscaAreaMenuRevistas.removeAllItems();
+                AlteraAreaMenuRevistas.removeAllItems();
+                ConsultaAreaMenuRevistas.removeAllItems();
+                try {
+                    ComboBoxAreaNovaRevista();
+                    BuscaAreaMenuRevistas();
+                    AlteraAreaMenuRevistas();
+                    ConsultaAreaMenuRevistas();
+                    LimpaCombos();
+
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Problema no botão BotaoAlterarArea", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(e.getMessage());
             }
         }
@@ -3112,15 +3103,26 @@ public class DashBoard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Area removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 atualizarConsultaArea();
 
-                ComboBoxAreaNovaRevista();
-                BuscaAreaMenuRevistas();
-                AlteraAreaMenuRevistas();
-                ConsultaAreaMenuRevistas();
-
                 LimpaCamposAreaAlterarOuRemover();
                 TravaTudoAreaAlterarOuRemover();
                 BotaoLiberaCamposAlterarArea.setEnabled(true);
+
+                ComboBoxAreaNovaRevista.removeAllItems();
+                BuscaAreaMenuRevistas.removeAllItems();
+                AlteraAreaMenuRevistas.removeAllItems();
+                ConsultaAreaMenuRevistas.removeAllItems();
+                try {
+                    ComboBoxAreaNovaRevista();
+                    BuscaAreaMenuRevistas();
+                    AlteraAreaMenuRevistas();
+                    ConsultaAreaMenuRevistas();
+                    LimpaCombos();
+
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Problema no botão BotaoRemoverArea", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(e.getMessage());
             }
         }
@@ -3177,47 +3179,74 @@ public class DashBoard extends javax.swing.JFrame {
 
             area.getId();
             area.setNome(CampoNovoTituloTipo.getText());
+
             try {
                 AreaDAO areaDAO = new AreaDAO();
                 areaDAO.InserirArea(area);
                 atualizarConsultaArea();
 
-                ComboBoxAreaNovaRevista();
-                BuscaAreaMenuRevistas();
-                AlteraAreaMenuRevistas();
-                ConsultaAreaMenuRevistas();
-
                 LimpaCamposNovoTipo();
                 TravaCamposNovoTipo();
                 BotaoAdicionarNovoTipo.setEnabled(true);
+
+                ComboBoxAreaNovaRevista.removeAllItems();
+                BuscaAreaMenuRevistas.removeAllItems();
+                AlteraAreaMenuRevistas.removeAllItems();
+                ConsultaAreaMenuRevistas.removeAllItems();
+                try {
+                    ComboBoxAreaNovaRevista();
+                    BuscaAreaMenuRevistas();
+                    AlteraAreaMenuRevistas();
+                    ConsultaAreaMenuRevistas();
+                    LimpaCombos();
+
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
 
                 JOptionPane.showMessageDialog(null, "Area adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
+
         } else if (ComboBoxNovoTipo.getSelectedItem() == "Especificação") {
-
-            Especificacao especificacao = new Especificacao();
-
-            especificacao.getId();
-            especificacao.setNome(CampoNovoTituloTipo.getText());
             try {
-                EspecificacaoDAO areaDAO = new EspecificacaoDAO();
-                areaDAO.InserirEspecificacao(especificacao);
-                atualizarConsultaEspecificacao();
+                ComboBoxEspecificacaoNovaRevista.removeAll();
+                Especificacao especificacao = new Especificacao();
 
-                ComboBoxEspecificacaoNovaRevista();
-                BuscaEspecificacaoMenuRevistas();
-                AlteraEspecificacaoMenuRevistas();
-                ConsultaEspecificacaoRevistas();
+                especificacao.getId();
+                especificacao.setNome(CampoNovoTituloTipo.getText());
+                try {
+                    EspecificacaoDAO areaDAO = new EspecificacaoDAO();
+                    areaDAO.InserirEspecificacao(especificacao);
+                    atualizarConsultaEspecificacao();
 
-                LimpaCamposNovoTipo();
-                TravaCamposNovoTipo();
-                BotaoAdicionarNovoTipo.setEnabled(true);
+                    LimpaCamposNovoTipo();
+                    TravaCamposNovoTipo();
+                    BotaoAdicionarNovoTipo.setEnabled(true);
 
-                JOptionPane.showMessageDialog(null, "Especificação adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                    ComboBoxEspecificacaoNovaRevista.removeAllItems();
+                    BuscaEspecificacaoMenuRevistas.removeAllItems();
+                    AlteraEspecificacaoMenuRevistas.removeAllItems();
+                    ConsultaEspecificacaoMenuRevistas.removeAllItems();
+                    try {
+                        ComboBoxEspecificacaoNovaRevista();
+                        BuscaEspecificacaoMenuRevistas();
+                        AlteraEspecificacaoMenuRevistas();
+                        ConsultaEspecificacaoRevistas();
+                        LimpaCombos();
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
+                    JOptionPane.showMessageDialog(null, "Especificação adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Problema no botão BotaoSalvarNovoTipo", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(e.getMessage());
+                }
+            } catch (Exception Ex) {
+                System.out.println(Ex.getMessage());
             }
         }
     }//GEN-LAST:event_BotaoSalvarNovoTipoActionPerformed
@@ -3238,6 +3267,7 @@ public class DashBoard extends javax.swing.JFrame {
 
             ConsultaEspecificacaoAlterar();
         } catch (Exception E) {
+            JOptionPane.showMessageDialog(null, "Problema no botão BotaoBuscaAlterarOuRemoverEsp", "Sistema", JOptionPane.INFORMATION_MESSAGE);
             System.out.println(E.getMessage());
 
         }
@@ -3257,15 +3287,26 @@ public class DashBoard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Especificacao alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 atualizarConsultaEspecificacao();
 
-                ComboBoxEspecificacaoNovaRevista();
-                BuscaEspecificacaoMenuRevistas();
-                AlteraEspecificacaoMenuRevistas();
-                ConsultaEspecificacaoRevistas();
                 LimpaCamposEspAlterarOuRemover();
                 TravaTudoEspAlterarOuRemover();
                 TravaTudoEspAlterarOuRemover();
+
                 BotaoLiberarAcoesEsp.setEnabled(true);
+                ComboBoxEspecificacaoNovaRevista.removeAllItems();
+                BuscaEspecificacaoMenuRevistas.removeAllItems();
+                AlteraEspecificacaoMenuRevistas.removeAllItems();
+                ConsultaEspecificacaoMenuRevistas.removeAllItems();
+                try {
+                    ComboBoxEspecificacaoNovaRevista();
+                    BuscaEspecificacaoMenuRevistas();
+                    AlteraEspecificacaoMenuRevistas();
+                    ConsultaEspecificacaoRevistas();
+                    LimpaCombos();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Problema no botão BotaoAlterarEsp", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(e.getMessage());
             }
         }
@@ -3293,16 +3334,26 @@ public class DashBoard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Especificacao removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 atualizarConsultaEspecificacao();
 
-                ComboBoxEspecificacaoNovaRevista();
-                BuscaEspecificacaoMenuRevistas();
-                AlteraEspecificacaoMenuRevistas();
-                ConsultaEspecificacaoRevistas();
-
                 LimpaCamposEspAlterarOuRemover();
                 TravaTudoEspAlterarOuRemover();
                 BotaoLiberarAcoesEsp.setEnabled(true);
 
+                ComboBoxEspecificacaoNovaRevista.removeAllItems();
+                BuscaEspecificacaoMenuRevistas.removeAllItems();
+                AlteraEspecificacaoMenuRevistas.removeAllItems();
+                ConsultaEspecificacaoMenuRevistas.removeAllItems();
+                try {
+                    ComboBoxEspecificacaoNovaRevista();
+                    BuscaEspecificacaoMenuRevistas();
+                    AlteraEspecificacaoMenuRevistas();
+                    ConsultaEspecificacaoRevistas();
+                    LimpaCombos();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Problema no botão BotaoRemoverEsp", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(e.getMessage());
             }
         }

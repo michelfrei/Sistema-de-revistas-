@@ -15,7 +15,7 @@ public class AreaDAO {
 
     public boolean InserirArea(Area area) {
 
-        String SQL = "INSERT INTO sys.Area (id, Nome) values (?, ?)";
+        String SQL = "INSERT INTO revista.Area (id, Nome) values (?, ?)";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -34,7 +34,7 @@ public class AreaDAO {
     }
 
     public boolean RemoverArea(Area area) throws SQLException {
-        String SQL = "Delete from sys.Area where id=?";
+        String SQL = "Delete from revista.Area where id=?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -50,7 +50,7 @@ public class AreaDAO {
     }
 
     public boolean AlterarArea(Area area) throws SQLException {
-        String SQL = "update sys.Area set Nome=? where id = ?";
+        String SQL = "update revista.Area set Nome=? where id = ?";
 
         try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -72,7 +72,7 @@ public class AreaDAO {
         List<Area> ListaArea;
         ListaArea = new ArrayList<>();
 
-        String SQL = "select* from sys.Area";
+        String SQL = "select* from revista.Area";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -84,7 +84,6 @@ public class AreaDAO {
 
             }
         } catch (Exception e) {
-            System.out.println("Problema tal:");
             System.out.println(e.getMessage());
         }
         return ListaArea;
@@ -93,7 +92,7 @@ public class AreaDAO {
     public List<Area> ListaBuscaArea(Area area) throws SQLException {
         List<Area> retorno = new ArrayList<Area>();
 
-        String SQL = "select * from sys.Area where Nome like ?";
+        String SQL = "select * from revista.Area where Nome like ?";
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
                
         stmt.setString(1, "%" + area.getNome() + "%");
@@ -106,7 +105,6 @@ public class AreaDAO {
                         rs.getString("Nome")));
             }
         } catch (Exception e) {
-            System.out.println("Problema tal:");
             System.out.println(e.getMessage());
         }
 
