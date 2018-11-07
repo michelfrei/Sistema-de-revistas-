@@ -21,9 +21,6 @@ public class Conexao {
             String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver
             Class.forName(driverName);
 
-            /*String url = "jdbc:mysql://localhost:3306/?user=root";
-            String username = "root";
-            String password = "root";*/
 
             String url = "jdbc:mysql://10.93.10.10:3306/revista?autoReconnect=true&useSSL=false";
             String username = "revista";
@@ -77,16 +74,14 @@ public static String status = "Não conectou...";
 public static java.sql.Connection getConexaoMySQL() {
       Connection connection = null;
 try {
-String driverName = "com.mysql.cj.jdbc.Driver";
-Class.forName(driverName);
-          String serverName = "localhost";
-          String mydatabase ="sys";
-          String port ="3306";
-          String aux = "?useTimezone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
-          String url = "jdbc:mysql://"+serverName+":"+port +"/" +mydatabase+aux;
-          String username = "root";      
-          String password = "root";
-          connection = DriverManager.getConnection(url, username, password);
+String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver
+            Class.forName(driverName);
+
+
+            String url = "jdbc:mysql://localhost:3306/?user=root";            
+            String username = "root";
+            String password = "root";
+            connection = DriverManager.getConnection(url, username, password);
 
           if (connection != null) {
               status = ("STATUS--->Conectado com sucesso!");

@@ -17,10 +17,9 @@ import model.Revistas;
  */
 public class RevistaDAO {
 
-    public boolean InserirNovaRevistas(Revistas rev) {
+    public void InserirNovaRevistas(Revistas rev) throws SQLException {
         String SQL = "INSERT INTO revista.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Area) values (?, ?, ?, ?, ?, ?, ?)";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             stmt.setInt(1, 0);
@@ -33,34 +32,21 @@ public class RevistaDAO {
 
             stmt.execute();
             stmt.close();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
-        return false;
     }
 
-    public boolean RemoverRevista(Revistas rev) throws SQLException {
+    public void RemoverRevista(Revistas rev) throws SQLException {
         String SQL = "Delete from revista.revista where id=?";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             stmt.setInt(1, rev.getID());
 
             stmt.execute();
             stmt.close();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return true;
     }
 
-    public boolean AlterarRevista(Revistas rev) throws SQLException {
+    public void AlterarRevista(Revistas rev) throws SQLException {
         String SQL = SQL = "update revista.revista set Titulo=?, Especificacao=?, Origem=?, Data=?, Area=?, Quantidade=? where id = ?";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
@@ -73,11 +59,6 @@ public class RevistaDAO {
             stmt.setInt(7, rev.getID());
             stmt.execute();
             stmt.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return true;
     }
 
     public List<Revistas> ListaRevista() throws SQLException {

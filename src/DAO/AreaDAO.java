@@ -13,11 +13,10 @@ import model.*;
 
 public class AreaDAO {
 
-    public boolean InserirArea(Area area) {
+    public void InserirArea(Area area) throws SQLException {
 
         String SQL = "INSERT INTO revista.Area (id, Nome) values (?, ?)";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             stmt.setInt(1, area.getId());
@@ -25,34 +24,21 @@ public class AreaDAO {
 
             stmt.execute();
             stmt.close();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
-        return false;
     }
 
-    public boolean RemoverArea(Area area) throws SQLException {
+    public void RemoverArea(Area area) throws SQLException {
         String SQL = "Delete from revista.Area where id=?";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             stmt.setInt(1, area.getId());
 
             stmt.execute();
             stmt.close();
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return true;
     }
 
-    public boolean AlterarArea(Area area) throws SQLException {
+    public void AlterarArea(Area area) throws SQLException {
         String SQL = "update revista.Area set Nome=? where id = ?";
 
-        try {
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
             stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
@@ -60,11 +46,6 @@ public class AreaDAO {
             stmt.setInt(2, area.getId());
             stmt.execute();
             stmt.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return true;
     }
 
     public List<Area> ListaArea() throws SQLException {
