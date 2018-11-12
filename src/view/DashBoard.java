@@ -8,6 +8,7 @@ package view;
 import DAO.Conexao;
 import DAO.*;
 import Extra.JTextFieldLimit;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +17,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -344,6 +347,37 @@ public class DashBoard extends javax.swing.JFrame {
         ConsultaEspecificacaoMenuRevistas.setSelectedItem(null);
     }
 
+    //-----------------Esvazia as combobox + chamada de combobox -------------------------
+    public void ClearComboBoxEspecificacao() {
+        ComboBoxEspecificacaoNovaRevista.removeAllItems();
+        BuscaEspecificacaoMenuRevistas.removeAllItems();
+        AlteraEspecificacaoMenuRevistas.removeAllItems();
+        ConsultaEspecificacaoMenuRevistas.removeAllItems();
+    }
+
+    public void ClearComboBoxArea() {
+        ComboBoxAreaNovaRevista.removeAllItems();
+        BuscaAreaMenuRevistas.removeAllItems();
+        AlteraAreaMenuRevistas.removeAllItems();
+        ConsultaAreaMenuRevistas.removeAllItems();
+
+    }
+
+    public void ComboboxArea() {
+        ComboBoxAreaNovaRevista();
+        BuscaAreaMenuRevistas();
+        AlteraAreaMenuRevistas();
+        ConsultaAreaMenuRevistas();
+    }
+
+    public void ComboboxEspecificacao() {
+        ComboBoxEspecificacaoNovaRevista();
+        BuscaEspecificacaoMenuRevistas();
+        AlteraEspecificacaoMenuRevistas();
+        ConsultaEspecificacaoRevistas();
+    }
+
+    //------------------------------------------------------------------------------------
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxAreaNovaRevista() { //ok
         try {
@@ -530,6 +564,8 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(4).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(5).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRevista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         TabelaAlterarOuRemoverRevista.setRowHeight(25);
         TabelaAlterarOuRemoverRevista.updateUI();
 
@@ -578,6 +614,8 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(4).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(5).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverRevista.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRevista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         TabelaAlterarOuRemoverRevista.setRowHeight(25);
         TabelaAlterarOuRemoverRevista.updateUI();
     }
@@ -631,6 +669,8 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaConsultaRevista.getColumnModel().getColumn(4).setCellRenderer(centralizado);
         TabelaConsultaRevista.getColumnModel().getColumn(5).setCellRenderer(centralizado);
         TabelaConsultaRevista.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaConsultaRevista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
@@ -677,6 +717,8 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaConsultaRevista.getColumnModel().getColumn(4).setCellRenderer(centralizado);
         TabelaConsultaRevista.getColumnModel().getColumn(5).setCellRenderer(centralizado);
         TabelaConsultaRevista.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaConsultaRevista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
@@ -717,6 +759,7 @@ public class DashBoard extends javax.swing.JFrame {
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaAlterarOuRemoverArea.setRowHeight(25);
         TabelaAlterarOuRemoverArea.updateUI();
@@ -750,6 +793,7 @@ public class DashBoard extends javax.swing.JFrame {
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaAlterarOuRemoverArea.setRowHeight(25);
         TabelaAlterarOuRemoverArea.updateUI();
@@ -793,6 +837,7 @@ public class DashBoard extends javax.swing.JFrame {
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaAlterarOuRemoverEspecificacao.getColumnModel().getColumn(0).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverEspecificacao.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverEspecificacao.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaAlterarOuRemoverEspecificacao.setRowHeight(25);
         TabelaAlterarOuRemoverEspecificacao.updateUI();
@@ -826,6 +871,7 @@ public class DashBoard extends javax.swing.JFrame {
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaAlterarOuRemoverEspecificacao.getColumnModel().getColumn(0).setCellRenderer(centralizado);
         TabelaAlterarOuRemoverEspecificacao.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverEspecificacao.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaAlterarOuRemoverEspecificacao.setRowHeight(25);
         TabelaAlterarOuRemoverEspecificacao.updateUI();
@@ -856,6 +902,7 @@ public class DashBoard extends javax.swing.JFrame {
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaConsultaTipo.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaConsultaTipo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaConsultaTipo.setRowHeight(25);
         TabelaConsultaTipo.updateUI();
@@ -885,12 +932,29 @@ public class DashBoard extends javax.swing.JFrame {
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
         TabelaConsultaTipo.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaConsultaTipo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         TabelaConsultaTipo.setRowHeight(25);
         TabelaConsultaTipo.updateUI();
     }
 
     //------------------------------------------------------------------------------------
+    public void ResetaTabelaConsultaTipo() {
+        ((DefaultTableModel) TabelaConsultaTipo.getModel()).setRowCount(0);
+    }
+    public void ResetaTabelaAlterarOuRemoverArea() {
+        ((DefaultTableModel) TabelaAlterarOuRemoverArea.getModel()).setRowCount(0);
+    }
+    public void ResetaTabelaAlterarOuRemoverEspecificacao() {
+        ((DefaultTableModel) TabelaAlterarOuRemoverEspecificacao.getModel()).setRowCount(0);
+    }
+    public void ResetaTabelaConsultaRevista() {
+        ((DefaultTableModel) TabelaConsultaRevista.getModel()).setRowCount(0);
+    }
+    public void ResetaTabelaAlterarOuRemoverRevista() {
+        ((DefaultTableModel) TabelaAlterarOuRemoverRevista.getModel()).setRowCount(0);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1186,6 +1250,7 @@ public class DashBoard extends javax.swing.JFrame {
         campoTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         campoTitulo.setMaximumSize(new java.awt.Dimension(25, 25));
         campoTitulo.setMinimumSize(new java.awt.Dimension(25, 25));
+        campoTitulo.setDocument(new JTextFieldLimit(40, true));
 
         BotaoSalvarNovaRevista.setBackground(new java.awt.Color(255, 255, 255));
         BotaoSalvarNovaRevista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -1335,6 +1400,7 @@ public class DashBoard extends javax.swing.JFrame {
         ConsultaTituloMenuRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConsultaTituloMenuRevistas.setMaximumSize(new java.awt.Dimension(25, 25));
         ConsultaTituloMenuRevistas.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));
 
         lblTitulo5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo5.setText("Título da revista");
@@ -1506,6 +1572,7 @@ public class DashBoard extends javax.swing.JFrame {
         BuscaTituloMenuRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BuscaTituloMenuRevistas.setMaximumSize(new java.awt.Dimension(25, 25));
         BuscaTituloMenuRevistas.setMinimumSize(new java.awt.Dimension(25, 25));
+        BuscaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));
 
         lblTitulo2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo2.setText("Título da revista");
@@ -2986,10 +3053,12 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoLimpaConsultaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevistaActionPerformed
         LimpaCamposConsultaRevista();
+        ResetaTabelaConsultaRevista();
     }//GEN-LAST:event_BotaoLimpaConsultaRevistaActionPerformed
 
     private void BotaoLimpaBuscaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaBuscaRevistaActionPerformed
         ResetaCamposAlterarRevistas();
+        ResetaTabelaAlterarOuRemoverRevista();
         TravaCamposAlteraRevista();
         TravaBotoeAlteraRevista();
         BotaoLimpaCamposAlterarRevistas.setEnabled(false);
@@ -3001,7 +3070,32 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoLiberaCamposAlterarRevistasActionPerformed
 
     private void ConsultaTipoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaTipoComboBoxActionPerformed
-        // TODO add your handling code here:
+        if(ConsultaTipoComboBox.getModel().getSelectedItem() == "Área"){
+            Area area = new Area();
+            AreaDAO areaDAO = new AreaDAO();
+            try {
+                ListaBuscaArea = areaDAO.ListaBuscaArea(area);
+                ConsultaAreaEspecificacaoAlterar();
+            } catch (SQLException ex) {
+                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ConsultaNomeMenuTipo.setText("");
+            ConsultaNomeMenuTipo.requestFocus();
+        }
+        
+        if(ConsultaTipoComboBox.getModel().getSelectedItem() == "Especificação"){
+            Especificacao especificacao = new Especificacao();
+            EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
+            try {
+                ListaBuscaEspecificacao = especificacaoDAO.ListaBuscaEspecificacao(especificacao);
+                ConsultaEspecificacaoAreaAlterar();
+            } catch (SQLException ex) {
+                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ConsultaNomeMenuTipo.setText("");
+            ConsultaNomeMenuTipo.requestFocus();
+        }
+        
     }//GEN-LAST:event_ConsultaTipoComboBoxActionPerformed
 
     private void BotaoConsultaAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoConsultaAreaActionPerformed
@@ -3040,6 +3134,7 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoNovaConsultaAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovaConsultaAreaActionPerformed
         DestravaCamposConsultaTipo();
+        ResetaTabelaConsultaTipo();
     }//GEN-LAST:event_BotaoNovaConsultaAreaActionPerformed
 
     private void TabelaConsultaTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaConsultaTipoMouseClicked
@@ -3048,6 +3143,7 @@ public class DashBoard extends javax.swing.JFrame {
 
     private void BotaoLimpaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaActionPerformed
         LimpaCamposConsultaTipo();
+        ResetaTabelaConsultaTipo();
     }//GEN-LAST:event_BotaoLimpaConsultaActionPerformed
 
     private void BotaoBuscaAlterarOuRemoverAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverAreaActionPerformed
@@ -3090,17 +3186,9 @@ public class DashBoard extends javax.swing.JFrame {
 
                     LimpaCamposAreaAlterarOuRemover();
                     TravaTudoAreaAlterarOuRemover();
-                    BotaoLiberaCamposAlterarArea.setEnabled(true);
 
-                    ComboBoxAreaNovaRevista.removeAllItems();
-                    BuscaAreaMenuRevistas.removeAllItems();
-                    AlteraAreaMenuRevistas.removeAllItems();
-                    ConsultaAreaMenuRevistas.removeAllItems();
-
-                    ComboBoxAreaNovaRevista();
-                    BuscaAreaMenuRevistas();
-                    AlteraAreaMenuRevistas();
-                    ConsultaAreaMenuRevistas();
+                    ClearComboBoxArea();
+                    ComboboxArea();
                     LimpaCombos();
                     BotaoLiberaCamposAlterarArea.setEnabled(false);
                     JOptionPane.showMessageDialog(null, "Área alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
@@ -3142,18 +3230,10 @@ public class DashBoard extends javax.swing.JFrame {
 
                     LimpaCamposAreaAlterarOuRemover();
                     TravaTudoAreaAlterarOuRemover();
-                    BotaoLiberaCamposAlterarArea.setEnabled(true);
-
-                    ComboBoxAreaNovaRevista.removeAllItems();
-                    BuscaAreaMenuRevistas.removeAllItems();
-                    AlteraAreaMenuRevistas.removeAllItems();
-                    ConsultaAreaMenuRevistas.removeAllItems();
-
-                    ComboBoxAreaNovaRevista();
-                    BuscaAreaMenuRevistas();
-                    AlteraAreaMenuRevistas();
-                    ConsultaAreaMenuRevistas();
                     BotaoLiberaCamposAlterarArea.setEnabled(false);
+
+                    ClearComboBoxArea();
+                    ComboboxArea();
                     LimpaCombos();
                     JOptionPane.showMessageDialog(null, "Área removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
 
@@ -3183,6 +3263,7 @@ public class DashBoard extends javax.swing.JFrame {
     private void BotaoLimpaAlterarOuRemoverAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaAlterarOuRemoverAreaActionPerformed
         LimpaCamposConsultaAreaAlterarOuRemover();
         TravaTudoAreaAlterarOuRemover();
+        ResetaTabelaAlterarOuRemoverArea();
     }//GEN-LAST:event_BotaoLimpaAlterarOuRemoverAreaActionPerformed
 
     private void BotaoLiberaCamposAlterarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLiberaCamposAlterarAreaActionPerformed
@@ -3228,22 +3309,17 @@ public class DashBoard extends javax.swing.JFrame {
                     TravaCamposNovoTipo();
                     BotaoAdicionarNovoTipo.setEnabled(true);
 
-                    ComboBoxAreaNovaRevista.removeAllItems();
-                    BuscaAreaMenuRevistas.removeAllItems();
-                    AlteraAreaMenuRevistas.removeAllItems();
-                    ConsultaAreaMenuRevistas.removeAllItems();
-
-                    ComboBoxAreaNovaRevista();
-                    BuscaAreaMenuRevistas();
-                    AlteraAreaMenuRevistas();
-                    ConsultaAreaMenuRevistas();
+                    ClearComboBoxArea();
+                    ComboboxArea();
                     LimpaCombos();
+
                     JOptionPane.showMessageDialog(null, "Área adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Algo de errado ocorreu, chame o suporte! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
                     System.out.println(ex.getMessage());
                 }
             } catch (SQLException ex) {
+                //JOptionPane.showMessageDialog(null, ex.getMessage(), "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(null, "Essa área já existe!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println(ex.getMessage());
             }
@@ -3257,7 +3333,6 @@ public class DashBoard extends javax.swing.JFrame {
                 EspecificacaoDAO especificacaoDAO = new EspecificacaoDAO();
                 especificacaoDAO.InserirEspecificacao(especificacao);
 
-                
                 try {
                     atualizarConsultaEspecificacao();
 
@@ -3265,17 +3340,10 @@ public class DashBoard extends javax.swing.JFrame {
                     TravaCamposNovoTipo();
                     BotaoAdicionarNovoTipo.setEnabled(true);
 
-                    ComboBoxEspecificacaoNovaRevista.removeAllItems();
-                    BuscaEspecificacaoMenuRevistas.removeAllItems();
-                    AlteraEspecificacaoMenuRevistas.removeAllItems();
-                    ConsultaEspecificacaoMenuRevistas.removeAllItems();
-                    
-                    ComboBoxEspecificacaoNovaRevista();
-                    BuscaEspecificacaoMenuRevistas();
-                    AlteraEspecificacaoMenuRevistas();
-                    ConsultaEspecificacaoRevistas();
+                    ClearComboBoxEspecificacao();
+                    ComboboxEspecificacao();
                     LimpaCombos();
-                    
+
                     JOptionPane.showMessageDialog(null, "Especificação adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Algo de errado ocorreu, chame o suporte! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -3300,6 +3368,7 @@ public class DashBoard extends javax.swing.JFrame {
     private void BotaoLimpaAlterarOuRemoverEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaAlterarOuRemoverEspActionPerformed
         LimpaCamposConsultaEspAlterarOuRemover();
         TravaTudoEspAlterarOuRemover();
+        ResetaTabelaAlterarOuRemoverEspecificacao();
     }//GEN-LAST:event_BotaoLimpaAlterarOuRemoverEspActionPerformed
 
     private void BotaoLimpaCamposAlterarEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaCamposAlterarEspActionPerformed
@@ -3311,6 +3380,7 @@ public class DashBoard extends javax.swing.JFrame {
     private void BotaoResetaPesquisaAlterarOuRemoverEspActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverEspActionPerformed
         atualizarConsultaEspecificacao();
         DestravaCamposConsultaEspAlterarOuRemover();
+        
         LimpaCamposConsultaEspAlterarOuRemover();
         LimpaCamposEspAlterarOuRemover();
         TravaTudoEspAlterarOuRemover();
@@ -3334,15 +3404,8 @@ public class DashBoard extends javax.swing.JFrame {
                     LimpaCamposEspAlterarOuRemover();
                     TravaTudoEspAlterarOuRemover();
 
-                    ComboBoxEspecificacaoNovaRevista.removeAllItems();
-                    BuscaEspecificacaoMenuRevistas.removeAllItems();
-                    AlteraEspecificacaoMenuRevistas.removeAllItems();
-                    ConsultaEspecificacaoMenuRevistas.removeAllItems();
-
-                    ComboBoxEspecificacaoNovaRevista();
-                    BuscaEspecificacaoMenuRevistas();
-                    AlteraEspecificacaoMenuRevistas();
-                    ConsultaEspecificacaoRevistas();
+                    ClearComboBoxEspecificacao();
+                    ComboboxEspecificacao();
                     LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Especificação removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
@@ -3380,16 +3443,11 @@ public class DashBoard extends javax.swing.JFrame {
                     TravaTudoEspAlterarOuRemover();
 
                     BotaoLiberarAcoesEsp.setEnabled(true);
-                    ComboBoxEspecificacaoNovaRevista.removeAllItems();
-                    BuscaEspecificacaoMenuRevistas.removeAllItems();
-                    AlteraEspecificacaoMenuRevistas.removeAllItems();
-                    ConsultaEspecificacaoMenuRevistas.removeAllItems();
 
-                    ComboBoxEspecificacaoNovaRevista();
-                    BuscaEspecificacaoMenuRevistas();
-                    AlteraEspecificacaoMenuRevistas();
-                    ConsultaEspecificacaoRevistas();
+                    ClearComboBoxEspecificacao();
+                    ComboboxEspecificacao();
                     LimpaCombos();
+
                     JOptionPane.showMessageDialog(null, "Especificação alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception ex) {

@@ -73,11 +73,18 @@ public class EspecificacaoDAO {
     public List<Especificacao> ListaBuscaEspecificacao(Especificacao especificacao) throws SQLException {
         List<Especificacao> retorno = new ArrayList<Especificacao>();
 
-        String SQL = "select * from revista.Especificação where Nome like ?";
+        String SQL = "select * from revista.Especificação";
+        
+        if(especificacao.getNome()!= null){
+            SQL += " where Nome like ?";
+        }
+        
+        
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         
+        if(especificacao.getNome()!= null){
         stmt.setString(1, "%" + especificacao.getNome() + "%");
-        
+        }
         try {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

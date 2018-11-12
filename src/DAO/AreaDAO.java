@@ -73,11 +73,18 @@ public class AreaDAO {
     public List<Area> ListaBuscaArea(Area area) throws SQLException {
         List<Area> retorno = new ArrayList<Area>();
 
-        String SQL = "select * from revista.Area where Nome like ?";
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-               
-        stmt.setString(1, "%" + area.getNome() + "%");
+        String SQL = "select * from revista.Area ";
         
+        
+        if(area.getNome() != null){
+            SQL += "where Nome like ?";
+        }
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        
+        if(area.getNome() != null){
+            stmt.setString(1, "%" + area.getNome() + "%");
+        }
+
         try {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

@@ -493,6 +493,9 @@
                               <Dimension value="[25, 25]"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="campoTitulo.setDocument(new JTextFieldLimit(40, true));"/>
+                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="BotaoSalvarNovaRevista">
                           <Properties>
@@ -723,6 +726,9 @@
                               <Dimension value="[25, 25]"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="ConsultaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));"/>
+                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblTitulo5">
                           <Properties>
@@ -1154,6 +1160,9 @@
                               <Dimension value="[25, 25]"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="BuscaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));"/>
+                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblTitulo2">
                           <Properties>
