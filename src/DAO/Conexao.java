@@ -8,7 +8,7 @@ import java.sql.SQLException;
  *
  * @author Michel
  */
-public class Conexao {
+/*public class Conexao {
 
     public static String status = "Não conectou...";
 
@@ -18,14 +18,13 @@ public class Conexao {
     public static java.sql.Connection getConexaoMySQL() {
         Connection connection = null;
         try {
-            String driverName = "com.mysql.jdbc.Driver"; //com.mysql.cj.jdbc.Driver
+            String driverName = "com.mysql.cj.jdbc.Driver"; //com.mysql.jdbc.Driver
             Class.forName(driverName);
 
 
             String url = "jdbc:mysql://10.93.10.10:3306/revista?autoReconnect=true&useSSL=false";
             String username = "revista";
             String password = "Uemg2018";
-            connection = DriverManager.getConnection(url, username, password);
 
             if (connection != null) {
                 //System.out.println("Conectou");
@@ -63,9 +62,9 @@ public class Conexao {
         FecharConexao();
         return Conexao.getConexaoMySQL();
     }
-}
+}*/
 
-/*public class Conexao{ 
+public class Conexao{ 
 
 public static String status = "Não conectou...";
       public Conexao() {
@@ -115,4 +114,4 @@ public static java.sql.Connection ReiniciarConexao() {
       FecharConexao();
       return Conexao.getConexaoMySQL();
   }
-}*/
+}
