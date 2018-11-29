@@ -17,7 +17,7 @@ import model.Registro;
  */
 public class RegistroDAO {
 
-    public void InserirNovaRevistas(Registro reg) throws SQLException {
+    public void InserirNovaRegistro(Registro reg) throws SQLException {
         String SQL = "INSERT INTO revista.registro (registro, Titulo, Editora, Origem, Local, Area, Ano) values (?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);

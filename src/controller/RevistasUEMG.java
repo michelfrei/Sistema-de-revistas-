@@ -12,7 +12,7 @@ public class RevistasUEMG {
 
     public static void main(String[] args) throws SQLException {
         
-        DashBoard dash = new DashBoard();
+        Board dash = new Board();
         dash.setVisible(true);
         //dash.setLocationRelativeTo(null);
         //dash.setExtendedState(Frame.MAXIMIZED_BOTH);

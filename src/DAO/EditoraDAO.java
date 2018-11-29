@@ -53,7 +53,7 @@ public class EditoraDAO {
         List<Editora> ListaEditora;
         ListaEditora = new ArrayList<>();
 
-        String SQL = "select* from revista.editora";
+        String SQL = "select* from revista.editora order by id desc";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -72,12 +72,15 @@ public class EditoraDAO {
 
     public List<Editora> ListaBuscaEditora(Editora editora) throws SQLException {
         List<Editora> retorno = new ArrayList<Editora>();
-
-        String SQL = "select * from revista.editora ";
         
+        String SQL = "select * from revista.editora ";
         
         if(editora.getNome() != null){
             SQL += "where Nome like ?";
+        }
+        
+        if(1==1){
+            SQL += " order by id desc";
         }
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         

@@ -31,7 +31,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Michel
  */
-public class DashBoard extends javax.swing.JFrame {
+public class Board extends javax.swing.JFrame {
 
     PreparedStatement stmt = null;
     ResultSet rs = null;
@@ -51,7 +51,7 @@ public class DashBoard extends javax.swing.JFrame {
     List<Editora> ListaEditora;
     List<Editora> ListaBuscaEditora;
 
-    public DashBoard() {
+    public Board() {
         initComponents();
         setIcon();
         inicioRevista();
@@ -81,10 +81,13 @@ public class DashBoard extends javax.swing.JFrame {
         TravaCamposConsultaTipo();
         TravaTudoEspAlterarOuRemover();
         TravaTudoAreaAlterarOuRemover();
+        TravaTudoEditoraAlterarOuRemover();
         TravaCamposConsultaEditoraAlterarOuRemover();
         BotaoLiberaCamposAlterarArea.setEnabled(false);
         BotaoLiberarAcoesEsp.setEnabled(false);
         BotaoLiberarAcoesEditora.setEnabled(false);
+        ComboBoxEditoraRegistro();
+        ComboBoxAreaRegistro();
     }
 
     private void inicioRevista() {
@@ -346,12 +349,12 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoRemoverArea.setEnabled(true);
         BotaoAlterarArea.setEnabled(true);
     }
-
+  
     private void TravaTudoAreaAlterarOuRemover() {
-        AlteraNomeMenuEditora.setEnabled(false);
-        BotaoLimpaCamposAlterarEditora.setEnabled(false);
-        BotaoRemoverEditora.setEnabled(false);
-        BotaoAlterarEditora.setEnabled(false);
+        AlteraNomeMenuArea.setEnabled(false);
+        BotaoLimpaCamposAlterarArea.setEnabled(false);
+        BotaoRemoverArea.setEnabled(false);
+        BotaoAlterarArea.setEnabled(false);
     }
     //-----------------------------------------------------------------------
     private void LimpaCamposEditoraAlterarOuRemover() {
@@ -399,6 +402,8 @@ public class DashBoard extends javax.swing.JFrame {
         AlteraEspecificacaoMenuRevistas.setSelectedItem(null);
         ConsultaAreaMenuRevistas.setSelectedItem(null);
         ConsultaEspecificacaoMenuRevistas.setSelectedItem(null);
+        ComboBoxEditoraRegistro.setSelectedItem(null);
+        ComboBoxAreaRegistro.setSelectedItem(null);
     }
 
     //-----------------Esvazia as combobox + chamada de combobox -------------------------
@@ -595,7 +600,7 @@ public class DashBoard extends javax.swing.JFrame {
         try {
             ListaRevista = revistasDAO.ListaRevista();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaRevista.size()][7];
         int i = 0;
@@ -700,7 +705,7 @@ public class DashBoard extends javax.swing.JFrame {
         try {
             ListaRevista = revistasDAO.ListaRevista();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaRevista.size()][7];
         int i = 0;
@@ -794,7 +799,41 @@ public class DashBoard extends javax.swing.JFrame {
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
+    
+    
+        private void ComboBoxEditoraRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.editora order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ComboBoxEditoraRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+    private void ComboBoxAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ComboBoxAreaRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+    
     //------------------------------------ fim das operacoes de lista referente a revista
     //------------------------------------ inicio das operacoes de lista referente a ferramenta
     public void atualizarConsultaArea() {
@@ -804,7 +843,7 @@ public class DashBoard extends javax.swing.JFrame {
         try {
             ListaArea = areaDAO.ListaArea();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaArea.size()][2];
         int i = 0;
@@ -879,7 +918,7 @@ public class DashBoard extends javax.swing.JFrame {
         try {
             ListaEditora = editoraDAO.ListaEditora();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaEditora.size()][2];
         int i = 0;
@@ -956,7 +995,7 @@ public class DashBoard extends javax.swing.JFrame {
             ListaEspecificacao = especificacaoDAO.ListaEspecificacao();
             //ListaArea = areaDAO.ListaArea();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaEspecificacao.size()][2];
         int i = 0;
@@ -1121,7 +1160,7 @@ public class DashBoard extends javax.swing.JFrame {
         try {
             ListaEditora = editoraDAO.ListaEditora();
         } catch (SQLException ex) {
-            Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
         String dados[][] = new String[ListaEditora.size()][2];
         int i = 0;
@@ -1388,10 +1427,10 @@ public class DashBoard extends javax.swing.JFrame {
         BotaoCancelarNovaRevista3 = new javax.swing.JButton();
         lblData6 = new javax.swing.JLabel();
         campoRegistroRegistro = new javax.swing.JTextField();
-        campoEditoraRegistro = new javax.swing.JTextField();
-        lblData7 = new javax.swing.JLabel();
         campoLocalRegistro = new javax.swing.JTextField();
         lblData8 = new javax.swing.JLabel();
+        lblEspecificacao9 = new javax.swing.JLabel();
+        ComboBoxEditoraRegistro = new javax.swing.JComboBox<>();
         PaneGuiaConsulta2 = new javax.swing.JPanel();
         ConsultaTituloMenuRevistas1 = new javax.swing.JTextField();
         lblTitulo11 = new javax.swing.JLabel();
@@ -1427,8 +1466,6 @@ public class DashBoard extends javax.swing.JFrame {
         lblTitulo15 = new javax.swing.JLabel();
         campoTituloRegistro2 = new javax.swing.JTextField();
         lblData12 = new javax.swing.JLabel();
-        lblData13 = new javax.swing.JLabel();
-        campoEditoraRegistro2 = new javax.swing.JTextField();
         campoLocalRegistro2 = new javax.swing.JTextField();
         lblData14 = new javax.swing.JLabel();
         campoDataRegistro2 = new javax.swing.JTextField();
@@ -1437,25 +1474,12 @@ public class DashBoard extends javax.swing.JFrame {
         lblEspecificacao12 = new javax.swing.JLabel();
         ComboBoxOrigemRegistro2 = new javax.swing.JComboBox<>();
         lblOrigem13 = new javax.swing.JLabel();
+        ComboBoxEditoraRegistro2 = new javax.swing.JComboBox<>();
+        lblEspecificacao11 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         PaneGuiaNovaRevista2 = new javax.swing.JPanel();
-        ComboBoxOrigemRegistro1 = new javax.swing.JComboBox<>();
-        lblData4 = new javax.swing.JLabel();
-        lblOrigem8 = new javax.swing.JLabel();
-        lblTitulo14 = new javax.swing.JLabel();
-        ComboBoxAreaRegistro1 = new javax.swing.JComboBox<>();
-        campoTituloRegistro1 = new javax.swing.JTextField();
-        BotaoSalvarNovaRevista2 = new javax.swing.JButton();
-        lblEspecificacao11 = new javax.swing.JLabel();
-        BotaoAdicionarNovaRevista2 = new javax.swing.JButton();
-        campoDataRegistro1 = new javax.swing.JTextField();
-        BotaoCancelarNovaRevista4 = new javax.swing.JButton();
-        lblData9 = new javax.swing.JLabel();
-        campoRegistroRegistro1 = new javax.swing.JTextField();
-        campoEditoraRegistro1 = new javax.swing.JTextField();
-        lblData10 = new javax.swing.JLabel();
-        campoLocalRegistro1 = new javax.swing.JTextField();
-        lblData11 = new javax.swing.JLabel();
+        ComboBoxEditoraRegistro1 = new javax.swing.JComboBox<>();
+        lblEspecificacao10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UEMG Frutal - Revistas");
@@ -2337,7 +2361,7 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneRevistaLayout = new javax.swing.GroupLayout(PaneRevista);
@@ -2402,7 +2426,7 @@ public class DashBoard extends javax.swing.JFrame {
         CampoNovoTituloTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         CampoNovoTituloTipo.setMaximumSize(new java.awt.Dimension(25, 25));
         CampoNovoTituloTipo.setMinimumSize(new java.awt.Dimension(25, 25));
-        CampoNovoTituloTipo.setDocument(new JTextFieldLimit(40, true));
+        CampoNovoTituloTipo.setDocument(new JTextFieldLimit(100, true));
 
         ComboBoxNovoTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ComboBoxNovoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Área", "Especificação", "Editora" }));
@@ -3448,7 +3472,7 @@ public class DashBoard extends javax.swing.JFrame {
         campoTituloRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         campoTituloRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
         campoTituloRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
+        campoTituloRegistro.setDocument(new JTextFieldLimit(150, true, false));
 
         BotaoSalvarNovaRevista1.setBackground(new java.awt.Color(255, 255, 255));
         BotaoSalvarNovaRevista1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -3507,21 +3531,29 @@ public class DashBoard extends javax.swing.JFrame {
             }
         });
 
-        campoEditoraRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoEditoraRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoEditoraRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
-
-        lblData7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData7.setText("Editora");
-
         campoLocalRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         campoLocalRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
         campoLocalRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
+        campoLocalRegistro.setDocument(new JTextFieldLimit(50, true, false));
 
         lblData8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblData8.setText("Local");
+
+        lblEspecificacao9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao9.setText("Editora");
+
+        ComboBoxEditoraRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboBoxEditoraRegistro.setToolTipText("");
+        ComboBoxEditoraRegistro.setDoubleBuffered(true);
+        ComboBoxEditoraRegistro.setEditor(null);
+        ComboBoxEditoraRegistro.setFocusable(false);
+        ComboBoxEditoraRegistro.setMaximumSize(new java.awt.Dimension(35, 26));
+        ComboBoxEditoraRegistro.setName("Selecione"); // NOI18N
+        ComboBoxEditoraRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxEditoraRegistroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PaneGuiaNovaRevista1Layout = new javax.swing.GroupLayout(PaneGuiaNovaRevista1);
         PaneGuiaNovaRevista1.setLayout(PaneGuiaNovaRevista1Layout);
@@ -3530,44 +3562,48 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
                 .addGap(126, 126, 126)
                 .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                            .addComponent(BotaoAdicionarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotaoCancelarNovaRevista3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(BotaoSalvarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblOrigem7)
-                                .addComponent(ComboBoxOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(158, 158, 158)
-                            .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblEspecificacao1)
-                                .addComponent(ComboBoxAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTitulo10)
-                                .addComponent(campoRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                                    .addComponent(lblData6)
-                                    .addGap(705, 705, 705))
-                                .addComponent(campoTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                        .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                .addComponent(BotaoAdicionarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotaoCancelarNovaRevista3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(BotaoSalvarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblOrigem7)
+                                    .addComponent(ComboBoxOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(158, 158, 158)
+                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEspecificacao1)
+                                    .addComponent(ComboBoxAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTitulo10)
+                                    .addComponent(campoRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                        .addComponent(lblData6)
+                                        .addGap(705, 705, 705))
+                                    .addComponent(campoTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(124, Short.MAX_VALUE))
                     .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
                         .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData7)
-                            .addComponent(campoEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblEspecificacao9)
+                            .addComponent(ComboBoxEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData8)
-                            .addComponent(campoLocalRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                .addComponent(lblData8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(campoLocalRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblData3)
-                            .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(124, Short.MAX_VALUE))
+                            .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(132, 132, 132))))
         );
         PaneGuiaNovaRevista1Layout.setVerticalGroup(
             PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3583,19 +3619,20 @@ public class DashBoard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                            .addComponent(lblData8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campoLocalRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                            .addComponent(lblData3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                        .addComponent(lblData7)
+                        .addComponent(lblEspecificacao9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                        .addComponent(lblData8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoLocalRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                        .addComponent(lblData3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ComboBoxEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
@@ -3960,14 +3997,6 @@ public class DashBoard extends javax.swing.JFrame {
         lblData12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblData12.setText("Título");
 
-        lblData13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData13.setText("Editora");
-
-        campoEditoraRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoEditoraRegistro2.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoEditoraRegistro2.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
-
         campoLocalRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         campoLocalRegistro2.setMaximumSize(new java.awt.Dimension(25, 25));
         campoLocalRegistro2.setMinimumSize(new java.awt.Dimension(25, 25));
@@ -4018,6 +4047,22 @@ public class DashBoard extends javax.swing.JFrame {
         lblOrigem13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblOrigem13.setText("Origem");
 
+        ComboBoxEditoraRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboBoxEditoraRegistro2.setToolTipText("");
+        ComboBoxEditoraRegistro2.setDoubleBuffered(true);
+        ComboBoxEditoraRegistro2.setEditor(null);
+        ComboBoxEditoraRegistro2.setFocusable(false);
+        ComboBoxEditoraRegistro2.setMaximumSize(new java.awt.Dimension(35, 26));
+        ComboBoxEditoraRegistro2.setName("Selecione"); // NOI18N
+        ComboBoxEditoraRegistro2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxEditoraRegistro2ActionPerformed(evt);
+            }
+        });
+
+        lblEspecificacao11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao11.setText("Editora");
+
         javax.swing.GroupLayout PaneGuiaAlteraRevista3Layout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista3);
         PaneGuiaAlteraRevista3.setLayout(PaneGuiaAlteraRevista3Layout);
         PaneGuiaAlteraRevista3Layout.setHorizontalGroup(
@@ -4064,10 +4109,10 @@ public class DashBoard extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                    .addComponent(lblData13)
+                                    .addComponent(lblEspecificacao11)
                                     .addGap(327, 327, 327))
                                 .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                    .addComponent(campoEditoraRegistro2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ComboBoxEditoraRegistro2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(31, 31, 31))))
                         .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4143,9 +4188,9 @@ public class DashBoard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoRegistroRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                        .addComponent(lblData13)
+                        .addComponent(lblEspecificacao11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEditoraRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ComboBoxEditoraRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(lblData12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -4186,205 +4231,41 @@ public class DashBoard extends javax.swing.JFrame {
         PaneGuiaNovaRevista2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         PaneGuiaNovaRevista2.setMinimumSize(new java.awt.Dimension(1097, 681));
 
-        ComboBoxOrigemRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxOrigemRegistro1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
-        ComboBoxOrigemRegistro1.setBorder(null);
-        ComboBoxOrigemRegistro1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ComboBoxOrigemRegistro1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        ComboBoxOrigemRegistro1.setEditor(null);
-        ComboBoxOrigemRegistro1.setFocusCycleRoot(true);
-        ComboBoxOrigemRegistro1.setFocusable(false);
-        ComboBoxOrigemRegistro1.setLightWeightPopupEnabled(false);
-        ComboBoxOrigemRegistro1.setMinimumSize(new java.awt.Dimension(25, 25));
-
-        lblData4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData4.setText("Ano");
-
-        lblOrigem8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblOrigem8.setText("Origem");
-
-        lblTitulo14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblTitulo14.setText("Registro");
-
-        ComboBoxAreaRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxAreaRegistro1.setToolTipText("");
-        ComboBoxAreaRegistro1.setDoubleBuffered(true);
-        ComboBoxAreaRegistro1.setEditor(null);
-        ComboBoxAreaRegistro1.setFocusable(false);
-        ComboBoxAreaRegistro1.setMaximumSize(new java.awt.Dimension(35, 26));
-        ComboBoxAreaRegistro1.setName("Selecione"); // NOI18N
-        ComboBoxAreaRegistro1.addActionListener(new java.awt.event.ActionListener() {
+        ComboBoxEditoraRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboBoxEditoraRegistro1.setToolTipText("");
+        ComboBoxEditoraRegistro1.setDoubleBuffered(true);
+        ComboBoxEditoraRegistro1.setEditor(null);
+        ComboBoxEditoraRegistro1.setFocusable(false);
+        ComboBoxEditoraRegistro1.setMaximumSize(new java.awt.Dimension(35, 26));
+        ComboBoxEditoraRegistro1.setName("Selecione"); // NOI18N
+        ComboBoxEditoraRegistro1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxAreaRegistro1ActionPerformed(evt);
+                ComboBoxEditoraRegistro1ActionPerformed(evt);
             }
         });
 
-        campoTituloRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoTituloRegistro1.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro1.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
-
-        BotaoSalvarNovaRevista2.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoSalvarNovaRevista2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BotaoSalvarNovaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Save Close_24px.png"))); // NOI18N
-        BotaoSalvarNovaRevista2.setText("Salvar");
-        BotaoSalvarNovaRevista2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BotaoSalvarNovaRevista2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoSalvarNovaRevista2ActionPerformed(evt);
-            }
-        });
-
-        lblEspecificacao11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblEspecificacao11.setText("Área");
-
-        BotaoAdicionarNovaRevista2.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoAdicionarNovaRevista2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BotaoAdicionarNovaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Add Book_24px.png"))); // NOI18N
-        BotaoAdicionarNovaRevista2.setText("Nova revista");
-        BotaoAdicionarNovaRevista2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BotaoAdicionarNovaRevista2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoAdicionarNovaRevista2ActionPerformed(evt);
-            }
-        });
-
-        campoDataRegistro1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        campoDataRegistro1.setPreferredSize(new java.awt.Dimension(35, 26));
-        campoDataRegistro.setDocument(new JTextFieldLimit(4, false, true));
-        campoDataRegistro1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDataRegistro1ActionPerformed(evt);
-            }
-        });
-
-        BotaoCancelarNovaRevista4.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoCancelarNovaRevista4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BotaoCancelarNovaRevista4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Remove Book_24px.png"))); // NOI18N
-        BotaoCancelarNovaRevista4.setText("Cancelar");
-        BotaoCancelarNovaRevista4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BotaoCancelarNovaRevista4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoCancelarNovaRevista4ActionPerformed(evt);
-            }
-        });
-
-        lblData9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData9.setText("Título");
-
-        campoRegistroRegistro1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        campoRegistroRegistro1.setPreferredSize(new java.awt.Dimension(35, 26));
-        campoRegistroRegistro.setDocument(new JTextFieldLimit(4, false, true));
-        campoRegistroRegistro1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoRegistroRegistro1ActionPerformed(evt);
-            }
-        });
-
-        campoEditoraRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoEditoraRegistro1.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoEditoraRegistro1.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
-
-        lblData10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData10.setText("Editora");
-
-        campoLocalRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoLocalRegistro1.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoLocalRegistro1.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
-
-        lblData11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblData11.setText("Local");
+        lblEspecificacao10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEspecificacao10.setText("Editora");
 
         javax.swing.GroupLayout PaneGuiaNovaRevista2Layout = new javax.swing.GroupLayout(PaneGuiaNovaRevista2);
         PaneGuiaNovaRevista2.setLayout(PaneGuiaNovaRevista2Layout);
         PaneGuiaNovaRevista2Layout.setHorizontalGroup(
             PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(102, 102, 102)
                 .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                            .addComponent(BotaoAdicionarNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotaoCancelarNovaRevista4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(BotaoSalvarNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblOrigem8)
-                                .addComponent(ComboBoxOrigemRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblEspecificacao11)
-                                .addComponent(ComboBoxAreaRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTitulo14)
-                                .addComponent(campoRegistroRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblData9)
-                                .addComponent(campoTituloRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(376, 376, 376)))
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData10)
-                            .addComponent(campoEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData11)
-                            .addComponent(campoLocalRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblData4)
-                            .addComponent(campoDataRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(124, Short.MAX_VALUE))
+                    .addComponent(lblEspecificacao10)
+                    .addComponent(ComboBoxEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(831, Short.MAX_VALUE))
         );
         PaneGuiaNovaRevista2Layout.setVerticalGroup(
             PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblTitulo14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoRegistroRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblData9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoTituloRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblData10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblData11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoLocalRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblData4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDataRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblOrigem8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxOrigemRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                        .addComponent(lblEspecificacao11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxAreaRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotaoSalvarNovaRevista2)
-                    .addComponent(BotaoAdicionarNovaRevista2)
-                    .addComponent(BotaoCancelarNovaRevista4))
-                .addContainerGap(320, Short.MAX_VALUE))
+                .addGap(141, 141, 141)
+                .addComponent(lblEspecificacao10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ComboBoxEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(481, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -4422,7 +4303,7 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(PaneRegistroLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         PaneMae.add(PaneRegistro, "card4");
@@ -4439,7 +4320,7 @@ public class DashBoard extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SideBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 796, Short.MAX_VALUE)
+            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
         );
 
         pack();
@@ -4795,7 +4676,7 @@ public class DashBoard extends javax.swing.JFrame {
                 ListaBuscaArea = areaDAO.ListaBuscaArea(area);
                 ConsultaAreaEspecificacao();
             } catch (SQLException ex) {
-                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
             }
             ConsultaNomeMenuTipo.setText("");
             ConsultaNomeMenuTipo.requestFocus();
@@ -4806,7 +4687,7 @@ public class DashBoard extends javax.swing.JFrame {
                 ListaBuscaEspecificacao = especificacaoDAO.ListaBuscaEspecificacao(especificacao);
                 ConsultaEspecificacaoArea();
             } catch (SQLException ex) {
-                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
             }
             ConsultaNomeMenuTipo.setText("");
             ConsultaNomeMenuTipo.requestFocus();
@@ -4817,7 +4698,7 @@ public class DashBoard extends javax.swing.JFrame {
                 ListaBuscaEditora = editoraDAO.ListaBuscaEditora(editora);
                 ConsultaEditora();
             } catch (SQLException ex) {
-                Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
             }
             ConsultaNomeMenuTipo.setText("");
             ConsultaNomeMenuTipo.requestFocus();
@@ -5104,12 +4985,12 @@ public class DashBoard extends javax.swing.JFrame {
                 editoraDAO.InserirEditora(editora);
 
                 try {
-                    atualizarConsultaEspecificacao();
+                    atualizarConsultaEditora();
 
                     LimpaCamposNovoTipo();
                     TravaCamposNovoTipo();
                     BotaoAdicionarNovoTipo.setEnabled(true);
-
+                    
                     ClearComboBoxEspecificacao();
                     ComboboxEspecificacao();
                     LimpaCombos();
@@ -5279,7 +5160,41 @@ public class DashBoard extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxAreaRegistroActionPerformed
 
     private void BotaoSalvarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoSalvarNovaRevista1ActionPerformed
-        // TODO add your handling code here:
+        if (campoRegistroRegistro.getText().isEmpty() || campoTituloRegistro.getText().isEmpty() || campoLocalRegistro.getText().isEmpty() || campoDataRegistro.getText().isEmpty() 
+                || ComboBoxEditoraRegistro.getSelectedItem() == null || ComboBoxAreaRegistro.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Há campos vazios, preencha-os", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                Registro reg = new Registro();
+
+                reg.setRegistro(Integer.parseInt(campoRegistroRegistro.getText()));
+                reg.setTitulo(campoTituloRegistro.getText());
+                reg.setLocal(campoLocalRegistro.getText());
+                reg.setArea((String) ComboBoxAreaRegistro.getSelectedItem());
+                reg.setAno(Integer.parseInt(campoDataRegistro.getText()));
+                reg.setEditora((String) ComboBoxEditoraRegistro.getSelectedItem());                
+                reg.setOrigem((String) ComboBoxOrigemRegistro.getSelectedItem());
+
+                RegistroDAO registroDAO = new RegistroDAO();
+                registroDAO.InserirNovaRegistro(reg);
+                try {
+                    /*limpaCamposNovaRevista();
+                    TravaCamposDoNovaRevista();
+                    atualizarTabelaRevista();
+                    atualizarConsultaRevista();
+                    TravaBotoesCadRevista();
+                    BotaoAdicionarNovaRevista.setEnabled(true);*/
+
+                    JOptionPane.showMessageDialog(null, "Revista cadastrada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(ex.getMessage());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Essa revista já existe! Erro:" + ex.getMessage(), "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_BotaoSalvarNovaRevista1ActionPerformed
 
     private void BotaoAdicionarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarNovaRevista1ActionPerformed
@@ -5375,30 +5290,6 @@ public class DashBoard extends javax.swing.JFrame {
     private void campoTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoTituloMouseClicked
         System.out.println("Teste");
     }//GEN-LAST:event_campoTituloMouseClicked
-
-    private void ComboBoxAreaRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxAreaRegistro1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxAreaRegistro1ActionPerformed
-
-    private void BotaoSalvarNovaRevista2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoSalvarNovaRevista2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoSalvarNovaRevista2ActionPerformed
-
-    private void BotaoAdicionarNovaRevista2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarNovaRevista2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoAdicionarNovaRevista2ActionPerformed
-
-    private void campoDataRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDataRegistro1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDataRegistro1ActionPerformed
-
-    private void BotaoCancelarNovaRevista4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarNovaRevista4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoCancelarNovaRevista4ActionPerformed
-
-    private void campoRegistroRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRegistroRegistro1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoRegistroRegistro1ActionPerformed
 
     private void campoRegistroRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRegistroRegistro2ActionPerformed
         // TODO add your handling code here:
@@ -5541,6 +5432,18 @@ public class DashBoard extends javax.swing.JFrame {
         TravaTudoEditoraAlterarOuRemover();
         BotaoLiberarAcoesEditora.setEnabled(true);
     }//GEN-LAST:event_TabelaAlterarOuRemoverEditoraMouseClicked
+
+    private void ComboBoxEditoraRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxEditoraRegistroActionPerformed
+
+    private void ComboBoxEditoraRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxEditoraRegistro1ActionPerformed
+
+    private void ComboBoxEditoraRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistro2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxEditoraRegistro2ActionPerformed
 //-------------------------fim das ações de revista ------------------------------------//
 
     public void setLblColor(JLabel lbl) {
@@ -5566,7 +5469,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JTextField AlteraTituloMenuRevistas;
     private javax.swing.JButton BotaoAdicionarNovaRevista;
     private javax.swing.JButton BotaoAdicionarNovaRevista1;
-    private javax.swing.JButton BotaoAdicionarNovaRevista2;
     private javax.swing.JButton BotaoAdicionarNovoTipo;
     private javax.swing.JButton BotaoAlterarArea;
     private javax.swing.JButton BotaoAlterarEditora;
@@ -5583,7 +5485,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JButton BotaoCancelaNovoTipo;
     private javax.swing.JButton BotaoCancelarNovaRevista2;
     private javax.swing.JButton BotaoCancelarNovaRevista3;
-    private javax.swing.JButton BotaoCancelarNovaRevista4;
     private javax.swing.JButton BotaoConsultaArea;
     private javax.swing.JLabel BotaoFerramenta;
     private javax.swing.JButton BotaoLiberaCamposAlterarArea;
@@ -5621,7 +5522,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel BotaoRevista;
     private javax.swing.JButton BotaoSalvarNovaRevista;
     private javax.swing.JButton BotaoSalvarNovaRevista1;
-    private javax.swing.JButton BotaoSalvarNovaRevista2;
     private javax.swing.JButton BotaoSalvarNovoTipo;
     private javax.swing.JComboBox<String> BuscaAreaMenuRevistas;
     private javax.swing.JComboBox<String> BuscaAreaMenuRevistas1;
@@ -5635,13 +5535,14 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JTextField CampoNovoTituloTipo;
     private javax.swing.JComboBox<String> ComboBoxAreaNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxAreaRegistro;
-    private javax.swing.JComboBox<String> ComboBoxAreaRegistro1;
     private javax.swing.JComboBox<String> ComboBoxAreaRegistro2;
+    private javax.swing.JComboBox<String> ComboBoxEditoraRegistro;
+    private javax.swing.JComboBox<String> ComboBoxEditoraRegistro1;
+    private javax.swing.JComboBox<String> ComboBoxEditoraRegistro2;
     private javax.swing.JComboBox<String> ComboBoxEspecificacaoNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxNovoTipo;
     private javax.swing.JComboBox<String> ComboBoxOrigem;
     private javax.swing.JComboBox<String> ComboBoxOrigemRegistro;
-    private javax.swing.JComboBox<String> ComboBoxOrigemRegistro1;
     private javax.swing.JComboBox<String> ComboBoxOrigemRegistro2;
     private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas;
     private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas1;
@@ -5678,21 +5579,14 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JTable TabelaConsultaTipo;
     private javax.swing.JTextField campoData;
     private javax.swing.JTextField campoDataRegistro;
-    private javax.swing.JTextField campoDataRegistro1;
     private javax.swing.JTextField campoDataRegistro2;
-    private javax.swing.JTextField campoEditoraRegistro;
-    private javax.swing.JTextField campoEditoraRegistro1;
-    private javax.swing.JTextField campoEditoraRegistro2;
     private javax.swing.JTextField campoLocalRegistro;
-    private javax.swing.JTextField campoLocalRegistro1;
     private javax.swing.JTextField campoLocalRegistro2;
     private javax.swing.JTextField campoQuantidade;
     private javax.swing.JTextField campoRegistroRegistro;
-    private javax.swing.JTextField campoRegistroRegistro1;
     private javax.swing.JTextField campoRegistroRegistro2;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.JTextField campoTituloRegistro;
-    private javax.swing.JTextField campoTituloRegistro1;
     private javax.swing.JTextField campoTituloRegistro2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -5735,21 +5629,16 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane3;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblData1;
-    private javax.swing.JLabel lblData10;
-    private javax.swing.JLabel lblData11;
     private javax.swing.JLabel lblData12;
-    private javax.swing.JLabel lblData13;
     private javax.swing.JLabel lblData14;
     private javax.swing.JLabel lblData15;
     private javax.swing.JLabel lblData2;
     private javax.swing.JLabel lblData3;
-    private javax.swing.JLabel lblData4;
     private javax.swing.JLabel lblData6;
-    private javax.swing.JLabel lblData7;
     private javax.swing.JLabel lblData8;
-    private javax.swing.JLabel lblData9;
     private javax.swing.JLabel lblEspecificacao;
     private javax.swing.JLabel lblEspecificacao1;
+    private javax.swing.JLabel lblEspecificacao10;
     private javax.swing.JLabel lblEspecificacao11;
     private javax.swing.JLabel lblEspecificacao12;
     private javax.swing.JLabel lblEspecificacao2;
@@ -5759,6 +5648,7 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel lblEspecificacao6;
     private javax.swing.JLabel lblEspecificacao7;
     private javax.swing.JLabel lblEspecificacao8;
+    private javax.swing.JLabel lblEspecificacao9;
     private javax.swing.JLabel lblIDAlteraArea;
     private javax.swing.JLabel lblIDAlteraEditora;
     private javax.swing.JLabel lblIDAlteraEsp;
@@ -5773,7 +5663,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel lblOrigem5;
     private javax.swing.JLabel lblOrigem6;
     private javax.swing.JLabel lblOrigem7;
-    private javax.swing.JLabel lblOrigem8;
     private javax.swing.JLabel lblOrigem9;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTitulo1;
@@ -5781,7 +5670,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo11;
     private javax.swing.JLabel lblTitulo12;
     private javax.swing.JLabel lblTitulo13;
-    private javax.swing.JLabel lblTitulo14;
     private javax.swing.JLabel lblTitulo15;
     private javax.swing.JLabel lblTitulo16;
     private javax.swing.JLabel lblTitulo2;
