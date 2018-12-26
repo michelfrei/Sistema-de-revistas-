@@ -34,7 +34,7 @@ public class RegistroDAO {
         stmt.close();
     }
 
-    public void RemoverRevista(Registro reg) throws SQLException {
+    public void RemoverRegistro(Registro reg) throws SQLException {
         String SQL = "Delete from revista.registro where registro=?";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -44,7 +44,7 @@ public class RegistroDAO {
         stmt.close();
     }
 
-    public void AlterarRevista(Registro reg) throws SQLException {
+    public void AlterarRegistro(Registro reg) throws SQLException {
         String SQL = SQL = "update revista.registro set Titulo=?, Editora=?, Origem=?, Local=?, Area=?, Ano=? where registro = ?";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -66,7 +66,7 @@ public class RegistroDAO {
         ArrayList<Registro> ListaRegistros;
         ListaRegistros = new ArrayList<>();
 
-        String SQL = "select* from revista.registros order by registro ASC";
+        String SQL = "select* from revista.registro order by registro ASC";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -79,7 +79,7 @@ public class RegistroDAO {
                         rs.getString("Origem"),
                         rs.getString("local"),
                         rs.getString("Area"),
-                        rs.getInt("Data")));
+                        rs.getInt("Ano")));
 
             }
         } catch (Exception e) {
@@ -90,49 +90,50 @@ public class RegistroDAO {
 
     }
 
-    public List<Registro> ListaBuscaRevista(Registro reg) throws SQLException {
+    public List<Registro> ListaBuscaRegistros(Registro reg) throws SQLException {
         List<Registro> retorno = new ArrayList<Registro>();
 
         String SQL = "select * from revista.registro ";
 
-        /*if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null) {
-            SQL += " where Titulo like ? order by id ASC";
-        } else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null) {
-            SQL += " where Area like ? order by id ASC";
-        } else if (rev.getArea() == null && rev.getTitulo() == null && rev.getEspecificacao() != null) {
-            SQL += " where Especificacao like ? order by id ASC";
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? order by id ASC";
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null) {
-            SQL += " where Titulo like ? and Especificacao like ? order by id ASC";
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Titulo like ? and Area like ? and Especificacao like ? order by id ASC";
-        } else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            SQL += " where Area like ? and Especificacao like ? order by id ASC";
-        }*/
+        if (reg.getTitulo() != null && reg.getRegistro()== 0 && reg.getArea() == null) {
+            SQL += " where Titulo like ? order by registro ASC";
+        } else if (reg.getArea() != null && reg.getTitulo() == null && reg.getRegistro() == 0) {
+            SQL += " where Area like ? order by registro ASC";
+        } else if (reg.getArea() == null && reg.getTitulo() == null && reg.getRegistro() != 0) {
+            SQL += " where Registro = ? order by registro ASC";
+        } else if (reg.getTitulo() != null && reg.getRegistro() == 0 && reg.getArea() != null) {
+            SQL += " where Titulo like ? and Area like ? order by registro ASC";
+        } else if (reg.getTitulo() != null && reg.getRegistro() != 0 && reg.getArea() == null) {
+            SQL += " where Titulo like ? and Registro = ? order by registro ASC";
+        } else if (reg.getTitulo() != null && reg.getRegistro() != 0 && reg.getArea() != null) {
+            SQL += " where Titulo like ? and Area like ? and Registro = ? order by registro ASC";
+        } else if (reg.getTitulo() == null && reg.getRegistro() != 0 && reg.getArea() != null) {
+            SQL += " where Area like ? and Registro = ? order by registro ASC";
+        }
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-        /*if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() == null) {
-            stmt.setString(1, "%" + rev.getTitulo() + "%");
-        } else if (rev.getArea() != null && rev.getTitulo() == null && rev.getEspecificacao() == null) {
-            stmt.setString(1, "%" + rev.getArea() + "%");
-        } else if (rev.getArea() == null && rev.getTitulo() == null && rev.getEspecificacao() != null) {
-            stmt.setString(1, "%" + rev.getEspecificacao() + "%");
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() == null && rev.getArea() != null) {
-            stmt.setString(1, "%" + rev.getTitulo() + "%");
-            stmt.setString(2, rev.getArea());
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() == null) {
-            stmt.setString(1, "%" + rev.getTitulo() + "%");
-            stmt.setString(2, rev.getEspecificacao());
-        } else if (rev.getTitulo() != null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            stmt.setString(1, "%" + rev.getTitulo() + "%");
-            stmt.setString(2, rev.getArea());
-            stmt.setString(3, rev.getEspecificacao());
-        } else if (rev.getTitulo() == null && rev.getEspecificacao() != null && rev.getArea() != null) {
-            stmt.setString(1, rev.getArea());
-            stmt.setString(2, rev.getEspecificacao());
-        }*/
+        if (reg.getTitulo() != null && reg.getRegistro()== 0 && reg.getArea() == null) {
+            stmt.setString(1, "%" + reg.getTitulo() + "%");
+        } else if (reg.getArea() != null && reg.getTitulo() == null && reg.getRegistro() == 0) {
+            stmt.setString(1, "%" + reg.getArea() + "%");
+        } else if (reg.getArea() == null && reg.getTitulo() == null && reg.getRegistro() != 0) {
+            stmt.setInt(1, reg.getRegistro());
+        } else if (reg.getTitulo() != null && reg.getRegistro() == 0 && reg.getArea() != null) {
+            stmt.setString(1, "%" + reg.getTitulo() + "%");
+            stmt.setString(2, reg.getArea());
+        } else if (reg.getTitulo() != null && reg.getRegistro() != 0 && reg.getArea() == null) {
+            stmt.setString(1, "%" + reg.getTitulo() + "%");
+            stmt.setInt(2, reg.getRegistro());
+        } else if (reg.getTitulo() != null && reg.getRegistro() != 0 && reg.getArea() != null) {
+            stmt.setString(1, "%" + reg.getTitulo() + "%");
+            stmt.setString(2, reg.getArea());
+            stmt.setInt(3, reg.getRegistro());
+        } else if (reg.getTitulo() == null && reg.getRegistro() != 0 && reg.getArea() != null) {
+            stmt.setString(1, reg.getArea());
+            stmt.setInt(2, reg.getRegistro());
+        }
+        
         try {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -142,7 +143,7 @@ public class RegistroDAO {
                         rs.getString("Origem"),
                         rs.getString("local"),
                         rs.getString("Area"),
-                        rs.getInt("Data")));
+                        rs.getInt("Ano")));
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -62,7 +62,10 @@ public class Board extends javax.swing.JFrame {
         ResetColor(BotaoFerramenta);
         ResetColor(BotaoRegistro);
         LimpaCombos();
-
+        atualizarConsultaRegistro();
+        ComboBoxConsultaAreaRegistro();
+        ConsultaAreaRegistro.setSelectedItem(null);
+        atualizarBuscaRegistro();
     }
 
     private void inicioFerramentas() {
@@ -834,6 +837,23 @@ public class Board extends javax.swing.JFrame {
         }
     }
     
+    private void ComboBoxConsultaAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ConsultaAreaRegistro.addItem(Nome);
+                
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+    
     //------------------------------------ fim das operacoes de lista referente a revista
     //------------------------------------ inicio das operacoes de lista referente a ferramenta
     public void atualizarConsultaArea() {
@@ -1153,79 +1173,215 @@ public class Board extends javax.swing.JFrame {
     }
 
     //-----------------------------------------------------------------------------------
-    /*public void atualizarConsultaRegistro() {
+    public void atualizarConsultaRegistro() {
 
-        Editora editora = new Editora();
-        EditoraDAO editoraDAO = new EditoraDAO();
+        Registro reg = new Registro();
+        RegistroDAO registroDAO = new RegistroDAO();
         try {
-            ListaEditora = editoraDAO.ListaEditora();
+            ListaRegistro = registroDAO.ListaRegistros();
         } catch (SQLException ex) {
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String dados[][] = new String[ListaEditora.size()][2];
+        String dados[][] = new String[ListaRegistro.size()][7];
         int i = 0;
-        for (Editora ed : ListaEditora) {
-            dados[i][0] = String.valueOf(ed.getId());
-            dados[i][1] = ed.getNome();
+        for (Registro registro : ListaRegistro) {
+            dados[i][0] = String.valueOf(registro.getRegistro());
+            dados[i][1] = registro.getTitulo();
+            dados[i][2] = registro.getEditora();
+            dados[i][3] = registro.getOrigem();
+            dados[i][4] = registro.getLocal();
+            dados[i][5] = registro.getArea();
+            dados[i][6] = String.valueOf(registro.getAno());
             i++;
         }
-        String tituloColuna[] = {"id", "Nome"};
+        String tituloColuna[] = {"Registro", "Titulo", "Editora", "Origem", "Local", "Área", "Ano"};
         DefaultTableModel tabelaCliente = new DefaultTableModel();
         tabelaCliente.setDataVector(dados, tituloColuna);
-        TabelaAlterarOuRemoverArea.setModel(new DefaultTableModel(dados, tituloColuna) {
+        TabelaConsultaRegistro.setModel(new DefaultTableModel(dados, tituloColuna) {
             boolean[] canEdit = new boolean[]{
-                false, false};
+                false, false, false, false, false, false, false};
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         });
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setPreferredWidth(20);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setPreferredWidth(500);
-
+        TabelaConsultaRegistro.getColumnModel().getColumn(0).setPreferredWidth(20);
+        TabelaConsultaRegistro.getColumnModel().getColumn(1).setPreferredWidth(180);
+        TabelaConsultaRegistro.getColumnModel().getColumn(2).setPreferredWidth(100);
+        TabelaConsultaRegistro.getColumnModel().getColumn(3).setPreferredWidth(100);
+        TabelaConsultaRegistro.getColumnModel().getColumn(4).setPreferredWidth(30);
+        TabelaConsultaRegistro.getColumnModel().getColumn(5).setPreferredWidth(50);
+        TabelaConsultaRegistro.getColumnModel().getColumn(6).setPreferredWidth(60);
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setCellRenderer(centralizado);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setCellRenderer(centralizado);
-        TabelaAlterarOuRemoverArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        TabelaConsultaRegistro.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(3).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(4).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(5).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        TabelaAlterarOuRemoverArea.setRowHeight(25);
-        TabelaAlterarOuRemoverArea.updateUI();
+        TabelaConsultaRegistro.setRowHeight(25);
+        TabelaConsultaRegistro.updateUI();
     }
 
-    public void ConsultaAreaAlterar() {
-        Area area = new Area();
-        String dados[][] = new String[ListaBuscaArea.size()][2];
+    public void ConsultaRegistroComFiltro() {
+        Registro reg = new Registro();
+        String dados[][] = new String[ListaBuscaRegistro.size()][7];
         int i = 0;
-        for (Area ar : ListaBuscaArea) {
-            dados[i][0] = String.valueOf(ar.getId());
-            dados[i][1] = ar.getNome();
-
+        for (Registro registro : ListaBuscaRegistro) {
+            dados[i][0] = String.valueOf(registro.getRegistro());
+            dados[i][1] = registro.getTitulo();
+            dados[i][2] = registro.getEditora();
+            dados[i][3] = registro.getOrigem();
+            dados[i][4] = registro.getLocal();
+            dados[i][5] = registro.getArea();
+            dados[i][6] = String.valueOf(registro.getAno());
             i++;
         }
-        String tituloColuna[] = {"id", "Nome"};
+        String tituloColuna[] = {"Registro", "Titulo", "Editora", "Origem", "Local", "Área", "Ano"};
         DefaultTableModel tabelaCliente = new DefaultTableModel();
         tabelaCliente.setDataVector(dados, tituloColuna);
-        TabelaAlterarOuRemoverArea.setModel(new DefaultTableModel(dados, tituloColuna) {
+        TabelaConsultaRegistro.setModel(new DefaultTableModel(dados, tituloColuna) {
             boolean[] canEdit = new boolean[]{
-                false, false};
+                false, false, false, false, false, false, false,};
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         });
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setPreferredWidth(20);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setPreferredWidth(500);
-
+        TabelaConsultaRegistro.getColumnModel().getColumn(0).setPreferredWidth(20);
+        TabelaConsultaRegistro.getColumnModel().getColumn(1).setPreferredWidth(180);
+        TabelaConsultaRegistro.getColumnModel().getColumn(2).setPreferredWidth(100);
+        TabelaConsultaRegistro.getColumnModel().getColumn(3).setPreferredWidth(100);
+        TabelaConsultaRegistro.getColumnModel().getColumn(4).setPreferredWidth(30);
+        TabelaConsultaRegistro.getColumnModel().getColumn(5).setPreferredWidth(50);
+        TabelaConsultaRegistro.getColumnModel().getColumn(6).setPreferredWidth(60);
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
         centralizado.setHorizontalAlignment(SwingConstants.CENTER);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(0).setCellRenderer(centralizado);
-        TabelaAlterarOuRemoverArea.getColumnModel().getColumn(1).setCellRenderer(centralizado);
-        TabelaAlterarOuRemoverArea.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        TabelaConsultaRegistro.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(3).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(4).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(5).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaConsultaRegistro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        TabelaAlterarOuRemoverArea.setRowHeight(25);
-        TabelaAlterarOuRemoverArea.updateUI();
-    }*/
+        TabelaConsultaRegistro.setRowHeight(25);
+        TabelaConsultaRegistro.updateUI();
+    }
+    
+        public void atualizarBuscaRegistro() {
+
+        Registro reg = new Registro();
+        RegistroDAO registroDAO = new RegistroDAO();
+        try {
+            ListaRegistro = registroDAO.ListaRegistros();
+        } catch (SQLException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String dados[][] = new String[ListaRegistro.size()][7];
+        int i = 0;
+        for (Registro registro : ListaRegistro) {
+            dados[i][0] = String.valueOf(registro.getRegistro());
+            dados[i][1] = registro.getTitulo();
+            dados[i][2] = registro.getEditora();
+            dados[i][3] = registro.getOrigem();
+            dados[i][4] = registro.getLocal();
+            dados[i][5] = registro.getArea();
+            dados[i][6] = String.valueOf(registro.getAno());
+            i++;
+        }
+        String tituloColuna[] = {"Registro", "Titulo", "Editora", "Origem", "Local", "Área", "Ano"};
+        DefaultTableModel tabelaCliente = new DefaultTableModel();
+        tabelaCliente.setDataVector(dados, tituloColuna);
+        TabelaAlterarOuRemoverRegistro.setModel(new DefaultTableModel(dados, tituloColuna) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false};
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(0).setPreferredWidth(20);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(1).setPreferredWidth(180);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(2).setPreferredWidth(100);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(3).setPreferredWidth(100);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(4).setPreferredWidth(30);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(5).setPreferredWidth(50);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(6).setPreferredWidth(60);
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(3).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(4).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(5).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        TabelaAlterarOuRemoverRegistro.setRowHeight(25);
+        TabelaAlterarOuRemoverRegistro.updateUI();
+    }
+
+    public void BuscaRegistroComFiltro() {
+        Registro reg = new Registro();
+        String dados[][] = new String[ListaBuscaRegistro.size()][7];
+        int i = 0;
+        for (Registro registro : ListaBuscaRegistro) {
+            dados[i][0] = String.valueOf(registro.getRegistro());
+            dados[i][1] = registro.getTitulo();
+            dados[i][2] = registro.getEditora();
+            dados[i][3] = registro.getOrigem();
+            dados[i][4] = registro.getLocal();
+            dados[i][5] = registro.getArea();
+            dados[i][6] = String.valueOf(registro.getAno());
+            i++;
+        }
+        String tituloColuna[] = {"Registro", "Titulo", "Editora", "Origem", "Local", "Área", "Ano"};
+        DefaultTableModel tabelaCliente = new DefaultTableModel();
+        tabelaCliente.setDataVector(dados, tituloColuna);
+        TabelaAlterarOuRemoverRegistro.setModel(new DefaultTableModel(dados, tituloColuna) {
+            boolean[] canEdit = new boolean[]{
+                false, false, false, false, false, false, false,};
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        });
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(0).setPreferredWidth(20);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(1).setPreferredWidth(180);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(2).setPreferredWidth(100);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(3).setPreferredWidth(100);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(4).setPreferredWidth(30);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(5).setPreferredWidth(50);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(6).setPreferredWidth(60);
+        DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+        centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(0).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(3).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(4).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(5).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.getColumnModel().getColumn(6).setCellRenderer(centralizado);
+        TabelaAlterarOuRemoverRegistro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        TabelaAlterarOuRemoverRegistro.setRowHeight(25);
+        TabelaAlterarOuRemoverRegistro.updateUI();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     //------------------------------------------------------------------------------------
     public void ResetaTabelaConsultaTipo() {
         ((DefaultTableModel) TabelaConsultaTipo.getModel()).setRowCount(0);
@@ -1261,13 +1417,14 @@ public class Board extends javax.swing.JFrame {
         BotaoFerramenta = new javax.swing.JLabel();
         BotaoRevista = new javax.swing.JLabel();
         BotaoRegistro = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         PaneMae = new javax.swing.JPanel();
         PaneRevista = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        PaneGuiaNovaRevista = new javax.swing.JPanel();
+        PaneNovaRevista = new javax.swing.JPanel();
         ComboBoxOrigem = new javax.swing.JComboBox<>();
         lblData = new javax.swing.JLabel();
         lblOrigem = new javax.swing.JLabel();
@@ -1283,7 +1440,7 @@ public class Board extends javax.swing.JFrame {
         campoData = new javax.swing.JTextField();
         BotaoCancelarNovaRevista2 = new javax.swing.JButton();
         ComboBoxEspecificacaoNovaRevista = new javax.swing.JComboBox<>();
-        PaneGuiaConsulta = new javax.swing.JPanel();
+        PaneConsultaRevista = new javax.swing.JPanel();
         ConsultaTituloMenuRevistas = new javax.swing.JTextField();
         lblTitulo5 = new javax.swing.JLabel();
         lblOrigem6 = new javax.swing.JLabel();
@@ -1295,7 +1452,7 @@ public class Board extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelaConsultaRevista = new javax.swing.JTable();
         BotaoLimpaConsultaRevista = new javax.swing.JButton();
-        PaneGuiaAlteraRevista = new javax.swing.JPanel();
+        PaneAlteraRevista = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lblData1 = new javax.swing.JLabel();
         BuscaTituloMenuRevistas = new javax.swing.JTextField();
@@ -1333,7 +1490,7 @@ public class Board extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jPanel7 = new javax.swing.JPanel();
+        PaneCadastraGeral = new javax.swing.JPanel();
         lblTitulo1 = new javax.swing.JLabel();
         CampoNovoTituloTipo = new javax.swing.JTextField();
         ComboBoxNovoTipo = new javax.swing.JComboBox<>();
@@ -1341,7 +1498,7 @@ public class Board extends javax.swing.JFrame {
         BotaoAdicionarNovoTipo = new javax.swing.JButton();
         BotaoCancelaNovoTipo = new javax.swing.JButton();
         BotaoSalvarNovoTipo = new javax.swing.JButton();
-        PaneGuiaConsulta1 = new javax.swing.JPanel();
+        PaneConsultaGeral = new javax.swing.JPanel();
         ConsultaNomeMenuTipo = new javax.swing.JTextField();
         lblTitulo6 = new javax.swing.JLabel();
         ConsultaTipoComboBox = new javax.swing.JComboBox<>();
@@ -1351,7 +1508,7 @@ public class Board extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         TabelaConsultaTipo = new javax.swing.JTable();
         BotaoLimpaConsulta = new javax.swing.JButton();
-        PaneGuiaAlteraRevista1 = new javax.swing.JPanel();
+        PaneGerenciaArea = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         BuscaTituloMenuArea = new javax.swing.JTextField();
         lblTitulo4 = new javax.swing.JLabel();
@@ -1370,7 +1527,7 @@ public class Board extends javax.swing.JFrame {
         BotaoLimpaCamposAlterarArea = new javax.swing.JButton();
         BotaoLimpaAlterarOuRemoverArea = new javax.swing.JButton();
         BotaoLiberaCamposAlterarArea = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
+        PaneGerenciaEspecificacao = new javax.swing.JPanel();
         PaneGuiaAlteraRevista2 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         BuscaTituloMenuEspecificacao = new javax.swing.JTextField();
@@ -1390,7 +1547,7 @@ public class Board extends javax.swing.JFrame {
         BotaoLiberarAcoesEsp = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         TabelaAlterarOuRemoverEspecificacao = new javax.swing.JTable();
-        PaneGuiaAlteraRevista4 = new javax.swing.JPanel();
+        PaneGerenciaEditora = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         BuscaTituloMenuEditora = new javax.swing.JTextField();
         lblTitulo13 = new javax.swing.JLabel();
@@ -1413,7 +1570,7 @@ public class Board extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTabbedPane3 = new javax.swing.JTabbedPane();
-        PaneGuiaNovaRevista1 = new javax.swing.JPanel();
+        PaneCadastroRegistro = new javax.swing.JPanel();
         ComboBoxOrigemRegistro = new javax.swing.JComboBox<>();
         lblData3 = new javax.swing.JLabel();
         lblOrigem7 = new javax.swing.JLabel();
@@ -1431,55 +1588,51 @@ public class Board extends javax.swing.JFrame {
         lblData8 = new javax.swing.JLabel();
         lblEspecificacao9 = new javax.swing.JLabel();
         ComboBoxEditoraRegistro = new javax.swing.JComboBox<>();
-        PaneGuiaConsulta2 = new javax.swing.JPanel();
-        ConsultaTituloMenuRevistas1 = new javax.swing.JTextField();
+        PaneConsultaRegistro = new javax.swing.JPanel();
+        ConsultaTituloRegistro = new javax.swing.JTextField();
         lblTitulo11 = new javax.swing.JLabel();
         lblOrigem9 = new javax.swing.JLabel();
-        ConsultaAreaMenuRevistas1 = new javax.swing.JComboBox<>();
-        ConsultaEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
-        lblEspecificacao7 = new javax.swing.JLabel();
+        ConsultaAreaRegistro = new javax.swing.JComboBox<>();
         BotaoBuscaConsultaRevista1 = new javax.swing.JButton();
         BotaoNovaBuscaConsultaRevista1 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        TabelaConsultaRevista1 = new javax.swing.JTable();
+        TabelaConsultaRegistro = new javax.swing.JTable();
         BotaoLimpaConsultaRevista1 = new javax.swing.JButton();
-        PaneGuiaAlteraRevista3 = new javax.swing.JPanel();
+        lblTitulo14 = new javax.swing.JLabel();
+        ConsultaRegistroRegistro = new javax.swing.JTextField();
+        PaneGerenciaRegistro = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        BuscaTituloMenuRevistas1 = new javax.swing.JTextField();
+        BuscaTituloRegistro = new javax.swing.JTextField();
         lblTitulo12 = new javax.swing.JLabel();
         BuscaEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
-        lblOrigem10 = new javax.swing.JLabel();
-        BuscaAreaMenuRevistas1 = new javax.swing.JComboBox<>();
         lblEspecificacao8 = new javax.swing.JLabel();
         BotaoBuscaAlterarOuRemoverRevista1 = new javax.swing.JButton();
         BotaoAlterarRevistas1 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jScrollPane7 = new javax.swing.JScrollPane();
-        TabelaAlterarOuRemoverRevista1 = new javax.swing.JTable();
+        TabelaAlterarOuRemoverRegistro = new javax.swing.JTable();
         BotaoRemoverRevistas1 = new javax.swing.JButton();
         BotaoResetaPesquisaAlterarOuRemoverRevista1 = new javax.swing.JButton();
         BotaoLimpaCamposAlterarRevistas1 = new javax.swing.JButton();
         BotaoLimpaBuscaRevista1 = new javax.swing.JButton();
         BotaoLiberaCamposAlterarRevistas1 = new javax.swing.JButton();
-        campoRegistroRegistro2 = new javax.swing.JTextField();
+        AlteraRegistroRegistro = new javax.swing.JTextField();
         lblTitulo15 = new javax.swing.JLabel();
-        campoTituloRegistro2 = new javax.swing.JTextField();
+        AlteraTituloRegistro = new javax.swing.JTextField();
         lblData12 = new javax.swing.JLabel();
-        campoLocalRegistro2 = new javax.swing.JTextField();
+        AlteraLocalRegistro = new javax.swing.JTextField();
         lblData14 = new javax.swing.JLabel();
-        campoDataRegistro2 = new javax.swing.JTextField();
+        AlteraAnoRegistro = new javax.swing.JTextField();
         lblData15 = new javax.swing.JLabel();
-        ComboBoxAreaRegistro2 = new javax.swing.JComboBox<>();
+        AlteraAreaRegistro = new javax.swing.JComboBox<>();
         lblEspecificacao12 = new javax.swing.JLabel();
-        ComboBoxOrigemRegistro2 = new javax.swing.JComboBox<>();
+        AlteraOrigemRegistro = new javax.swing.JComboBox<>();
         lblOrigem13 = new javax.swing.JLabel();
-        ComboBoxEditoraRegistro2 = new javax.swing.JComboBox<>();
+        AlteraEditoraRegistro = new javax.swing.JComboBox<>();
         lblEspecificacao11 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        PaneGuiaNovaRevista2 = new javax.swing.JPanel();
-        ComboBoxEditoraRegistro1 = new javax.swing.JComboBox<>();
-        lblEspecificacao10 = new javax.swing.JLabel();
+        ConsultaRegistroRegistro1 = new javax.swing.JTextField();
+        lblTitulo17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UEMG Frutal - Revistas");
@@ -1493,7 +1646,7 @@ public class Board extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Utsaah", 0, 40)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("UEMG Frutal");
+        jLabel1.setText("UEMG");
 
         BotaoFerramenta.setBackground(new java.awt.Color(37, 103, 125));
         BotaoFerramenta.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
@@ -1537,6 +1690,11 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Utsaah", 0, 40)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Frutal");
+
         javax.swing.GroupLayout SideBoardLayout = new javax.swing.GroupLayout(SideBoard);
         SideBoard.setLayout(SideBoardLayout);
         SideBoardLayout.setHorizontalGroup(
@@ -1544,18 +1702,22 @@ public class Board extends javax.swing.JFrame {
             .addComponent(BotaoRevista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(BotaoFerramenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+            .addComponent(BotaoRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(SideBoardLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jSeparator1)
+                .addGroup(SideBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(BotaoRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         SideBoardLayout.setVerticalGroup(
             SideBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SideBoardLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addGap(35, 35, 35)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BotaoRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1563,7 +1725,7 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(BotaoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BotaoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(425, Short.MAX_VALUE))
         );
 
         PaneMae.setBackground(new java.awt.Color(255, 255, 255));
@@ -1612,9 +1774,9 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        PaneGuiaNovaRevista.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaNovaRevista.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PaneGuiaNovaRevista.setMinimumSize(new java.awt.Dimension(1097, 681));
+        PaneNovaRevista.setBackground(new java.awt.Color(255, 255, 255));
+        PaneNovaRevista.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        PaneNovaRevista.setMinimumSize(new java.awt.Dimension(1097, 681));
 
         ComboBoxOrigem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ComboBoxOrigem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
@@ -1737,64 +1899,64 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaNovaRevistaLayout = new javax.swing.GroupLayout(PaneGuiaNovaRevista);
-        PaneGuiaNovaRevista.setLayout(PaneGuiaNovaRevistaLayout);
-        PaneGuiaNovaRevistaLayout.setHorizontalGroup(
-            PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
+        javax.swing.GroupLayout PaneNovaRevistaLayout = new javax.swing.GroupLayout(PaneNovaRevista);
+        PaneNovaRevista.setLayout(PaneNovaRevistaLayout);
+        PaneNovaRevistaLayout.setHorizontalGroup(
+            PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
                 .addGap(126, 126, 126)
-                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
+                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
                         .addComponent(BotaoAdicionarNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoCancelarNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoSalvarNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblTitulo))
-                    .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
-                        .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
-                                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
+                        .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblData)
                                     .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblOrigem1)
                                     .addComponent(ComboBoxEspecificacaoNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(64, 64, 64)
-                                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblEspecificacao)
                                     .addComponent(ComboBoxAreaNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
-                                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblOrigem)
                                     .addComponent(ComboBoxOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblData2)
                             .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
-        PaneGuiaNovaRevistaLayout.setVerticalGroup(
-            PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevistaLayout.createSequentialGroup()
+        PaneNovaRevistaLayout.setVerticalGroup(
+            PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
-                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblData)
                     .addComponent(lblOrigem1)
                     .addComponent(lblEspecificacao)
                     .addComponent(lblData2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ComboBoxAreaNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ComboBoxEspecificacaoNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1803,16 +1965,16 @@ public class Board extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ComboBoxOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
-                .addGroup(PaneGuiaNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoSalvarNovaRevista)
                     .addComponent(BotaoAdicionarNovaRevista)
                     .addComponent(BotaoCancelarNovaRevista2))
                 .addContainerGap(318, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cadastrar", PaneGuiaNovaRevista);
+        jTabbedPane1.addTab("Cadastrar", PaneNovaRevista);
 
-        PaneGuiaConsulta.setBackground(new java.awt.Color(255, 255, 255));
+        PaneConsultaRevista.setBackground(new java.awt.Color(255, 255, 255));
 
         ConsultaTituloMenuRevistas.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConsultaTituloMenuRevistas.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -1915,57 +2077,57 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaConsultaLayout = new javax.swing.GroupLayout(PaneGuiaConsulta);
-        PaneGuiaConsulta.setLayout(PaneGuiaConsultaLayout);
-        PaneGuiaConsultaLayout.setHorizontalGroup(
-            PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+        javax.swing.GroupLayout PaneConsultaRevistaLayout = new javax.swing.GroupLayout(PaneConsultaRevista);
+        PaneConsultaRevista.setLayout(PaneConsultaRevistaLayout);
+        PaneConsultaRevistaLayout.setHorizontalGroup(
+            PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                 .addGap(79, 79, 79)
-                .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+                .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                         .addComponent(BotaoNovaBuscaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoBuscaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BotaoLimpaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
-                        .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
+                        .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTitulo5)
                             .addComponent(ConsultaTituloMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ConsultaEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEspecificacao4))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblOrigem6)
                             .addComponent(ConsultaAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)))
                 .addContainerGap(94, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaConsultaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneConsultaRevistaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
-        PaneGuiaConsultaLayout.setVerticalGroup(
-            PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+        PaneConsultaRevistaLayout.setVerticalGroup(
+            PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                 .addGap(73, 73, 73)
-                .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+                .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                         .addComponent(lblTitulo5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ConsultaTituloMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+                    .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ConsultaEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsultaLayout.createSequentialGroup()
+                    .addGroup(PaneConsultaRevistaLayout.createSequentialGroup()
                         .addComponent(lblOrigem6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ConsultaAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53)
-                .addGroup(PaneGuiaConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneConsultaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoBuscaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoLimpaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoNovaBuscaConsultaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1973,10 +2135,10 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Consultar", PaneGuiaConsulta);
+        jTabbedPane1.addTab("Consultar", PaneConsultaRevista);
 
-        PaneGuiaAlteraRevista.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaAlteraRevista.setToolTipText("");
+        PaneAlteraRevista.setBackground(new java.awt.Color(255, 255, 255));
+        PaneAlteraRevista.setToolTipText("");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
         jLabel4.setText("Propriedades da revista");
@@ -2205,66 +2367,66 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaAlteraRevistaLayout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista);
-        PaneGuiaAlteraRevista.setLayout(PaneGuiaAlteraRevistaLayout);
-        PaneGuiaAlteraRevistaLayout.setHorizontalGroup(
-            PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+        javax.swing.GroupLayout PaneAlteraRevistaLayout = new javax.swing.GroupLayout(PaneAlteraRevista);
+        PaneAlteraRevista.setLayout(PaneAlteraRevistaLayout);
+        PaneAlteraRevistaLayout.setHorizontalGroup(
+            PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
+                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                 .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotaoBuscaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(BotaoLimpaBuscaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneAlteraRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblOrigem4)
                                     .addComponent(BuscaAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
-                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(BuscaEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblEspecificacao2))
                                 .addGap(66, 66, 66))
                             .addComponent(BuscaTituloMenuRevistas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(lblTitulo2))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneAlteraRevistaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblEspecificacao5)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitulo3)
                     .addComponent(AlteraTituloMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AlteraQuantidadeMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneAlteraRevistaLayout.createSequentialGroup()
+                            .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblOrigem5)
                                 .addComponent(lblEspecificacao3)
                                 .addComponent(AlteraAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(AlteraEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(112, 112, 112)
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblData1)
                                 .addComponent(AlteraOrigemMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblOrigem2)
                                 .addComponent(AlteraAnoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
+                            .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(BotaoLiberaCamposAlterarRevistas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                                .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                     .addComponent(lblIDAlteraRevista)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(IDTravadoAlteraRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2276,12 +2438,12 @@ public class Board extends javax.swing.JFrame {
                             .addGap(3, 3, 3))))
                 .addGap(17, 17, 17))
         );
-        PaneGuiaAlteraRevistaLayout.setVerticalGroup(
-            PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PaneAlteraRevistaLayout.setVerticalGroup(
+            PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
+                .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                    .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2289,44 +2451,44 @@ public class Board extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BuscaTituloMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                 .addComponent(lblOrigem4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BuscaAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addComponent(lblEspecificacao2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(BuscaEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoBuscaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoLimpaBuscaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                    .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTitulo3)
                         .addGap(4, 4, 4)
                         .addComponent(AlteraTituloMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                 .addComponent(lblOrigem5)
                                 .addGap(3, 3, 3)
                                 .addComponent(AlteraEspecificacaoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PaneGuiaAlteraRevistaLayout.createSequentialGroup()
+                            .addGroup(PaneAlteraRevistaLayout.createSequentialGroup()
                                 .addComponent(lblData1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(AlteraAnoMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblEspecificacao3)
                             .addComponent(lblOrigem2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(AlteraAreaMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(AlteraOrigemMenuRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -2336,18 +2498,18 @@ public class Board extends javax.swing.JFrame {
                         .addGap(49, 49, 49)
                         .addComponent(BotaoLiberaCamposAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoLimpaCamposAlterarRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoRemoverRevistas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoAlterarRevistas))
                         .addGap(46, 46, 46)
-                        .addGroup(PaneGuiaAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneAlteraRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(IDTravadoAlteraRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblIDAlteraRevista))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Gerenciar", PaneGuiaAlteraRevista);
+        jTabbedPane1.addTab("Gerenciar", PaneAlteraRevista);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -2418,7 +2580,7 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        PaneCadastraGeral.setBackground(new java.awt.Color(255, 255, 255));
 
         lblTitulo1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo1.setText("Nome do título:");
@@ -2477,56 +2639,56 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneCadastraGeralLayout = new javax.swing.GroupLayout(PaneCadastraGeral);
+        PaneCadastraGeral.setLayout(PaneCadastraGeralLayout);
+        PaneCadastraGeralLayout.setHorizontalGroup(
+            PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                 .addGap(127, 127, 127)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                         .addComponent(BotaoAdicionarNovoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(209, 209, 209)
                         .addComponent(BotaoCancelaNovoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoSalvarNovoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
+                        .addGroup(PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                                 .addComponent(lblTitulo1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 546, Short.MAX_VALUE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                                 .addComponent(CampoNovoTituloTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(48, 48, 48)))
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblOrigem3)
                             .addComponent(ComboBoxNovoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(128, 128, 128))
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        PaneCadastraGeralLayout.setVerticalGroup(
+            PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                 .addGap(71, 71, 71)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                         .addComponent(lblTitulo1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CampoNovoTituloTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(PaneCadastraGeralLayout.createSequentialGroup()
                         .addComponent(lblOrigem3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBoxNovoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(97, 97, 97)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneCadastraGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoSalvarNovoTipo)
                     .addComponent(BotaoAdicionarNovoTipo)
                     .addComponent(BotaoCancelaNovoTipo))
                 .addContainerGap(422, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Cadastrar", jPanel7);
+        jTabbedPane2.addTab("Cadastrar", PaneCadastraGeral);
 
-        PaneGuiaConsulta1.setBackground(new java.awt.Color(255, 255, 255));
+        PaneConsultaGeral.setBackground(new java.awt.Color(255, 255, 255));
 
         ConsultaNomeMenuTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConsultaNomeMenuTipo.setMaximumSize(new java.awt.Dimension(25, 25));
@@ -2613,48 +2775,48 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaConsulta1Layout = new javax.swing.GroupLayout(PaneGuiaConsulta1);
-        PaneGuiaConsulta1.setLayout(PaneGuiaConsulta1Layout);
-        PaneGuiaConsulta1Layout.setHorizontalGroup(
-            PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaConsulta1Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneConsultaGeralLayout = new javax.swing.GroupLayout(PaneConsultaGeral);
+        PaneConsultaGeral.setLayout(PaneConsultaGeralLayout);
+        PaneConsultaGeralLayout.setHorizontalGroup(
+            PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneConsultaGeralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaConsulta1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneConsultaGeralLayout.createSequentialGroup()
                 .addContainerGap(95, Short.MAX_VALUE)
-                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                .addGroup(PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PaneConsultaGeralLayout.createSequentialGroup()
                         .addComponent(BotaoNovaConsultaArea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotaoConsultaArea, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BotaoLimpaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaConsulta1Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneConsultaGeralLayout.createSequentialGroup()
+                        .addGroup(PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTitulo6)
                             .addComponent(ConsultaNomeMenuTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ConsultaTipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblEspecificacao6))))
                 .addGap(78, 78, 78))
         );
-        PaneGuiaConsulta1Layout.setVerticalGroup(
-            PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+        PaneConsultaGeralLayout.setVerticalGroup(
+            PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneConsultaGeralLayout.createSequentialGroup()
                 .addGap(75, 75, 75)
-                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                .addGroup(PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneConsultaGeralLayout.createSequentialGroup()
                         .addComponent(lblTitulo6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ConsultaNomeMenuTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsulta1Layout.createSequentialGroup()
+                    .addGroup(PaneConsultaGeralLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ConsultaTipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(53, 53, 53)
-                .addGroup(PaneGuiaConsulta1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneConsultaGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoConsultaArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoLimpaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoNovaConsultaArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2662,10 +2824,10 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Consultar", PaneGuiaConsulta1);
+        jTabbedPane2.addTab("Consultar", PaneConsultaGeral);
 
-        PaneGuiaAlteraRevista1.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaAlteraRevista1.setToolTipText("");
+        PaneGerenciaArea.setBackground(new java.awt.Color(255, 255, 255));
+        PaneGerenciaArea.setToolTipText("");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
         jLabel7.setText("Propriedades");
@@ -2809,39 +2971,43 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaAlteraRevista1Layout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista1);
-        PaneGuiaAlteraRevista1.setLayout(PaneGuiaAlteraRevista1Layout);
-        PaneGuiaAlteraRevista1Layout.setHorizontalGroup(
-            PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
-                        .addComponent(BotaoResetaPesquisaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                        .addComponent(BotaoBuscaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BotaoLimpaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(BuscaTituloMenuArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaAlteraRevista1Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTitulo4, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+        javax.swing.GroupLayout PaneGerenciaAreaLayout = new javax.swing.GroupLayout(PaneGerenciaArea);
+        PaneGerenciaArea.setLayout(PaneGerenciaAreaLayout);
+        PaneGerenciaAreaLayout.setHorizontalGroup(
+            PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                                .addComponent(BotaoResetaPesquisaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                                .addComponent(BotaoBuscaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotaoLimpaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BuscaTituloMenuArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGerenciaAreaLayout.createSequentialGroup()
+                                .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTitulo4, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane4)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitulo7)
-                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
                                 .addComponent(lblIDAlteraArea)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(AlteraIDMenuArea, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(BotaoLiberaCamposAlterarArea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotaoLimpaCamposAlterarArea, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2851,12 +3017,12 @@ public class Board extends javax.swing.JFrame {
                     .addComponent(AlteraNomeMenuArea, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        PaneGuiaAlteraRevista1Layout.setVerticalGroup(
-            PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PaneGerenciaAreaLayout.setVerticalGroup(
+            PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2864,13 +3030,13 @@ public class Board extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BuscaTituloMenuArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoBuscaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoResetaPesquisaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoLimpaAlterarOuRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaAreaLayout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblTitulo7)
@@ -2879,18 +3045,18 @@ public class Board extends javax.swing.JFrame {
                         .addGap(58, 58, 58)
                         .addComponent(BotaoLiberaCamposAlterarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoLimpaCamposAlterarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoRemoverArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoAlterarArea))
                         .addGap(85, 85, 85)
-                        .addGroup(PaneGuiaAlteraRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AlteraIDMenuArea, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblIDAlteraArea))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Gerenciar área", PaneGuiaAlteraRevista1);
+        jTabbedPane2.addTab("Gerenciar área", PaneGerenciaArea);
 
         PaneGuiaAlteraRevista2.setBackground(new java.awt.Color(255, 255, 255));
         PaneGuiaAlteraRevista2.setToolTipText("");
@@ -3121,26 +3287,26 @@ public class Board extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout PaneGerenciaEspecificacaoLayout = new javax.swing.GroupLayout(PaneGerenciaEspecificacao);
+        PaneGerenciaEspecificacao.setLayout(PaneGerenciaEspecificacaoLayout);
+        PaneGerenciaEspecificacaoLayout.setHorizontalGroup(
+            PaneGerenciaEspecificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(PaneGuiaAlteraRevista2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        PaneGerenciaEspecificacaoLayout.setVerticalGroup(
+            PaneGerenciaEspecificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaEspecificacaoLayout.createSequentialGroup()
                 .addComponent(PaneGuiaAlteraRevista2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         PaneGuiaAlteraRevista2.getAccessibleContext().setAccessibleName("Gerenciar Especificacao");
 
-        jTabbedPane2.addTab("Gerenciar especificação", jPanel8);
+        jTabbedPane2.addTab("Gerenciar especificação", PaneGerenciaEspecificacao);
 
-        PaneGuiaAlteraRevista4.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaAlteraRevista4.setToolTipText("");
-        PaneGuiaAlteraRevista4.setPreferredSize(new java.awt.Dimension(1097, 714));
+        PaneGerenciaEditora.setBackground(new java.awt.Color(255, 255, 255));
+        PaneGerenciaEditora.setToolTipText("");
+        PaneGerenciaEditora.setPreferredSize(new java.awt.Dimension(1097, 714));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
         jLabel13.setText("Propriedades");
@@ -3149,7 +3315,7 @@ public class Board extends javax.swing.JFrame {
         BuscaTituloMenuEditora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BuscaTituloMenuEditora.setMaximumSize(new java.awt.Dimension(25, 25));
         BuscaTituloMenuEditora.setMinimumSize(new java.awt.Dimension(25, 25));
-        BuscaTituloMenuEspecificacao.setDocument(new JTextFieldLimit(40, true));
+        BuscaTituloMenuEditora.setDocument(new JTextFieldLimit(40, true));
 
         lblTitulo13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo13.setText("Título da editora");
@@ -3198,7 +3364,7 @@ public class Board extends javax.swing.JFrame {
         AlteraNomeMenuEditora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         AlteraNomeMenuEditora.setMaximumSize(new java.awt.Dimension(25, 25));
         AlteraNomeMenuEditora.setMinimumSize(new java.awt.Dimension(25, 25));
-        AlteraNomeMenuEspecificacao.setDocument(new JTextFieldLimit(40, true));
+        AlteraNomeMenuEditora.setDocument(new JTextFieldLimit(40, true));
 
         BotaoRemoverEditora.setBackground(new java.awt.Color(255, 255, 255));
         BotaoRemoverEditora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -3284,21 +3450,21 @@ public class Board extends javax.swing.JFrame {
         });
         jScrollPane8.setViewportView(TabelaAlterarOuRemoverEditora);
 
-        javax.swing.GroupLayout PaneGuiaAlteraRevista4Layout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista4);
-        PaneGuiaAlteraRevista4.setLayout(PaneGuiaAlteraRevista4Layout);
-        PaneGuiaAlteraRevista4Layout.setHorizontalGroup(
-            PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneGerenciaEditoraLayout = new javax.swing.GroupLayout(PaneGerenciaEditora);
+        PaneGerenciaEditora.setLayout(PaneGerenciaEditoraLayout);
+        PaneGerenciaEditoraLayout.setHorizontalGroup(
+            PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(lblTitulo13))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
                                 .addComponent(BotaoResetaPesquisaAlterarOuRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                                 .addComponent(BotaoBuscaAlterarOuRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3309,16 +3475,16 @@ public class Board extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitulo16)
-                    .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
                                 .addComponent(lblIDAlteraEditora)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(AlteraIDMenuEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(BotaoLiberarAcoesEditora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotaoLimpaCamposAlterarEditora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3328,12 +3494,12 @@ public class Board extends javax.swing.JFrame {
                     .addComponent(AlteraNomeMenuEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        PaneGuiaAlteraRevista4Layout.setVerticalGroup(
-            PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PaneGerenciaEditoraLayout.setVerticalGroup(
+            PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3341,33 +3507,33 @@ public class Board extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BuscaTituloMenuEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoBuscaAlterarOuRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoResetaPesquisaAlterarOuRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoLimpaAlterarOuRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevista4Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaEditoraLayout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblTitulo16)
-                        .addGap(4, 4, 4)
+                        .addGap(18, 18, 18)
                         .addComponent(AlteraNomeMenuEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
+                        .addGap(44, 44, 44)
                         .addComponent(BotaoLiberarAcoesEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoLimpaCamposAlterarEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoRemoverEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BotaoAlterarEditora))
                         .addGap(85, 85, 85)
-                        .addGroup(PaneGuiaAlteraRevista4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(PaneGerenciaEditoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AlteraIDMenuEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblIDAlteraEditora))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Gerenciar editora", PaneGuiaAlteraRevista4);
+        jTabbedPane2.addTab("Gerenciar editora", PaneGerenciaEditora);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -3381,7 +3547,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneFerramentasLayout = new javax.swing.GroupLayout(PaneFerramentas);
@@ -3432,9 +3598,9 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        PaneGuiaNovaRevista1.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaNovaRevista1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PaneGuiaNovaRevista1.setMinimumSize(new java.awt.Dimension(1097, 681));
+        PaneCadastroRegistro.setBackground(new java.awt.Color(255, 255, 255));
+        PaneCadastroRegistro.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        PaneCadastroRegistro.setMinimumSize(new java.awt.Dimension(1097, 681));
 
         ComboBoxOrigemRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ComboBoxOrigemRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
@@ -3555,110 +3721,115 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaNovaRevista1Layout = new javax.swing.GroupLayout(PaneGuiaNovaRevista1);
-        PaneGuiaNovaRevista1.setLayout(PaneGuiaNovaRevista1Layout);
-        PaneGuiaNovaRevista1Layout.setHorizontalGroup(
-            PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneCadastroRegistroLayout = new javax.swing.GroupLayout(PaneCadastroRegistro);
+        PaneCadastroRegistro.setLayout(PaneCadastroRegistroLayout);
+        PaneCadastroRegistroLayout.setHorizontalGroup(
+            PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                 .addGap(126, 126, 126)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                                 .addComponent(BotaoAdicionarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BotaoCancelarNovaRevista3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(BotaoSalvarNovaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PaneCadastroRegistroLayout.createSequentialGroup()
+                                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblOrigem7)
                                     .addComponent(ComboBoxOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(158, 158, 158)
-                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblEspecificacao1)
                                     .addComponent(ComboBoxAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
+                                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblTitulo10)
                                     .addComponent(campoRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                                         .addComponent(lblData6)
                                         .addGap(705, 705, 705))
                                     .addComponent(campoTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap(124, Short.MAX_VALUE))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEspecificacao9)
                             .addComponent(ComboBoxEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                        .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                                 .addComponent(lblData8)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(campoLocalRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblData3)
                             .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(132, 132, 132))))
         );
-        PaneGuiaNovaRevista1Layout.setVerticalGroup(
-            PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+        PaneCadastroRegistroLayout.setVerticalGroup(
+            PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                         .addComponent(lblTitulo10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                         .addComponent(lblData6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                             .addComponent(lblData8)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(campoLocalRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                        .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                             .addComponent(lblData3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(campoDataRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBoxEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBoxAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaNovaRevista1Layout.createSequentialGroup()
+                    .addGroup(PaneCadastroRegistroLayout.createSequentialGroup()
                         .addComponent(lblOrigem7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBoxOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
-                .addGroup(PaneGuiaNovaRevista1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneCadastroRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoSalvarNovaRevista1)
                     .addComponent(BotaoAdicionarNovaRevista1)
                     .addComponent(BotaoCancelarNovaRevista3))
                 .addContainerGap(320, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Cadastrar", PaneGuiaNovaRevista1);
+        jTabbedPane3.addTab("Cadastrar", PaneCadastroRegistro);
 
-        PaneGuiaConsulta2.setBackground(new java.awt.Color(255, 255, 255));
+        PaneConsultaRegistro.setBackground(new java.awt.Color(255, 255, 255));
 
-        ConsultaTituloMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConsultaTituloMenuRevistas1.setMaximumSize(new java.awt.Dimension(25, 25));
-        ConsultaTituloMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        ConsultaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));
+        ConsultaTituloRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaTituloRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
+        ConsultaTituloRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaTituloRegistro.setDocument(new JTextFieldLimit(40, true));
+        ConsultaTituloRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConsultaTituloRegistroActionPerformed(evt);
+            }
+        });
 
         lblTitulo11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo11.setText("Título da revista");
@@ -3666,33 +3837,16 @@ public class Board extends javax.swing.JFrame {
         lblOrigem9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblOrigem9.setText("Área");
 
-        ConsultaAreaMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConsultaAreaMenuRevistas1.setToolTipText("");
-        ConsultaAreaMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        ConsultaAreaMenuRevistas1.setFocusable(false);
-        ConsultaAreaMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        ConsultaAreaMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+        ConsultaAreaRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaAreaRegistro.setToolTipText("");
+        ConsultaAreaRegistro.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        ConsultaAreaRegistro.setFocusable(false);
+        ConsultaAreaRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaAreaRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConsultaAreaMenuRevistas1ActionPerformed(evt);
+                ConsultaAreaRegistroActionPerformed(evt);
             }
         });
-
-        ConsultaEspecificacaoMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConsultaEspecificacaoMenuRevistas1.setToolTipText("");
-        ConsultaEspecificacaoMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        ConsultaEspecificacaoMenuRevistas1.setDoubleBuffered(true);
-        ConsultaEspecificacaoMenuRevistas1.setEditor(null);
-        ConsultaEspecificacaoMenuRevistas1.setFocusable(false);
-        ConsultaEspecificacaoMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        ConsultaEspecificacaoMenuRevistas1.setName("Selecione"); // NOI18N
-        ConsultaEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConsultaEspecificacaoMenuRevistas1ActionPerformed(evt);
-            }
-        });
-
-        lblEspecificacao7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblEspecificacao7.setText("Especificação");
 
         BotaoBuscaConsultaRevista1.setBackground(new java.awt.Color(255, 255, 255));
         BotaoBuscaConsultaRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -3722,8 +3876,8 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        TabelaConsultaRevista1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        TabelaConsultaRevista1.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaConsultaRegistro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TabelaConsultaRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -3734,13 +3888,13 @@ public class Board extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        TabelaConsultaRevista1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        TabelaConsultaRevista1.addMouseListener(new java.awt.event.MouseAdapter() {
+        TabelaConsultaRegistro.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        TabelaConsultaRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TabelaConsultaRevista1MouseClicked(evt);
+                TabelaConsultaRegistroMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(TabelaConsultaRevista1);
+        jScrollPane5.setViewportView(TabelaConsultaRegistro);
 
         BotaoLimpaConsultaRevista1.setBackground(new java.awt.Color(255, 255, 255));
         BotaoLimpaConsultaRevista1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -3756,57 +3910,74 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PaneGuiaConsulta2Layout = new javax.swing.GroupLayout(PaneGuiaConsulta2);
-        PaneGuiaConsulta2.setLayout(PaneGuiaConsulta2Layout);
-        PaneGuiaConsulta2Layout.setHorizontalGroup(
-            PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
-                        .addComponent(BotaoNovaBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotaoBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BotaoLimpaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTitulo11)
-                            .addComponent(ConsultaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ConsultaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEspecificacao7))
-                        .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblOrigem9)
-                            .addComponent(ConsultaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(2, 2, 2)))
-                .addContainerGap(94, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaConsulta2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5)
+        lblTitulo14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo14.setText("Registro");
+
+        ConsultaRegistroRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaRegistroRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
+        ConsultaRegistroRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaTituloRegistro.setDocument(new JTextFieldLimit(40, true));
+
+        javax.swing.GroupLayout PaneConsultaRegistroLayout = new javax.swing.GroupLayout(PaneConsultaRegistro);
+        PaneConsultaRegistro.setLayout(PaneConsultaRegistroLayout);
+        PaneConsultaRegistroLayout.setHorizontalGroup(
+            PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneConsultaRegistroLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5))
+                    .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(BotaoNovaBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
+                                .addComponent(BotaoBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotaoLimpaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                                        .addGap(79, 79, 79)
+                                        .addComponent(lblTitulo11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneConsultaRegistroLayout.createSequentialGroup()
+                                        .addContainerGap(71, Short.MAX_VALUE)
+                                        .addComponent(ConsultaTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(34, 34, 34)))
+                                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTitulo14)
+                                    .addComponent(ConsultaRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(57, 57, 57)
+                                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblOrigem9)
+                                    .addComponent(ConsultaAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 131, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        PaneGuiaConsulta2Layout.setVerticalGroup(
-            PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
+        PaneConsultaRegistroLayout.setVerticalGroup(
+            PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
                 .addGap(73, 73, 73)
-                .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
+                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
                         .addComponent(lblTitulo11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ConsultaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
-                        .addComponent(lblEspecificacao7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ConsultaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaConsulta2Layout.createSequentialGroup()
-                        .addComponent(lblOrigem9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ConsultaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(53, 53, 53)
-                .addGroup(PaneGuiaConsulta2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(85, 85, 85))
+                    .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                                .addComponent(lblOrigem9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ConsultaAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PaneConsultaRegistroLayout.createSequentialGroup()
+                                .addComponent(lblTitulo14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(ConsultaRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ConsultaTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(52, 52, 52)))
+                .addGroup(PaneConsultaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoLimpaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoNovaBuscaConsultaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -3814,19 +3985,19 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Consultar", PaneGuiaConsulta2);
+        jTabbedPane3.addTab("Consultar", PaneConsultaRegistro);
 
-        PaneGuiaAlteraRevista3.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaAlteraRevista3.setToolTipText("");
+        PaneGerenciaRegistro.setBackground(new java.awt.Color(255, 255, 255));
+        PaneGerenciaRegistro.setToolTipText("");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Light", 0, 30)); // NOI18N
         jLabel11.setText("Propriedades da revista");
         jLabel11.setPreferredSize(new java.awt.Dimension(407, 41));
 
-        BuscaTituloMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BuscaTituloMenuRevistas1.setMaximumSize(new java.awt.Dimension(25, 25));
-        BuscaTituloMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        BuscaTituloMenuRevistas.setDocument(new JTextFieldLimit(40, true));
+        BuscaTituloRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BuscaTituloRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
+        BuscaTituloRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        BuscaTituloRegistro.setDocument(new JTextFieldLimit(40, true));
 
         lblTitulo12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo12.setText("Título da revista");
@@ -3842,20 +4013,6 @@ public class Board extends javax.swing.JFrame {
         BuscaEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BuscaEspecificacaoMenuRevistas1ActionPerformed(evt);
-            }
-        });
-
-        lblOrigem10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblOrigem10.setText("Área");
-
-        BuscaAreaMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BuscaAreaMenuRevistas1.setToolTipText("");
-        BuscaAreaMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        BuscaAreaMenuRevistas1.setFocusable(false);
-        BuscaAreaMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        BuscaAreaMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscaAreaMenuRevistas1ActionPerformed(evt);
             }
         });
 
@@ -3894,8 +4051,8 @@ public class Board extends javax.swing.JFrame {
         jSeparator5.setForeground(new java.awt.Color(37, 103, 125));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        TabelaAlterarOuRemoverRevista1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        TabelaAlterarOuRemoverRevista1.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaAlterarOuRemoverRegistro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        TabelaAlterarOuRemoverRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -3906,13 +4063,13 @@ public class Board extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        TabelaAlterarOuRemoverRevista1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        TabelaAlterarOuRemoverRevista1.addMouseListener(new java.awt.event.MouseAdapter() {
+        TabelaAlterarOuRemoverRegistro.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        TabelaAlterarOuRemoverRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TabelaAlterarOuRemoverRevista1MouseClicked(evt);
+                TabelaAlterarOuRemoverRegistroMouseClicked(evt);
             }
         });
-        jScrollPane7.setViewportView(TabelaAlterarOuRemoverRevista1);
+        jScrollPane7.setViewportView(TabelaAlterarOuRemoverRegistro);
 
         BotaoRemoverRevistas1.setBackground(new java.awt.Color(255, 255, 255));
         BotaoRemoverRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -3977,169 +4134,179 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        campoRegistroRegistro2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        campoRegistroRegistro2.setPreferredSize(new java.awt.Dimension(35, 26));
-        campoRegistroRegistro.setDocument(new JTextFieldLimit(4, false, true));
-        campoRegistroRegistro2.addActionListener(new java.awt.event.ActionListener() {
+        AlteraRegistroRegistro.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        AlteraRegistroRegistro.setPreferredSize(new java.awt.Dimension(35, 26));
+        AlteraRegistroRegistro.setDocument(new JTextFieldLimit(4, false, true));
+        AlteraRegistroRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoRegistroRegistro2ActionPerformed(evt);
+                AlteraRegistroRegistroActionPerformed(evt);
             }
         });
 
         lblTitulo15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo15.setText("Registro");
 
-        campoTituloRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoTituloRegistro2.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro2.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
+        AlteraTituloRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        AlteraTituloRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
+        AlteraTituloRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        AlteraTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
 
         lblData12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblData12.setText("Título");
 
-        campoLocalRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        campoLocalRegistro2.setMaximumSize(new java.awt.Dimension(25, 25));
-        campoLocalRegistro2.setMinimumSize(new java.awt.Dimension(25, 25));
-        campoTituloRegistro.setDocument(new JTextFieldLimit(75, true, false));
+        AlteraLocalRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        AlteraLocalRegistro.setMaximumSize(new java.awt.Dimension(25, 25));
+        AlteraLocalRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        AlteraLocalRegistro.setDocument(new JTextFieldLimit(75, true, false));
 
         lblData14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblData14.setText("Local");
 
-        campoDataRegistro2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        campoDataRegistro2.setPreferredSize(new java.awt.Dimension(35, 26));
-        campoDataRegistro.setDocument(new JTextFieldLimit(4, false, true));
-        campoDataRegistro2.addActionListener(new java.awt.event.ActionListener() {
+        AlteraAnoRegistro.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        AlteraAnoRegistro.setPreferredSize(new java.awt.Dimension(35, 26));
+        AlteraAnoRegistro.setDocument(new JTextFieldLimit(4, false, true));
+        AlteraAnoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDataRegistro2ActionPerformed(evt);
+                AlteraAnoRegistroActionPerformed(evt);
             }
         });
 
         lblData15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblData15.setText("Ano");
 
-        ComboBoxAreaRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxAreaRegistro2.setToolTipText("");
-        ComboBoxAreaRegistro2.setDoubleBuffered(true);
-        ComboBoxAreaRegistro2.setEditor(null);
-        ComboBoxAreaRegistro2.setFocusable(false);
-        ComboBoxAreaRegistro2.setMaximumSize(new java.awt.Dimension(35, 26));
-        ComboBoxAreaRegistro2.setName("Selecione"); // NOI18N
-        ComboBoxAreaRegistro2.addActionListener(new java.awt.event.ActionListener() {
+        AlteraAreaRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraAreaRegistro.setToolTipText("");
+        AlteraAreaRegistro.setDoubleBuffered(true);
+        AlteraAreaRegistro.setEditor(null);
+        AlteraAreaRegistro.setFocusable(false);
+        AlteraAreaRegistro.setMaximumSize(new java.awt.Dimension(35, 26));
+        AlteraAreaRegistro.setName("Selecione"); // NOI18N
+        AlteraAreaRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxAreaRegistro2ActionPerformed(evt);
+                AlteraAreaRegistroActionPerformed(evt);
             }
         });
 
         lblEspecificacao12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblEspecificacao12.setText("Área");
 
-        ComboBoxOrigemRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxOrigemRegistro2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
-        ComboBoxOrigemRegistro2.setBorder(null);
-        ComboBoxOrigemRegistro2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ComboBoxOrigemRegistro2.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        ComboBoxOrigemRegistro2.setEditor(null);
-        ComboBoxOrigemRegistro2.setFocusCycleRoot(true);
-        ComboBoxOrigemRegistro2.setFocusable(false);
-        ComboBoxOrigemRegistro2.setLightWeightPopupEnabled(false);
-        ComboBoxOrigemRegistro2.setMinimumSize(new java.awt.Dimension(25, 25));
+        AlteraOrigemRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraOrigemRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Doação", "Aquisição" }));
+        AlteraOrigemRegistro.setBorder(null);
+        AlteraOrigemRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        AlteraOrigemRegistro.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        AlteraOrigemRegistro.setEditor(null);
+        AlteraOrigemRegistro.setFocusCycleRoot(true);
+        AlteraOrigemRegistro.setFocusable(false);
+        AlteraOrigemRegistro.setLightWeightPopupEnabled(false);
+        AlteraOrigemRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
 
         lblOrigem13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblOrigem13.setText("Origem");
 
-        ComboBoxEditoraRegistro2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxEditoraRegistro2.setToolTipText("");
-        ComboBoxEditoraRegistro2.setDoubleBuffered(true);
-        ComboBoxEditoraRegistro2.setEditor(null);
-        ComboBoxEditoraRegistro2.setFocusable(false);
-        ComboBoxEditoraRegistro2.setMaximumSize(new java.awt.Dimension(35, 26));
-        ComboBoxEditoraRegistro2.setName("Selecione"); // NOI18N
-        ComboBoxEditoraRegistro2.addActionListener(new java.awt.event.ActionListener() {
+        AlteraEditoraRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        AlteraEditoraRegistro.setToolTipText("");
+        AlteraEditoraRegistro.setDoubleBuffered(true);
+        AlteraEditoraRegistro.setEditor(null);
+        AlteraEditoraRegistro.setFocusable(false);
+        AlteraEditoraRegistro.setMaximumSize(new java.awt.Dimension(35, 26));
+        AlteraEditoraRegistro.setName("Selecione"); // NOI18N
+        AlteraEditoraRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxEditoraRegistro2ActionPerformed(evt);
+                AlteraEditoraRegistroActionPerformed(evt);
             }
         });
 
         lblEspecificacao11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblEspecificacao11.setText("Editora");
 
-        javax.swing.GroupLayout PaneGuiaAlteraRevista3Layout = new javax.swing.GroupLayout(PaneGuiaAlteraRevista3);
-        PaneGuiaAlteraRevista3.setLayout(PaneGuiaAlteraRevista3Layout);
-        PaneGuiaAlteraRevista3Layout.setHorizontalGroup(
-            PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+        ConsultaRegistroRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConsultaRegistroRegistro1.setMaximumSize(new java.awt.Dimension(25, 25));
+        ConsultaRegistroRegistro1.setMinimumSize(new java.awt.Dimension(25, 25));
+        ConsultaRegistroRegistro1.setDocument(new JTextFieldLimit(4, false, true));
+
+        lblTitulo17.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo17.setText("Registro");
+
+        javax.swing.GroupLayout PaneGerenciaRegistroLayout = new javax.swing.GroupLayout(PaneGerenciaRegistro);
+        PaneGerenciaRegistro.setLayout(PaneGerenciaRegistroLayout);
+        PaneGerenciaRegistroLayout.setHorizontalGroup(
+            PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGerenciaRegistroLayout.createSequentialGroup()
+                                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblTitulo17)
+                                            .addComponent(ConsultaRegistroRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(132, 467, Short.MAX_VALUE))
+                                    .addComponent(BuscaTituloRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel12)
+                                            .addComponent(lblTitulo12))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGerenciaRegistroLayout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                                .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(BotaoLimpaBuscaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblOrigem10)
-                                    .addComponent(BuscaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblEspecificacao8))
-                                .addGap(66, 66, 66))
-                            .addComponent(BuscaTituloMenuRevistas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(lblTitulo12))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(lblEspecificacao8)
+                                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                                        .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(BotaoLimpaBuscaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(jScrollPane7)
-                        .addGap(18, 18, 18)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGerenciaRegistroLayout.createSequentialGroup()
+                            .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblTitulo15)
-                                .addComponent(campoRegistroRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(AlteraRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                            .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                                     .addComponent(lblEspecificacao11)
                                     .addGap(327, 327, 327))
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                    .addComponent(ComboBoxEditoraRegistro2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                                    .addComponent(AlteraEditoraRegistro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGap(31, 31, 31))))
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                        .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(73, 73, 73)))
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblOrigem13)
-                            .addComponent(ComboBoxOrigemRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(AlteraOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblEspecificacao12)
-                            .addComponent(ComboBoxAreaRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(AlteraAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(lblData12)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                            .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                                     .addComponent(lblData14)
                                     .addGap(0, 291, Short.MAX_VALUE))
-                                .addComponent(campoLocalRegistro2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(AlteraLocalRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(18, 18, 18)
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblData15)
-                                .addComponent(campoDataRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(campoTituloRegistro2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(AlteraAnoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AlteraTituloRegistro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneGerenciaRegistroLayout.createSequentialGroup()
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(BotaoLiberaCamposAlterarRevistas1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BotaoLimpaCamposAlterarRevistas1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -4148,148 +4315,82 @@ public class Board extends javax.swing.JFrame {
                         .addComponent(BotaoAlterarRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))))
         );
-        PaneGuiaAlteraRevista3Layout.setVerticalGroup(
-            PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PaneGerenciaRegistroLayout.setVerticalGroup(
+            PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 714, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTitulo12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BuscaTituloMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                .addComponent(lblOrigem10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BuscaAreaMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(lblEspecificacao8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotaoLimpaBuscaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BuscaTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEspecificacao8)
+                            .addComponent(lblTitulo17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ConsultaRegistroRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(BotaoLimpaBuscaRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+            .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblTitulo15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoRegistroRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                        .addComponent(AlteraRegistroRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxEditoraRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AlteraEditoraRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(lblData12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoTituloRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(AlteraTituloRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(lblData14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoLocalRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                        .addComponent(AlteraLocalRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(lblData15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDataRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AlteraAnoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(lblOrigem13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxOrigemRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PaneGuiaAlteraRevista3Layout.createSequentialGroup()
+                        .addComponent(AlteraOrigemRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                         .addComponent(lblEspecificacao12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxAreaRegistro2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(AlteraAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38)
                 .addComponent(BotaoLiberaCamposAlterarRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PaneGuiaAlteraRevista3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoLimpaCamposAlterarRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoRemoverRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BotaoAlterarRevistas1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("Gerenciar", PaneGuiaAlteraRevista3);
-
-        PaneGuiaNovaRevista2.setBackground(new java.awt.Color(255, 255, 255));
-        PaneGuiaNovaRevista2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        PaneGuiaNovaRevista2.setMinimumSize(new java.awt.Dimension(1097, 681));
-
-        ComboBoxEditoraRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ComboBoxEditoraRegistro1.setToolTipText("");
-        ComboBoxEditoraRegistro1.setDoubleBuffered(true);
-        ComboBoxEditoraRegistro1.setEditor(null);
-        ComboBoxEditoraRegistro1.setFocusable(false);
-        ComboBoxEditoraRegistro1.setMaximumSize(new java.awt.Dimension(35, 26));
-        ComboBoxEditoraRegistro1.setName("Selecione"); // NOI18N
-        ComboBoxEditoraRegistro1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBoxEditoraRegistro1ActionPerformed(evt);
-            }
-        });
-
-        lblEspecificacao10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblEspecificacao10.setText("Editora");
-
-        javax.swing.GroupLayout PaneGuiaNovaRevista2Layout = new javax.swing.GroupLayout(PaneGuiaNovaRevista2);
-        PaneGuiaNovaRevista2.setLayout(PaneGuiaNovaRevista2Layout);
-        PaneGuiaNovaRevista2Layout.setHorizontalGroup(
-            PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addGroup(PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEspecificacao10)
-                    .addComponent(ComboBoxEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(831, Short.MAX_VALUE))
-        );
-        PaneGuiaNovaRevista2Layout.setVerticalGroup(
-            PaneGuiaNovaRevista2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PaneGuiaNovaRevista2Layout.createSequentialGroup()
-                .addGap(141, 141, 141)
-                .addComponent(lblEspecificacao10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ComboBoxEditoraRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(481, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1097, Short.MAX_VALUE)
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PaneGuiaNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(PaneGuiaNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        jTabbedPane3.addTab("tab4", jPanel6);
+        jTabbedPane3.addTab("Gerenciar", PaneGerenciaRegistro);
 
         javax.swing.GroupLayout PaneRegistroLayout = new javax.swing.GroupLayout(PaneRegistro);
         PaneRegistro.setLayout(PaneRegistroLayout);
@@ -4303,7 +4404,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(PaneRegistroLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
         );
 
         PaneMae.add(PaneRegistro, "card4");
@@ -5155,132 +5256,6 @@ public class Board extends javax.swing.JFrame {
         setLblColor(BotaoRegistro);
     }//GEN-LAST:event_BotaoRegistroMouseClicked
 
-    private void ComboBoxAreaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxAreaRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxAreaRegistroActionPerformed
-
-    private void BotaoSalvarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoSalvarNovaRevista1ActionPerformed
-        if (campoRegistroRegistro.getText().isEmpty() || campoTituloRegistro.getText().isEmpty() || campoLocalRegistro.getText().isEmpty() || campoDataRegistro.getText().isEmpty() 
-                || ComboBoxEditoraRegistro.getSelectedItem() == null || ComboBoxAreaRegistro.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Há campos vazios, preencha-os", "Sistema", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            try {
-                Registro reg = new Registro();
-
-                reg.setRegistro(Integer.parseInt(campoRegistroRegistro.getText()));
-                reg.setTitulo(campoTituloRegistro.getText());
-                reg.setLocal(campoLocalRegistro.getText());
-                reg.setArea((String) ComboBoxAreaRegistro.getSelectedItem());
-                reg.setAno(Integer.parseInt(campoDataRegistro.getText()));
-                reg.setEditora((String) ComboBoxEditoraRegistro.getSelectedItem());                
-                reg.setOrigem((String) ComboBoxOrigemRegistro.getSelectedItem());
-
-                RegistroDAO registroDAO = new RegistroDAO();
-                registroDAO.InserirNovaRegistro(reg);
-                try {
-                    /*limpaCamposNovaRevista();
-                    TravaCamposDoNovaRevista();
-                    atualizarTabelaRevista();
-                    atualizarConsultaRevista();
-                    TravaBotoesCadRevista();
-                    BotaoAdicionarNovaRevista.setEnabled(true);*/
-
-                    JOptionPane.showMessageDialog(null, "Revista cadastrada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println(ex.getMessage());
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Essa revista já existe! Erro:" + ex.getMessage(), "Cadastro", JOptionPane.INFORMATION_MESSAGE);
-                System.out.println(ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_BotaoSalvarNovaRevista1ActionPerformed
-
-    private void BotaoAdicionarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarNovaRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoAdicionarNovaRevista1ActionPerformed
-
-    private void campoDataRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDataRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDataRegistroActionPerformed
-
-    private void BotaoCancelarNovaRevista3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarNovaRevista3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoCancelarNovaRevista3ActionPerformed
-
-    private void ConsultaAreaMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaAreaMenuRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ConsultaAreaMenuRevistas1ActionPerformed
-
-    private void ConsultaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaEspecificacaoMenuRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ConsultaEspecificacaoMenuRevistas1ActionPerformed
-
-    private void BotaoBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaConsultaRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoBuscaConsultaRevista1ActionPerformed
-
-    private void BotaoNovaBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
-
-    private void TabelaConsultaRevista1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaConsultaRevista1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TabelaConsultaRevista1MouseClicked
-
-    private void BotaoLimpaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoLimpaConsultaRevista1ActionPerformed
-
-    private void BuscaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
-
-    private void BuscaAreaMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaAreaMenuRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BuscaAreaMenuRevistas1ActionPerformed
-
-    private void BotaoBuscaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
-
-    private void BotaoAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAlterarRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoAlterarRevistas1ActionPerformed
-
-    private void TabelaAlterarOuRemoverRevista1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaAlterarOuRemoverRevista1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TabelaAlterarOuRemoverRevista1MouseClicked
-
-    private void BotaoRemoverRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoRemoverRevistas1ActionPerformed
-
-    private void BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
-
-    private void BotaoLimpaCamposAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaCamposAlterarRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistas1ActionPerformed
-
-    private void BotaoLimpaBuscaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaBuscaRevista1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoLimpaBuscaRevista1ActionPerformed
-
-    private void BotaoLiberaCamposAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLiberaCamposAlterarRevistas1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BotaoLiberaCamposAlterarRevistas1ActionPerformed
-
-    private void jTabbedPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTabbedPane3MouseClicked
-
-    private void campoRegistroRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRegistroRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoRegistroRegistroActionPerformed
-
     private void campoTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTituloKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Teste");
@@ -5290,18 +5265,6 @@ public class Board extends javax.swing.JFrame {
     private void campoTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoTituloMouseClicked
         System.out.println("Teste");
     }//GEN-LAST:event_campoTituloMouseClicked
-
-    private void campoRegistroRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRegistroRegistro2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoRegistroRegistro2ActionPerformed
-
-    private void campoDataRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDataRegistro2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDataRegistro2ActionPerformed
-
-    private void ComboBoxAreaRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxAreaRegistro2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxAreaRegistro2ActionPerformed
 
     private void BotaoBuscaAlterarOuRemoverEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverEditoraActionPerformed
         ListaBuscaEditora = null;
@@ -5433,17 +5396,275 @@ public class Board extends javax.swing.JFrame {
         BotaoLiberarAcoesEditora.setEnabled(true);
     }//GEN-LAST:event_TabelaAlterarOuRemoverEditoraMouseClicked
 
+    private void jTabbedPane3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane3MouseClicked
+
+    private void AlteraEditoraRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraEditoraRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraEditoraRegistroActionPerformed
+
+    private void AlteraAreaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraAreaRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraAreaRegistroActionPerformed
+
+    private void AlteraAnoRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraAnoRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraAnoRegistroActionPerformed
+
+    private void AlteraRegistroRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlteraRegistroRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AlteraRegistroRegistroActionPerformed
+
+    private void BotaoLiberaCamposAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLiberaCamposAlterarRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLiberaCamposAlterarRevistas1ActionPerformed
+
+    private void BotaoLimpaBuscaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaBuscaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLimpaBuscaRevista1ActionPerformed
+
+    private void BotaoLimpaCamposAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaCamposAlterarRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLimpaCamposAlterarRevistas1ActionPerformed
+
+    private void BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoResetaPesquisaAlterarOuRemoverRevista1ActionPerformed
+
+    private void BotaoRemoverRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverRevistas1ActionPerformed
+        if (AlteraRegistroRegistro.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione uma revista para exclui-la", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else if (JOptionPane.showConfirmDialog(null, "Deseja mesmo excluir essa revista?", "pergunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            try {
+                Registro reg = new Registro();
+                RegistroDAO registroDAO = new RegistroDAO();
+
+                reg.setRegistro(Integer.parseInt(AlteraRegistroRegistro.getText()));
+                registroDAO.RemoverRegistro(reg);
+                try {
+                    atualizarBuscaRegistro();
+                    //BotaoLiberaCamposAlterarRevistas.setEnabled(false);
+
+                    // limpaCamposNovaRevista();
+                    //  atualizarTabelaRevista();
+                    //  LimpaCamposAlteraRevista();
+                    // TravaCamposAlteraRevista();
+                    // atualizarConsultaRevista();
+                    // TravaBotoeAlteraRevista();
+                    // ResetaCamposAlterarRevistas();
+
+                    JOptionPane.showMessageDialog(null, "Revista Removida com sucesso", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + e.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(e.getMessage());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Náo foi possível remover essa revista! Erro:" + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_BotaoRemoverRevistas1ActionPerformed
+
+    private void TabelaAlterarOuRemoverRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaAlterarOuRemoverRegistroMouseClicked
+        //ClearComboBoxEspecificacao();
+        //ComboboxEspecificacao();
+        //ClearComboBoxArea();
+        //ComboboxArea();
+        //"Registro", "Titulo", "Editora", "Origem", "Local", "Área", "Ano"
+        TabelaAlterarOuRemoverRegistro.getTableHeader().setReorderingAllowed(false);
+        AlteraRegistroRegistro.setText(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 0).toString());
+        AlteraTituloRegistro.setText(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 1).toString());
+        AlteraEditoraRegistro.getModel().setSelectedItem(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 2).toString());
+        AlteraOrigemRegistro.getModel().setSelectedItem(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 3).toString());
+        AlteraLocalRegistro.setText(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 4).toString());
+        AlteraAreaRegistro.getModel().setSelectedItem(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 5).toString());
+        AlteraAnoRegistro.setText(TabelaAlterarOuRemoverRegistro.getValueAt(TabelaAlterarOuRemoverRegistro.getSelectedRow(), 6).toString());
+
+        //BotaoLiberaCamposAlterarRevistas.setEnabled(true);
+        //BotaoLimpaCamposAlterarRevistas.setEnabled(true);
+        //TravaCamposAlteraRevista();
+        //TravaBotoeAlteraRevista();
+    }//GEN-LAST:event_TabelaAlterarOuRemoverRegistroMouseClicked
+
+    private void BotaoAlterarRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAlterarRevistas1ActionPerformed
+        if (AlteraRegistroRegistro.getText().isEmpty() || AlteraTituloRegistro.getText().isEmpty() || AlteraAnoRegistro.getText().isEmpty() || AlteraLocalRegistro.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Há campos vazios, preencha esses campos, para proceder com a alteração", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else if (JOptionPane.showConfirmDialog(null, "Deseja mesmo alterar essa revista?", "pergunta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            try {
+                Registro reg = new Registro();
+                RegistroDAO registroDAO = new RegistroDAO();
+
+                reg.setRegistro(Integer.parseInt(AlteraRegistroRegistro.getText()));
+                reg.setTitulo(AlteraTituloRegistro.getText());
+                reg.setLocal(AlteraLocalRegistro.getText());
+                reg.setAno(Integer.parseInt(AlteraAnoRegistro.getText()));
+                reg.setOrigem((String) AlteraOrigemRegistro.getSelectedItem());
+                reg.setEditora((String) AlteraEditoraRegistro.getSelectedItem());
+                reg.setArea((String) AlteraAreaRegistro.getSelectedItem());
+
+                registroDAO.AlterarRegistro(reg);
+
+                try {
+                    atualizarBuscaRegistro();
+                    //atualizarTabelaRevista();
+
+                    //LimpaCamposAlteraRevista();
+                    //TravaCamposAlteraRevista();
+                    //TravaBotoeAlteraRevista();
+                    //atualizarConsultaRevista();
+                    //ResetaCamposAlterarRevistas();
+                    //BotaoLiberaCamposAlterarRevistas.setEnabled(false);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(ex.getMessage());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Náo foi possível alterar essa revista! Erro:" + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_BotaoAlterarRevistas1ActionPerformed
+
+    private void BotaoBuscaAlterarOuRemoverRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
+        ListaBuscaRegistro = null;
+        Registro reg = new Registro();
+        RegistroDAO registroDAO = new RegistroDAO();
+
+        try {
+
+            if (!BuscaTituloRegistro.getText().equals(null)) {
+                reg.setTitulo(BuscaTituloRegistro.getText());
+            }
+
+            if (!ConsultaRegistroRegistro1.getText().equals("")) {
+                reg.setRegistro(Integer.parseInt(ConsultaRegistroRegistro1.getText()));
+            }
+
+            if (BuscaEspecificacaoMenuRevistas1.getSelectedItem() != null) {
+                reg.setArea((String) BuscaEspecificacaoMenuRevistas1.getSelectedItem());
+            }
+            ListaBuscaRegistro = registroDAO.ListaBuscaRegistros(reg);
+
+            BuscaRegistroComFiltro();
+        } catch (SQLException E) {
+            JOptionPane.showMessageDialog(null, "Problema no BotaoBuscaConsultaRevista do DashBoard, consulta de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(E.getMessage());
+        }
+    }//GEN-LAST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
+
+    private void BuscaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+
+    private void BotaoLimpaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoLimpaConsultaRevista1ActionPerformed
+
+    private void TabelaConsultaRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaConsultaRegistroMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TabelaConsultaRegistroMouseClicked
+
+    private void BotaoNovaBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoNovaBuscaConsultaRevista1ActionPerformed
+
+    private void BotaoBuscaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaConsultaRevista1ActionPerformed
+        ListaBuscaRegistro = null;
+        Registro reg = new Registro();
+        RegistroDAO registroDAO = new RegistroDAO();
+
+        try {
+
+            if (!ConsultaTituloRegistro.getText().equals(null)) {
+                reg.setTitulo(ConsultaTituloRegistro.getText());
+            }
+
+            if (!ConsultaRegistroRegistro.getText().equals("")) {
+                reg.setRegistro(Integer.parseInt(ConsultaRegistroRegistro.getText()));
+            }
+
+            if (ConsultaAreaRegistro.getSelectedItem() != null) {
+                reg.setArea((String) ConsultaAreaRegistro.getSelectedItem());
+            }
+            ListaBuscaRegistro = registroDAO.ListaBuscaRegistros(reg);
+
+            ConsultaRegistroComFiltro();
+        } catch (SQLException E) {
+            JOptionPane.showMessageDialog(null, "Problema no BotaoBuscaConsultaRevista do DashBoard, consulta de revista falhou", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println(E.getMessage());
+        }
+    }//GEN-LAST:event_BotaoBuscaConsultaRevista1ActionPerformed
+
+    private void ConsultaAreaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaAreaRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConsultaAreaRegistroActionPerformed
+
+    private void ConsultaTituloRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConsultaTituloRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ConsultaTituloRegistroActionPerformed
+
     private void ComboBoxEditoraRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboBoxEditoraRegistroActionPerformed
 
-    private void ComboBoxEditoraRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistro1ActionPerformed
+    private void campoRegistroRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoRegistroRegistroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxEditoraRegistro1ActionPerformed
+    }//GEN-LAST:event_campoRegistroRegistroActionPerformed
 
-    private void ComboBoxEditoraRegistro2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxEditoraRegistro2ActionPerformed
+    private void BotaoCancelarNovaRevista3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarNovaRevista3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ComboBoxEditoraRegistro2ActionPerformed
+    }//GEN-LAST:event_BotaoCancelarNovaRevista3ActionPerformed
+
+    private void campoDataRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDataRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDataRegistroActionPerformed
+
+    private void BotaoAdicionarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarNovaRevista1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotaoAdicionarNovaRevista1ActionPerformed
+
+    private void BotaoSalvarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoSalvarNovaRevista1ActionPerformed
+        if (campoRegistroRegistro.getText().isEmpty() || campoTituloRegistro.getText().isEmpty() || campoLocalRegistro.getText().isEmpty() || campoDataRegistro.getText().isEmpty()
+            || ComboBoxEditoraRegistro.getSelectedItem() == null || ComboBoxAreaRegistro.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Há campos vazios, preencha-os", "Sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                Registro reg = new Registro();
+
+                reg.setRegistro(Integer.parseInt(campoRegistroRegistro.getText()));
+                reg.setTitulo(campoTituloRegistro.getText());
+                reg.setLocal(campoLocalRegistro.getText());
+                reg.setArea((String) ComboBoxAreaRegistro.getSelectedItem());
+                reg.setAno(Integer.parseInt(campoDataRegistro.getText()));
+                reg.setEditora((String) ComboBoxEditoraRegistro.getSelectedItem());
+                reg.setOrigem((String) ComboBoxOrigemRegistro.getSelectedItem());
+
+                RegistroDAO registroDAO = new RegistroDAO();
+                registroDAO.InserirNovaRegistro(reg);
+                try {
+                    /*limpaCamposNovaRevista();
+                    TravaCamposDoNovaRevista();
+                    atualizarTabelaRevista();
+                    atualizarConsultaRevista();
+                    TravaBotoesCadRevista();
+                    BotaoAdicionarNovaRevista.setEnabled(true);*/
+
+                    JOptionPane.showMessageDialog(null, "Revista cadastrada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + ex.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println(ex.getMessage());
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Essa revista já existe! Erro:" + ex.getMessage(), "Cadastro", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_BotaoSalvarNovaRevista1ActionPerformed
+
+    private void ComboBoxAreaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxAreaRegistroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboBoxAreaRegistroActionPerformed
 //-------------------------fim das ações de revista ------------------------------------//
 
     public void setLblColor(JLabel lbl) {
@@ -5456,17 +5677,24 @@ public class Board extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AlteraAnoMenuRevistas;
+    private javax.swing.JTextField AlteraAnoRegistro;
     private javax.swing.JComboBox<String> AlteraAreaMenuRevistas;
+    private javax.swing.JComboBox<String> AlteraAreaRegistro;
+    private javax.swing.JComboBox<String> AlteraEditoraRegistro;
     private javax.swing.JComboBox<String> AlteraEspecificacaoMenuRevistas;
     private javax.swing.JTextField AlteraIDMenuArea;
     private javax.swing.JTextField AlteraIDMenuEditora;
     private javax.swing.JTextField AlteraIDMenuEspecificacao;
+    private javax.swing.JTextField AlteraLocalRegistro;
     private javax.swing.JTextField AlteraNomeMenuArea;
     private javax.swing.JTextField AlteraNomeMenuEditora;
     private javax.swing.JTextField AlteraNomeMenuEspecificacao;
     private javax.swing.JComboBox<String> AlteraOrigemMenuRevistas;
+    private javax.swing.JComboBox<String> AlteraOrigemRegistro;
     private javax.swing.JTextField AlteraQuantidadeMenuRevistas;
+    private javax.swing.JTextField AlteraRegistroRegistro;
     private javax.swing.JTextField AlteraTituloMenuRevistas;
+    private javax.swing.JTextField AlteraTituloRegistro;
     private javax.swing.JButton BotaoAdicionarNovaRevista;
     private javax.swing.JButton BotaoAdicionarNovaRevista1;
     private javax.swing.JButton BotaoAdicionarNovoTipo;
@@ -5524,76 +5752,70 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton BotaoSalvarNovaRevista1;
     private javax.swing.JButton BotaoSalvarNovoTipo;
     private javax.swing.JComboBox<String> BuscaAreaMenuRevistas;
-    private javax.swing.JComboBox<String> BuscaAreaMenuRevistas1;
     private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas;
     private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas1;
     private javax.swing.JTextField BuscaTituloMenuArea;
     private javax.swing.JTextField BuscaTituloMenuEditora;
     private javax.swing.JTextField BuscaTituloMenuEspecificacao;
     private javax.swing.JTextField BuscaTituloMenuRevistas;
-    private javax.swing.JTextField BuscaTituloMenuRevistas1;
+    private javax.swing.JTextField BuscaTituloRegistro;
     private javax.swing.JTextField CampoNovoTituloTipo;
     private javax.swing.JComboBox<String> ComboBoxAreaNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxAreaRegistro;
-    private javax.swing.JComboBox<String> ComboBoxAreaRegistro2;
     private javax.swing.JComboBox<String> ComboBoxEditoraRegistro;
-    private javax.swing.JComboBox<String> ComboBoxEditoraRegistro1;
-    private javax.swing.JComboBox<String> ComboBoxEditoraRegistro2;
     private javax.swing.JComboBox<String> ComboBoxEspecificacaoNovaRevista;
     private javax.swing.JComboBox<String> ComboBoxNovoTipo;
     private javax.swing.JComboBox<String> ComboBoxOrigem;
     private javax.swing.JComboBox<String> ComboBoxOrigemRegistro;
-    private javax.swing.JComboBox<String> ComboBoxOrigemRegistro2;
     private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas;
-    private javax.swing.JComboBox<String> ConsultaAreaMenuRevistas1;
+    private javax.swing.JComboBox<String> ConsultaAreaRegistro;
     private javax.swing.JComboBox<String> ConsultaEspecificacaoMenuRevistas;
-    private javax.swing.JComboBox<String> ConsultaEspecificacaoMenuRevistas1;
     private javax.swing.JTextField ConsultaNomeMenuTipo;
+    private javax.swing.JTextField ConsultaRegistroRegistro;
+    private javax.swing.JTextField ConsultaRegistroRegistro1;
     private javax.swing.JComboBox<String> ConsultaTipoComboBox;
     private javax.swing.JTextField ConsultaTituloMenuRevistas;
-    private javax.swing.JTextField ConsultaTituloMenuRevistas1;
+    private javax.swing.JTextField ConsultaTituloRegistro;
     private javax.swing.JTextField IDTravadoAlteraRevista;
+    private javax.swing.JPanel PaneAlteraRevista;
+    private javax.swing.JPanel PaneCadastraGeral;
+    private javax.swing.JPanel PaneCadastroRegistro;
+    private javax.swing.JPanel PaneConsultaGeral;
+    private javax.swing.JPanel PaneConsultaRegistro;
+    private javax.swing.JPanel PaneConsultaRevista;
     private javax.swing.JPanel PaneFerramentas;
-    private javax.swing.JPanel PaneGuiaAlteraRevista;
-    private javax.swing.JPanel PaneGuiaAlteraRevista1;
+    private javax.swing.JPanel PaneGerenciaArea;
+    private javax.swing.JPanel PaneGerenciaEditora;
+    private javax.swing.JPanel PaneGerenciaEspecificacao;
+    private javax.swing.JPanel PaneGerenciaRegistro;
     private javax.swing.JPanel PaneGuiaAlteraRevista2;
-    private javax.swing.JPanel PaneGuiaAlteraRevista3;
-    private javax.swing.JPanel PaneGuiaAlteraRevista4;
-    private javax.swing.JPanel PaneGuiaConsulta;
-    private javax.swing.JPanel PaneGuiaConsulta1;
-    private javax.swing.JPanel PaneGuiaConsulta2;
-    private javax.swing.JPanel PaneGuiaNovaRevista;
-    private javax.swing.JPanel PaneGuiaNovaRevista1;
-    private javax.swing.JPanel PaneGuiaNovaRevista2;
     private javax.swing.JPanel PaneMae;
+    private javax.swing.JPanel PaneNovaRevista;
     private javax.swing.JPanel PaneRegistro;
     private javax.swing.JPanel PaneRevista;
     private javax.swing.JPanel SideBoard;
     private javax.swing.JTable TabelaAlterarOuRemoverArea;
     private javax.swing.JTable TabelaAlterarOuRemoverEditora;
     private javax.swing.JTable TabelaAlterarOuRemoverEspecificacao;
+    private javax.swing.JTable TabelaAlterarOuRemoverRegistro;
     private javax.swing.JTable TabelaAlterarOuRemoverRevista;
-    private javax.swing.JTable TabelaAlterarOuRemoverRevista1;
+    private javax.swing.JTable TabelaConsultaRegistro;
     private javax.swing.JTable TabelaConsultaRevista;
-    private javax.swing.JTable TabelaConsultaRevista1;
     private javax.swing.JTable TabelaConsultaTipo;
     private javax.swing.JTextField campoData;
     private javax.swing.JTextField campoDataRegistro;
-    private javax.swing.JTextField campoDataRegistro2;
     private javax.swing.JTextField campoLocalRegistro;
-    private javax.swing.JTextField campoLocalRegistro2;
     private javax.swing.JTextField campoQuantidade;
     private javax.swing.JTextField campoRegistroRegistro;
-    private javax.swing.JTextField campoRegistroRegistro2;
     private javax.swing.JTextField campoTitulo;
     private javax.swing.JTextField campoTituloRegistro;
-    private javax.swing.JTextField campoTituloRegistro2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -5607,9 +5829,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -5638,7 +5857,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JLabel lblData8;
     private javax.swing.JLabel lblEspecificacao;
     private javax.swing.JLabel lblEspecificacao1;
-    private javax.swing.JLabel lblEspecificacao10;
     private javax.swing.JLabel lblEspecificacao11;
     private javax.swing.JLabel lblEspecificacao12;
     private javax.swing.JLabel lblEspecificacao2;
@@ -5646,7 +5864,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JLabel lblEspecificacao4;
     private javax.swing.JLabel lblEspecificacao5;
     private javax.swing.JLabel lblEspecificacao6;
-    private javax.swing.JLabel lblEspecificacao7;
     private javax.swing.JLabel lblEspecificacao8;
     private javax.swing.JLabel lblEspecificacao9;
     private javax.swing.JLabel lblIDAlteraArea;
@@ -5655,7 +5872,6 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JLabel lblIDAlteraRevista;
     private javax.swing.JLabel lblOrigem;
     private javax.swing.JLabel lblOrigem1;
-    private javax.swing.JLabel lblOrigem10;
     private javax.swing.JLabel lblOrigem13;
     private javax.swing.JLabel lblOrigem2;
     private javax.swing.JLabel lblOrigem3;
@@ -5670,8 +5886,10 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo11;
     private javax.swing.JLabel lblTitulo12;
     private javax.swing.JLabel lblTitulo13;
+    private javax.swing.JLabel lblTitulo14;
     private javax.swing.JLabel lblTitulo15;
     private javax.swing.JLabel lblTitulo16;
+    private javax.swing.JLabel lblTitulo17;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JLabel lblTitulo3;
     private javax.swing.JLabel lblTitulo4;
