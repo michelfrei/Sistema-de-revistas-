@@ -33,7 +33,7 @@
           <Group type="102" alignment="1" attributes="0">
               <Component id="SideBoard" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="PaneMae" max="32767" attributes="0"/>
+              <Component id="PaneMae" min="-2" pref="1104" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -420,11 +420,13 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="ComboBoxAreaNovaRevista" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="ComboBoxAreaNovaRevista" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="ComboBoxEspecificacaoNovaRevista" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                      </Group>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="campoQuantidade" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                                           <Component id="campoData" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                                          <Component id="ComboBoxEspecificacaoNovaRevista" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -437,7 +439,7 @@
                                       <Component id="BotaoAdicionarNovaRevista" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="BotaoCancelarNovaRevista2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="318" max="32767" attributes="0"/>
+                                  <EmptySpace pref="319" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -667,6 +669,12 @@
                               <StringArray count="0"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value=""/>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="null"/>
+                            </Property>
+                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                              <Color id="Cursor Padr&#xe3;o"/>
+                            </Property>
                             <Property name="debugGraphicsOptions" type="int" value="-1"/>
                             <Property name="doubleBuffered" type="boolean" value="true"/>
                             <Property name="editor" type="javax.swing.ComboBoxEditor" editor="org.netbeans.modules.form.ComponentChooserEditor">

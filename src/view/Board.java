@@ -438,25 +438,24 @@ public class Board extends javax.swing.JFrame {
         AlteraEspecificacaoMenuRevistas();
         ConsultaEspecificacaoRevistas();
     }
-
-    public void teste() {
-        RevistaDAO revistaDAO = new RevistaDAO();
+    
+    public void teste123() {
+        RegistroDAO registroDAO = new RegistroDAO();
         //Preenche o combobox com as razões sociais
-        ArrayList<String> listaRevistas = new ArrayList<>();
+        ArrayList<String> listaRegistro = new ArrayList<>();
 
         try {
-            for (Revistas revista : revistaDAO.ListaRevista()) {
-                listaRevistas.add(revista.getTitulo());
+            for (Registro reg : registroDAO.ListaRegistros()) {
+                listaRegistro.add(reg.getTitulo());
             }
 
         } catch (SQLException ex) {
             ex.getMessage();
         }
 
-        SetupAutoComplete.setupAutoComplete(campoTitulo, listaRevistas);
-
+        SetupAutoComplete.setupAutoComplete(campoTitulo, listaRegistro);
     }
-
+    
     //------------------------------------------------------------------------------------
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxAreaNovaRevista() { //ok
@@ -1887,6 +1886,8 @@ public class Board extends javax.swing.JFrame {
 
         ComboBoxEspecificacaoNovaRevista.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ComboBoxEspecificacaoNovaRevista.setToolTipText("");
+        ComboBoxEspecificacaoNovaRevista.setBorder(null);
+        ComboBoxEspecificacaoNovaRevista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ComboBoxEspecificacaoNovaRevista.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         ComboBoxEspecificacaoNovaRevista.setDoubleBuffered(true);
         ComboBoxEspecificacaoNovaRevista.setEditor(null);
@@ -1955,11 +1956,12 @@ public class Board extends javax.swing.JFrame {
                     .addComponent(lblData2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ComboBoxAreaNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ComboBoxAreaNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboBoxEspecificacaoNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ComboBoxEspecificacaoNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(campoData, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(lblOrigem)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1969,7 +1971,7 @@ public class Board extends javax.swing.JFrame {
                     .addComponent(BotaoSalvarNovaRevista)
                     .addComponent(BotaoAdicionarNovaRevista)
                     .addComponent(BotaoCancelarNovaRevista2))
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(319, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Cadastrar", PaneNovaRevista);
@@ -2523,7 +2525,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneRevistaLayout = new javax.swing.GroupLayout(PaneRevista);
@@ -3547,7 +3549,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneFerramentasLayout = new javax.swing.GroupLayout(PaneFerramentas);
@@ -4416,12 +4418,12 @@ public class Board extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(SideBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PaneMae, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(PaneMae, javax.swing.GroupLayout.PREFERRED_SIZE, 1104, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SideBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 796, Short.MAX_VALUE)
         );
 
         pack();
@@ -4679,7 +4681,7 @@ public class Board extends javax.swing.JFrame {
         ClearComboBoxArea();
         ComboboxArea();
         LimpaCombos();
-        teste();
+        teste123();
     }//GEN-LAST:event_BotaoAdicionarNovaRevistaActionPerformed
 
     //Aqui cria-se uma nova revista
