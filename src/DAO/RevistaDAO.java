@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import model.Registro;
 
 import model.Revistas;
 
@@ -16,6 +17,7 @@ import model.Revistas;
  * @author Michel
  */
 public class RevistaDAO {
+    public Registro registro;
 
     public void InserirNovaRevistas(Revistas rev) throws SQLException {
         String SQL = "INSERT INTO revista.revista (id, Titulo, Especificacao, Quantidade, Origem, Data, Area) values (?, ?, ?, ?, ?, ?, ?)";
@@ -60,6 +62,61 @@ public class RevistaDAO {
         stmt.execute();
         stmt.close();
     }
+    
+    public Revistas retornoRegistro (String titulo) throws SQLException {
+        String SQL = "SELECT * FROM Registro WHERE titulo = ?";
+        
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+       /* 
+        try {
+
+            stmt.setString(1, titulo);
+
+            ResultSet resultado = stmt.executeQuery();
+
+            if (resultado.next()){
+                Registro reg = new Registro();
+                reg.setId(id);
+                a.setNome( resultado.getString("nome"));
+                a.setEmail(  resultado.getString("email"));
+                a.setCpf( resultado.getString("cpf"));
+                return a;
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Azedo o cu do piru");
+        } finally {
+            new Conexao().FecharConexao();    
+        }*/
+        return null;
+    } 
+    /*public Agenda selecionar(int id){
+        Connection c = new Conexao().criarConexao();
+        String sql = "SELECT * FROM agenda WHERE id=?";
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, id);
+
+            ResultSet resultado = p.executeQuery();
+
+            if (resultado.next()){
+                Agenda a = new Agenda();
+                a.setId(id);
+                a.setNome( resultado.getString("nome"));
+                a.setEmail(  resultado.getString("email"));
+                a.setCpf( resultado.getString("cpf"));
+                return a;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GerenciaAgenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            new Conexao().fecharConexao(c);    
+        }
+        return null;
+    }*/
+    
 
     public ArrayList<Revistas> ListaRevista() throws SQLException {
 

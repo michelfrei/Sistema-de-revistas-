@@ -352,13 +352,14 @@ public class Board extends javax.swing.JFrame {
         BotaoRemoverArea.setEnabled(true);
         BotaoAlterarArea.setEnabled(true);
     }
-  
+
     private void TravaTudoAreaAlterarOuRemover() {
         AlteraNomeMenuArea.setEnabled(false);
         BotaoLimpaCamposAlterarArea.setEnabled(false);
         BotaoRemoverArea.setEnabled(false);
         BotaoAlterarArea.setEnabled(false);
     }
+
     //-----------------------------------------------------------------------
     private void LimpaCamposEditoraAlterarOuRemover() {
         AlteraNomeMenuEditora.setText("");
@@ -378,7 +379,7 @@ public class Board extends javax.swing.JFrame {
         BotaoRemoverEditora.setEnabled(false);
         BotaoAlterarEditora.setEnabled(false);
     }
-    
+
     private void TravaCamposConsultaEditoraAlterarOuRemover() {
         BuscaTituloMenuEditora.setEnabled(false);
         BotaoBuscaAlterarOuRemoverEditora.setEnabled(false);
@@ -438,7 +439,7 @@ public class Board extends javax.swing.JFrame {
         AlteraEspecificacaoMenuRevistas();
         ConsultaEspecificacaoRevistas();
     }
-    
+
     public void teste123() {
         RegistroDAO registroDAO = new RegistroDAO();
         //Preenche o combobox com as razões sociais
@@ -455,7 +456,7 @@ public class Board extends javax.swing.JFrame {
 
         SetupAutoComplete.setupAutoComplete(campoTitulo, listaRegistro);
     }
-    
+
     //------------------------------------------------------------------------------------
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxAreaNovaRevista() { //ok
@@ -801,9 +802,8 @@ public class Board extends javax.swing.JFrame {
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
     }
-    
-    
-        private void ComboBoxEditoraRegistro() { //ok
+
+    private void ComboBoxEditoraRegistro() { //ok
         try {
             String SQL = "Select * from revista.editora order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -819,6 +819,7 @@ public class Board extends javax.swing.JFrame {
             System.out.println("problema na combobox");
         }
     }
+
     private void ComboBoxAreaRegistro() { //ok
         try {
             String SQL = "Select * from revista.area order by id asc";
@@ -835,7 +836,7 @@ public class Board extends javax.swing.JFrame {
             System.out.println("problema na combobox");
         }
     }
-    
+
     private void ComboBoxConsultaAreaRegistro() { //ok
         try {
             String SQL = "Select * from revista.area order by id asc";
@@ -845,14 +846,14 @@ public class Board extends javax.swing.JFrame {
             while (rs.next()) {
                 String Nome = rs.getString("Nome");
                 ConsultaAreaRegistro.addItem(Nome);
-                
+
             }
 
         } catch (Exception e) {
             System.out.println("problema na combobox");
         }
     }
-    
+
     //------------------------------------ fim das operacoes de lista referente a revista
     //------------------------------------ inicio das operacoes de lista referente a ferramenta
     public void atualizarConsultaArea() {
@@ -1272,8 +1273,8 @@ public class Board extends javax.swing.JFrame {
         TabelaConsultaRegistro.setRowHeight(25);
         TabelaConsultaRegistro.updateUI();
     }
-    
-        public void atualizarBuscaRegistro() {
+
+    public void atualizarBuscaRegistro() {
 
         Registro reg = new Registro();
         RegistroDAO registroDAO = new RegistroDAO();
@@ -1373,14 +1374,7 @@ public class Board extends javax.swing.JFrame {
         TabelaAlterarOuRemoverRegistro.setRowHeight(25);
         TabelaAlterarOuRemoverRegistro.updateUI();
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     //------------------------------------------------------------------------------------
     public void ResetaTabelaConsultaTipo() {
         ((DefaultTableModel) TabelaConsultaTipo.getModel()).setRowCount(0);
@@ -1393,11 +1387,11 @@ public class Board extends javax.swing.JFrame {
     public void ResetaTabelaAlterarOuRemoverEspecificacao() {
         ((DefaultTableModel) TabelaAlterarOuRemoverEspecificacao.getModel()).setRowCount(0);
     }
-    
+
     public void ResetaTabelaAlterarOuRemoverEditora() {
         ((DefaultTableModel) TabelaAlterarOuRemoverEditora.getModel()).setRowCount(0);
     }
-    
+
     public void ResetaTabelaConsultaRevista() {
         ((DefaultTableModel) TabelaConsultaRevista.getModel()).setRowCount(0);
     }
@@ -5093,7 +5087,7 @@ public class Board extends javax.swing.JFrame {
                     LimpaCamposNovoTipo();
                     TravaCamposNovoTipo();
                     BotaoAdicionarNovoTipo.setEnabled(true);
-                    
+
                     ClearComboBoxEspecificacao();
                     ComboboxEspecificacao();
                     LimpaCombos();
@@ -5260,7 +5254,42 @@ public class Board extends javax.swing.JFrame {
 
     private void campoTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTituloKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            System.out.println("Teste");
+            RegistroDAO registroDAO = new RegistroDAO();
+            //Preenche o combobox com as razões sociais
+            ArrayList<String> listaRegistro = new ArrayList<>();
+            try {
+                for (Registro reg : registroDAO.ListaRegistros()) {
+                    listaRegistro.add(reg.getTitulo());
+                }
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+
+            String SQL = "Select * from revista.Area order by id asc";
+            try {
+                PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    String Nome = rs.getString("Nome");
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            /*try {
+            String SQL = "Select * from revista.Area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                BuscaAreaMenuRevistas.addItem(Nome);
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }*/
         }
     }//GEN-LAST:event_campoTituloKeyPressed
 
@@ -5315,7 +5344,6 @@ public class Board extends javax.swing.JFrame {
                     //ClearComboBoxEspecificacao();
                     //ComboboxEspecificacao();
                     //LimpaCombos();
-
                     JOptionPane.showMessageDialog(null, "Editora alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception ex) {
@@ -5455,7 +5483,6 @@ public class Board extends javax.swing.JFrame {
                     // atualizarConsultaRevista();
                     // TravaBotoeAlteraRevista();
                     // ResetaCamposAlterarRevistas();
-
                     JOptionPane.showMessageDialog(null, "Revista Removida com sucesso", "Sistema", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Algo de errado ocorreu! Erro: " + e.getMessage(), "Sistema", JOptionPane.INFORMATION_MESSAGE);
@@ -5628,7 +5655,7 @@ public class Board extends javax.swing.JFrame {
 
     private void BotaoSalvarNovaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoSalvarNovaRevista1ActionPerformed
         if (campoRegistroRegistro.getText().isEmpty() || campoTituloRegistro.getText().isEmpty() || campoLocalRegistro.getText().isEmpty() || campoDataRegistro.getText().isEmpty()
-            || ComboBoxEditoraRegistro.getSelectedItem() == null || ComboBoxAreaRegistro.getSelectedItem() == null) {
+                || ComboBoxEditoraRegistro.getSelectedItem() == null || ComboBoxAreaRegistro.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Há campos vazios, preencha-os", "Sistema", JOptionPane.INFORMATION_MESSAGE);
         } else {
             try {
