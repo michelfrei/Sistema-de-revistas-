@@ -95,7 +95,7 @@ public class RegistroDAO {
 
         String SQL = "select * from revista.registro ";
 
-        if (reg.getTitulo() != null && reg.getRegistro()== 0 && reg.getArea() == null) {
+        if (reg.getTitulo() != null && reg.getRegistro() == 0 && reg.getArea() == null) {
             SQL += " where Titulo like ? order by registro ASC";
         } else if (reg.getArea() != null && reg.getTitulo() == null && reg.getRegistro() == 0) {
             SQL += " where Area like ? order by registro ASC";
@@ -113,7 +113,7 @@ public class RegistroDAO {
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
-        if (reg.getTitulo() != null && reg.getRegistro()== 0 && reg.getArea() == null) {
+        if (reg.getTitulo() != null && reg.getRegistro() == 0 && reg.getArea() == null) {
             stmt.setString(1, "%" + reg.getTitulo() + "%");
         } else if (reg.getArea() != null && reg.getTitulo() == null && reg.getRegistro() == 0) {
             stmt.setString(1, "%" + reg.getArea() + "%");
@@ -133,7 +133,7 @@ public class RegistroDAO {
             stmt.setString(1, reg.getArea());
             stmt.setInt(2, reg.getRegistro());
         }
-        
+
         try {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -152,6 +152,36 @@ public class RegistroDAO {
         stmt.close();
         Conexao.getConexaoMySQL().close();
 
+        return retorno;
+    }
+
+    public ArrayList<Registro> ListaRegistrosDir(Registro reg) throws SQLException {
+        ArrayList<Registro> retorno = new ArrayList<Registro>();
+
+        String SQL = "select * from revista.registro where titulo = ?";
+        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+        try {
+            stmt.setString(1, reg.getTitulo());
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                retorno.add(new Registro(rs.getInt("registro"),
+                        rs.getString("Titulo"),
+                        rs.getString("Editora"),
+                        rs.getString("Origem"),
+                        rs.getString("local"),
+                        rs.getString("Area"),
+                        rs.getInt("Ano")));
+
+            }
+        } catch (Exception e) {
+            System.out.println("Problema tal:");
+            System.out.println(e.getMessage());
+        }
+        stmt.close();
+        Conexao.getConexaoMySQL().close();
+        
         return retorno;
     }
 }

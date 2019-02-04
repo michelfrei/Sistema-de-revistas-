@@ -47,6 +47,7 @@ public class Board extends javax.swing.JFrame {
 
     List<Registro> ListaRegistro;
     List<Registro> ListaBuscaRegistro;
+    List<Registro> ListaRegistrosDir;
 
     List<Editora> ListaEditora;
     List<Editora> ListaBuscaEditora;
@@ -5254,41 +5255,62 @@ public class Board extends javax.swing.JFrame {
 
     private void campoTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTituloKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
             RegistroDAO registroDAO = new RegistroDAO();
-            //Preenche o combobox com as razões sociais
-            ArrayList<String> listaRegistro = new ArrayList<>();
+            Registro reg = new Registro();
+            reg.setTitulo(campoTitulo.getText());
             try {
-                for (Registro reg : registroDAO.ListaRegistros()) {
-                    listaRegistro.add(reg.getTitulo());
-                }
-            } catch (SQLException ex) {
-                ex.getMessage();
-            }
-
-            String SQL = "Select * from revista.Area order by id asc";
-            try {
-                PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    String Nome = rs.getString("Nome");
-                }
-
+                ListaRegistrosDir = registroDAO.ListaRegistrosDir(reg);
             } catch (SQLException ex) {
                 Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
             }
-            /*try {
-            String SQL = "Select * from revista.Area order by id asc";
-            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String Nome = rs.getString("Nome");
-                BuscaAreaMenuRevistas.addItem(Nome);
+            boolean aux = false;
+            
+            do{
+            RegistroDAO regis = new RegistroDAO();
+            String dados[][] = new String[ListaRegistrosDir.size()][7];
+            int i = 0;
+            for (Registro regs : ListaRegistrosDir) {
+                dados[i][0] = null;
+                dados[i][1] = null;
+                dados[i][2] = null;
+                String teste = dados[i][3];
+                ComboBoxOrigem.getModel().setSelectedItem(teste);
+                
             }
-
-        } catch (Exception e) {
-            System.out.println("problema na combobox");
+            aux = true;;
+            } while(aux=true);
+            /*Revistas revistas = new Revistas();
+        String dados[][] = new String[ListaBuscaRevista.size()][7];
+        int i = 0;
+        for (Revistas rev : ListaBuscaRevista) {
+            dados[i][0] = String.valueOf(rev.getID());
+            dados[i][1] = rev.getTitulo();
+            dados[i][2] = rev.getArea();
+            dados[i][3] = rev.getEspecificacao();
+            dados[i][4] = String.valueOf(rev.getData());
+            dados[i][5] = String.valueOf(rev.getQuantidade());
+            dados[i][6] = rev.getOrigem();
+            i++;
+        }
+            /* Registro reg = new Registro();
+        RegistroDAO registroDAO = new RegistroDAO();
+        try {
+            ListaRegistro = registroDAO.ListaRegistros();
+        } catch (SQLException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String dados[][] = new String[ListaRegistro.size()][7];
+        int i = 0;
+        for (Registro registro : ListaRegistro) {
+            dados[i][0] = String.valueOf(registro.getRegistro());
+            dados[i][1] = registro.getTitulo();
+            dados[i][2] = registro.getEditora();
+            dados[i][3] = registro.getOrigem();
+            dados[i][4] = registro.getLocal();
+            dados[i][5] = registro.getArea();
+            dados[i][6] = String.valueOf(registro.getAno());
+            i++;
         }*/
         }
     }//GEN-LAST:event_campoTituloKeyPressed
