@@ -33,6 +33,12 @@ public class Registro {
         this.area = area;
         this.ano = ano;
     }
+    public Registro(String titulo, String area, int ano, String origem){
+        this.titulo = titulo;
+        this.area = area;
+        this.ano = ano;
+        this.origem = origem;
+    }
 
     public int getRegistro() {
         return registro;

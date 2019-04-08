@@ -124,12 +124,12 @@ public class Board extends javax.swing.JFrame {
 
     private void TravaBotoesCadRevista() {
         BotaoSalvarNovaRevista.setEnabled(false);
-        BotaoCancelarNovaRevista2.setEnabled(false);
+        BotaoCancelarNovaRevista.setEnabled(false);
     }
 
     private void DestravaBotoesCadRevista() {
         BotaoSalvarNovaRevista.setEnabled(true);
-        BotaoCancelarNovaRevista2.setEnabled(true);
+        BotaoCancelarNovaRevista.setEnabled(true);
     }
 
     private void limpaCamposNovaRevista() {
@@ -396,6 +396,36 @@ public class Board extends javax.swing.JFrame {
     private void LimpaCamposConsultaEditoraAlterarOuRemover() {
         BuscaTituloMenuEditora.setText("");
     }
+    //------------------------------------------------------------------------------------
+    private void limpaCamposRegistro() {
+        campoRegistroRegistro.setText("");
+        campoTituloRegistro.setText("");
+        campoLocalRegistro.setText("");
+        campoDataRegistro.setText("");
+        ComboBoxEditoraRegistro.setSelectedItem(null);
+        ComboBoxAreaRegistro.setSelectedItem(null);
+        ComboBoxOrigemRegistro.getModel().setSelectedItem("Doação");
+    }
+
+    private void TravaCamposRegistro() {
+        campoRegistroRegistro.setEnabled(false);
+        campoTituloRegistro.setEnabled(false);
+        campoLocalRegistro.setEnabled(false);
+        campoDataRegistro.setEnabled(false);
+        ComboBoxEditoraRegistro.setEnabled(false);
+        ComboBoxAreaRegistro.setEnabled(false);
+        ComboBoxOrigemRegistro.setEnabled(false);
+    }
+
+    private void DestravaCamposRegistro() {
+        campoRegistroRegistro.setEnabled(true);
+        campoTituloRegistro.setEnabled(true);
+        campoLocalRegistro.setEnabled(true);
+        campoDataRegistro.setEnabled(true);
+        ComboBoxEditoraRegistro.setEnabled(true);
+        ComboBoxAreaRegistro.setEnabled(true);
+        ComboBoxOrigemRegistro.setEnabled(true);
+    }
 
     //----------------Limpa todas combobox da tela de cadastro de revista-----------------
     public void LimpaCombos() {
@@ -428,10 +458,16 @@ public class Board extends javax.swing.JFrame {
     }
 
     public void ComboboxArea() {
+        //revista
         ComboBoxAreaNovaRevista();
         BuscaAreaMenuRevistas();
         AlteraAreaMenuRevistas();
         ConsultaAreaMenuRevistas();
+        //registro
+        ComboBoxAreaRegistro();
+        //ConsultaAreaRegistro();
+        //AlteraAreaMenuRegistro();
+        //BuscaAreaRegistro();
     }
 
     public void ComboboxEspecificacao() {
@@ -441,7 +477,7 @@ public class Board extends javax.swing.JFrame {
         ConsultaEspecificacaoRevistas();
     }
 
-    public void teste123() {
+    public void AutoComplete() {
         RegistroDAO registroDAO = new RegistroDAO();
         //Preenche o combobox com as razões sociais
         ArrayList<String> listaRegistro = new ArrayList<>();
@@ -480,7 +516,7 @@ public class Board extends javax.swing.JFrame {
     //ComboBox do PaneRevista, referente a aba PaneGuiaNovaRevista
     private void ComboBoxEspecificacaoNovaRevista() {//ok
         try {
-            String SQL = "Select * from revista.Especificação order by id asc";
+            String SQL = "Select * from revista.Especificacao order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -497,7 +533,7 @@ public class Board extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void BuscaEspecificacaoMenuRevistas() {//ok
         try {
-            String SQL = "Select * from revista.Especificação order by id asc";
+            String SQL = "Select * from revista.Especificacao order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -549,7 +585,7 @@ public class Board extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaAlteraRevista).
     private void AlteraEspecificacaoMenuRevistas() {//ok
         try {
-            String SQL = "Select * from revista.Especificação order by id asc";
+            String SQL = "Select * from revista.Especificacao order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -583,7 +619,7 @@ public class Board extends javax.swing.JFrame {
     //ComboBox do PaneRevista(referente a aba PaneGuiaConsulta).
     private void ConsultaEspecificacaoRevistas() {//ok
         try {
-            String SQL = "Select * from revista.Especificação order by id asc";
+            String SQL = "Select * from revista.Especificacao order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
             rs = stmt.executeQuery();
@@ -597,6 +633,57 @@ public class Board extends javax.swing.JFrame {
         }
     }
 
+    
+        private void ComboBoxEditoraRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.editora order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ComboBoxEditoraRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+
+    private void ComboBoxAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ComboBoxAreaRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+
+    private void ComboBoxConsultaAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                ConsultaAreaRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
     //Tava do PaneRevista, referente a aba PaneGuiaAlteraRevista
     public void atualizarTabelaRevista() {
         Revistas rev = new Revistas();
@@ -802,57 +889,6 @@ public class Board extends javax.swing.JFrame {
 
         TabelaConsultaRevista.setRowHeight(25);
         TabelaConsultaRevista.updateUI();
-    }
-
-    private void ComboBoxEditoraRegistro() { //ok
-        try {
-            String SQL = "Select * from revista.editora order by id asc";
-            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String Nome = rs.getString("Nome");
-                ComboBoxEditoraRegistro.addItem(Nome);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("problema na combobox");
-        }
-    }
-
-    private void ComboBoxAreaRegistro() { //ok
-        try {
-            String SQL = "Select * from revista.area order by id asc";
-            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String Nome = rs.getString("Nome");
-                ComboBoxAreaRegistro.addItem(Nome);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("problema na combobox");
-        }
-    }
-
-    private void ComboBoxConsultaAreaRegistro() { //ok
-        try {
-            String SQL = "Select * from revista.area order by id asc";
-            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-            rs = stmt.executeQuery();
-            while (rs.next()) {
-                String Nome = rs.getString("Nome");
-                ConsultaAreaRegistro.addItem(Nome);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("problema na combobox");
-        }
     }
 
     //------------------------------------ fim das operacoes de lista referente a revista
@@ -1400,7 +1436,15 @@ public class Board extends javax.swing.JFrame {
     public void ResetaTabelaAlterarOuRemoverRevista() {
         ((DefaultTableModel) TabelaAlterarOuRemoverRevista.getModel()).setRowCount(0);
     }
-
+    
+    public void ResetaTabelaConsultaRegistro(){
+        ((DefaultTableModel) TabelaConsultaRegistro.getModel()).setRowCount(0);
+    }
+    
+    public void ResetaTabelaAlterarOuRemoverRegistro(){
+        ((DefaultTableModel) TabelaAlterarOuRemoverRegistro.getModel()).setRowCount(0);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1432,7 +1476,7 @@ public class Board extends javax.swing.JFrame {
         lblData2 = new javax.swing.JLabel();
         campoQuantidade = new javax.swing.JTextField();
         campoData = new javax.swing.JTextField();
-        BotaoCancelarNovaRevista2 = new javax.swing.JButton();
+        BotaoCancelarNovaRevista = new javax.swing.JButton();
         ComboBoxEspecificacaoNovaRevista = new javax.swing.JComboBox<>();
         PaneConsultaRevista = new javax.swing.JPanel();
         ConsultaTituloMenuRevistas = new javax.swing.JTextField();
@@ -1598,7 +1642,7 @@ public class Board extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         BuscaTituloRegistro = new javax.swing.JTextField();
         lblTitulo12 = new javax.swing.JLabel();
-        BuscaEspecificacaoMenuRevistas1 = new javax.swing.JComboBox<>();
+        BuscaAreaRegistro = new javax.swing.JComboBox<>();
         lblEspecificacao8 = new javax.swing.JLabel();
         BotaoBuscaAlterarOuRemoverRevista1 = new javax.swing.JButton();
         BotaoAlterarRevistas1 = new javax.swing.JButton();
@@ -1790,7 +1834,7 @@ public class Board extends javax.swing.JFrame {
         lblOrigem.setText("Origem");
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblTitulo.setText("Título da revista");
+        lblTitulo.setText("Pesquise o título da revista:");
 
         lblOrigem1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblOrigem1.setText("Especificação");
@@ -1868,14 +1912,14 @@ public class Board extends javax.swing.JFrame {
             }
         });
 
-        BotaoCancelarNovaRevista2.setBackground(new java.awt.Color(255, 255, 255));
-        BotaoCancelarNovaRevista2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        BotaoCancelarNovaRevista2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Remove Book_24px.png"))); // NOI18N
-        BotaoCancelarNovaRevista2.setText("Cancelar");
-        BotaoCancelarNovaRevista2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        BotaoCancelarNovaRevista2.addActionListener(new java.awt.event.ActionListener() {
+        BotaoCancelarNovaRevista.setBackground(new java.awt.Color(255, 255, 255));
+        BotaoCancelarNovaRevista.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        BotaoCancelarNovaRevista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/img/EntradaRevista/Remove Book_24px.png"))); // NOI18N
+        BotaoCancelarNovaRevista.setText("Cancelar");
+        BotaoCancelarNovaRevista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        BotaoCancelarNovaRevista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoCancelarNovaRevista2ActionPerformed(evt);
+                BotaoCancelarNovaRevistaActionPerformed(evt);
             }
         });
 
@@ -1905,7 +1949,7 @@ public class Board extends javax.swing.JFrame {
                     .addGroup(PaneNovaRevistaLayout.createSequentialGroup()
                         .addComponent(BotaoAdicionarNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BotaoCancelarNovaRevista2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotaoCancelarNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(BotaoSalvarNovaRevista, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1965,7 +2009,7 @@ public class Board extends javax.swing.JFrame {
                 .addGroup(PaneNovaRevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotaoSalvarNovaRevista)
                     .addComponent(BotaoAdicionarNovaRevista)
-                    .addComponent(BotaoCancelarNovaRevista2))
+                    .addComponent(BotaoCancelarNovaRevista))
                 .addContainerGap(319, Short.MAX_VALUE))
         );
 
@@ -2520,7 +2564,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneRevistaLayout = new javax.swing.GroupLayout(PaneRevista);
@@ -3544,7 +3588,7 @@ public class Board extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 726, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout PaneFerramentasLayout = new javax.swing.GroupLayout(PaneFerramentas);
@@ -3999,17 +4043,17 @@ public class Board extends javax.swing.JFrame {
         lblTitulo12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTitulo12.setText("Título da revista");
 
-        BuscaEspecificacaoMenuRevistas1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        BuscaEspecificacaoMenuRevistas1.setToolTipText("");
-        BuscaEspecificacaoMenuRevistas1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        BuscaEspecificacaoMenuRevistas1.setDoubleBuffered(true);
-        BuscaEspecificacaoMenuRevistas1.setEditor(null);
-        BuscaEspecificacaoMenuRevistas1.setFocusable(false);
-        BuscaEspecificacaoMenuRevistas1.setMinimumSize(new java.awt.Dimension(25, 25));
-        BuscaEspecificacaoMenuRevistas1.setName("Selecione"); // NOI18N
-        BuscaEspecificacaoMenuRevistas1.addActionListener(new java.awt.event.ActionListener() {
+        BuscaAreaRegistro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BuscaAreaRegistro.setToolTipText("");
+        BuscaAreaRegistro.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        BuscaAreaRegistro.setDoubleBuffered(true);
+        BuscaAreaRegistro.setEditor(null);
+        BuscaAreaRegistro.setFocusable(false);
+        BuscaAreaRegistro.setMinimumSize(new java.awt.Dimension(25, 25));
+        BuscaAreaRegistro.setName("Selecione"); // NOI18N
+        BuscaAreaRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscaEspecificacaoMenuRevistas1ActionPerformed(evt);
+                BuscaAreaRegistroActionPerformed(evt);
             }
         });
 
@@ -4252,7 +4296,7 @@ public class Board extends javax.swing.JFrame {
                                 .addComponent(BotaoResetaPesquisaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BuscaAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblEspecificacao8)
                                     .addGroup(PaneGerenciaRegistroLayout.createSequentialGroup()
                                         .addComponent(BotaoBuscaAlterarOuRemoverRevista1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4330,7 +4374,7 @@ public class Board extends javax.swing.JFrame {
                             .addComponent(lblTitulo17))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BuscaEspecificacaoMenuRevistas1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BuscaAreaRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ConsultaRegistroRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(PaneGerenciaRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4418,7 +4462,7 @@ public class Board extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(SideBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 796, Short.MAX_VALUE)
+            .addComponent(PaneMae, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
         );
 
         pack();
@@ -4667,16 +4711,16 @@ public class Board extends javax.swing.JFrame {
     }//GEN-LAST:event_campoQuantidadeActionPerformed
 
     private void BotaoAdicionarNovaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAdicionarNovaRevistaActionPerformed
-        DestravaCamposDoNovaRevista();
+        campoTitulo.setEnabled(true);
         limpaCamposNovaRevista();
-        DestravaBotoesCadRevista();
         BotaoAdicionarNovaRevista.setEnabled(false);
+        BotaoCancelarNovaRevista.setEnabled(true);
         ClearComboBoxEspecificacao();
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
         LimpaCombos();
-        teste123();
+        AutoComplete();
     }//GEN-LAST:event_BotaoAdicionarNovaRevistaActionPerformed
 
     //Aqui cria-se uma nova revista
@@ -4729,14 +4773,14 @@ public class Board extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TabelaConsultaRevistaMouseClicked
 
-    private void BotaoCancelarNovaRevista2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarNovaRevista2ActionPerformed
+    private void BotaoCancelarNovaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCancelarNovaRevistaActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Todos os dados informados serão perdidos. Desaja continuar?", "Cadastro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             limpaCamposNovaRevista();
             TravaCamposDoNovaRevista();
             TravaBotoesCadRevista();
             BotaoAdicionarNovaRevista.setEnabled(true);
         }
-    }//GEN-LAST:event_BotaoCancelarNovaRevista2ActionPerformed
+    }//GEN-LAST:event_BotaoCancelarNovaRevistaActionPerformed
 
     private void BotaoLimpaConsultaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevistaActionPerformed
         LimpaCamposConsultaRevista();
@@ -5255,63 +5299,32 @@ public class Board extends javax.swing.JFrame {
 
     private void campoTituloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTituloKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            RegistroDAO registroDAO = new RegistroDAO();
             Registro reg = new Registro();
-            reg.setTitulo(campoTitulo.getText());
+            RegistroDAO registroDAO = new RegistroDAO();
             try {
-                ListaRegistrosDir = registroDAO.ListaRegistrosDir(reg);
-            } catch (SQLException ex) {
-                Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            boolean aux = false;
-            
-            do{
-            RegistroDAO regis = new RegistroDAO();
-            String dados[][] = new String[ListaRegistrosDir.size()][7];
-            int i = 0;
-            for (Registro regs : ListaRegistrosDir) {
-                dados[i][0] = null;
-                dados[i][1] = null;
-                dados[i][2] = null;
-                String teste = dados[i][3];
-                ComboBoxOrigem.getModel().setSelectedItem(teste);
+                String SQL = "select Titulo, Area, Ano, Origem from revista.registro where titulo = ?";
+                PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+                stmt.setString(1, campoTitulo.getText());
+                ResultSet rs = stmt.executeQuery();
+                
+                while (rs.next()) {
+                //campoTitulo.setText(rs.getString("Titulo"));
+                ComboBoxAreaNovaRevista.getModel().setSelectedItem(rs.getString("Area"));
+                campoData.setText(rs.getString("Ano"));
+                ComboBoxOrigem.getModel().setSelectedItem(rs.getString("Origem"));
+                campoTitulo.setEnabled(false);
+                ComboBoxAreaNovaRevista.setEnabled(false);
+                campoData.setEnabled(false);
+                ComboBoxOrigem.setEnabled(false);
+                BotaoSalvarNovaRevista.setEnabled(true);
+                ComboBoxEspecificacaoNovaRevista.setEnabled(true);
+                campoQuantidade.setEnabled(true);
                 
             }
-            aux = true;;
-            } while(aux=true);
-            /*Revistas revistas = new Revistas();
-        String dados[][] = new String[ListaBuscaRevista.size()][7];
-        int i = 0;
-        for (Revistas rev : ListaBuscaRevista) {
-            dados[i][0] = String.valueOf(rev.getID());
-            dados[i][1] = rev.getTitulo();
-            dados[i][2] = rev.getArea();
-            dados[i][3] = rev.getEspecificacao();
-            dados[i][4] = String.valueOf(rev.getData());
-            dados[i][5] = String.valueOf(rev.getQuantidade());
-            dados[i][6] = rev.getOrigem();
-            i++;
-        }
-            /* Registro reg = new Registro();
-        RegistroDAO registroDAO = new RegistroDAO();
-        try {
-            ListaRegistro = registroDAO.ListaRegistros();
-        } catch (SQLException ex) {
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        String dados[][] = new String[ListaRegistro.size()][7];
-        int i = 0;
-        for (Registro registro : ListaRegistro) {
-            dados[i][0] = String.valueOf(registro.getRegistro());
-            dados[i][1] = registro.getTitulo();
-            dados[i][2] = registro.getEditora();
-            dados[i][3] = registro.getOrigem();
-            dados[i][4] = registro.getLocal();
-            dados[i][5] = registro.getArea();
-            dados[i][6] = String.valueOf(registro.getAno());
-            i++;
-        }*/
+            } catch (SQLException e) {
+                
+            }
         }
     }//GEN-LAST:event_campoTituloKeyPressed
 
@@ -5360,7 +5373,7 @@ public class Board extends javax.swing.JFrame {
                     LimpaCamposEditoraAlterarOuRemover();
                     TravaTudoEditoraAlterarOuRemover();
                     TravaTudoEditoraAlterarOuRemover();
-
+                    AlteraNomeMenuEditora.setEnabled(false);
                     BotaoLiberarAcoesEditora.setEnabled(true);
 
                     //ClearComboBoxEspecificacao();
@@ -5592,8 +5605,8 @@ public class Board extends javax.swing.JFrame {
                 reg.setRegistro(Integer.parseInt(ConsultaRegistroRegistro1.getText()));
             }
 
-            if (BuscaEspecificacaoMenuRevistas1.getSelectedItem() != null) {
-                reg.setArea((String) BuscaEspecificacaoMenuRevistas1.getSelectedItem());
+            if (BuscaAreaRegistro.getSelectedItem() != null) {
+                reg.setArea((String) BuscaAreaRegistro.getSelectedItem());
             }
             ListaBuscaRegistro = registroDAO.ListaBuscaRegistros(reg);
 
@@ -5604,9 +5617,9 @@ public class Board extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotaoBuscaAlterarOuRemoverRevista1ActionPerformed
 
-    private void BuscaEspecificacaoMenuRevistas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+    private void BuscaAreaRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscaAreaRegistroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BuscaEspecificacaoMenuRevistas1ActionPerformed
+    }//GEN-LAST:event_BuscaAreaRegistroActionPerformed
 
     private void BotaoLimpaConsultaRevista1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaConsultaRevista1ActionPerformed
         // TODO add your handling code here:
@@ -5762,7 +5775,7 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton BotaoBuscaConsultaRevista;
     private javax.swing.JButton BotaoBuscaConsultaRevista1;
     private javax.swing.JButton BotaoCancelaNovoTipo;
-    private javax.swing.JButton BotaoCancelarNovaRevista2;
+    private javax.swing.JButton BotaoCancelarNovaRevista;
     private javax.swing.JButton BotaoCancelarNovaRevista3;
     private javax.swing.JButton BotaoConsultaArea;
     private javax.swing.JLabel BotaoFerramenta;
@@ -5803,8 +5816,8 @@ public class Board extends javax.swing.JFrame {
     private javax.swing.JButton BotaoSalvarNovaRevista1;
     private javax.swing.JButton BotaoSalvarNovoTipo;
     private javax.swing.JComboBox<String> BuscaAreaMenuRevistas;
+    private javax.swing.JComboBox<String> BuscaAreaRegistro;
     private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas;
-    private javax.swing.JComboBox<String> BuscaEspecificacaoMenuRevistas1;
     private javax.swing.JTextField BuscaTituloMenuArea;
     private javax.swing.JTextField BuscaTituloMenuEditora;
     private javax.swing.JTextField BuscaTituloMenuEspecificacao;
@@ -5953,6 +5966,10 @@ public class Board extends javax.swing.JFrame {
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Magazine_48px.png")));
+    }
+
+    private Object BotaoFerramenta() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -158,7 +158,7 @@ public class RegistroDAO {
     public ArrayList<Registro> ListaRegistrosDir(Registro reg) throws SQLException {
         ArrayList<Registro> retorno = new ArrayList<Registro>();
 
-        String SQL = "select * from revista.registro where titulo = ?";
+        String SQL = "select * from revista.registro where titulo like ?";
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         try {
             stmt.setString(1, reg.getTitulo());
@@ -166,15 +166,13 @@ public class RegistroDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                retorno.add(new Registro(rs.getInt("registro"),
-                        rs.getString("Titulo"),
-                        rs.getString("Editora"),
-                        rs.getString("Origem"),
-                        rs.getString("local"),
+                retorno.add(new Registro(rs.getString("Titulo"),
                         rs.getString("Area"),
-                        rs.getInt("Ano")));
+                        rs.getInt("Ano"),
+                        rs.getString("Origem")));
 
             }
+            
         } catch (Exception e) {
             System.out.println("Problema tal:");
             System.out.println(e.getMessage());

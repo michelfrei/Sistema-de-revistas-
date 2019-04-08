@@ -210,40 +210,4 @@ public class RevistaDAO {
 
         return retorno;
     }
-
-    public List<Revistas> ListaBuscaRevistaa(String var) throws SQLException {
-        List<Revistas> retorno = new ArrayList<Revistas>();
-
-        String SQL = "select * from revista.revista";
-
-        if (var.equals(null)) {
-            SQL += " where nome like ?";
-        }
-        PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
-
-        if (var.equals(null)) {
-            stmt.setString(1, var);
-        }
-
-        try{
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-               retorno.add(new Revistas(rs.getInt("id"),
-                        rs.getString("Titulo"),
-                        rs.getString("Especificacao"),
-                        rs.getInt("Quantidade"),
-                        rs.getString("Origem"),
-                        rs.getInt("Data"),
-                        rs.getString("Area")));
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        stmt.close();
-        Conexao.getConexaoMySQL().close();
-
-        return retorno;
-    }
-
 }

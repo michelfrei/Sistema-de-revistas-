@@ -15,7 +15,7 @@ public class EspecificacaoDAO {
 
     public void InserirEspecificacao(Especificacao especificacao) throws SQLException {
 
-        String SQL = "INSERT INTO revista.Especificação (id, Nome) values (?, ?)";
+        String SQL = "INSERT INTO revista.Especificacao (id, Nome) values (?, ?)";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
 
@@ -27,7 +27,7 @@ public class EspecificacaoDAO {
     }
 
     public void RemoverEspecificacao(Especificacao especificacao) throws SQLException {
-        String SQL = "Delete from revista.Especificação where id=?";
+        String SQL = "Delete from revista.Especificacao where id=?";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         stmt.setInt(1, especificacao.getId());
@@ -37,7 +37,7 @@ public class EspecificacaoDAO {
     }
 
     public void AlterarEspecificacao(Especificacao especificacao) throws SQLException {
-        String SQL = "update revista.Especificação set Nome=? where id = ?";
+        String SQL = "update revista.Especificacao set Nome=? where id = ?";
 
         PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
         stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -53,7 +53,7 @@ public class EspecificacaoDAO {
         List<Especificacao> ListaEspecificacao;
         ListaEspecificacao = new ArrayList<>();
 
-        String SQL = "select* from revista.Especificação";
+        String SQL = "select* from revista.Especificacao";
         try {
 
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -73,7 +73,7 @@ public class EspecificacaoDAO {
     public List<Especificacao> ListaBuscaEspecificacao(Especificacao especificacao) throws SQLException {
         List<Especificacao> retorno = new ArrayList<Especificacao>();
 
-        String SQL = "select * from revista.Especificação";
+        String SQL = "select * from revista.Especificacao";
         
         if(especificacao.getNome()!= null){
             SQL += " where Nome like ?";
