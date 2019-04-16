@@ -55,18 +55,17 @@ public class Board extends javax.swing.JFrame {
     public Board() {
         initComponents();
         setIcon();
+        
         inicioRevista();
         inicioFerramentas();
+        inicioRegistro();
+        
         PaneRevista.setVisible(true);
         PaneFerramentas.setVisible(false);
         setLblColor(BotaoRevista);
         ResetColor(BotaoFerramenta);
         ResetColor(BotaoRegistro);
         LimpaCombos();
-        atualizarConsultaRegistro();
-        ComboBoxConsultaAreaRegistro();
-        ConsultaAreaRegistro.setSelectedItem(null);
-        atualizarBuscaRegistro();
     }
 
     private void inicioFerramentas() {
@@ -120,6 +119,42 @@ public class Board extends javax.swing.JFrame {
         BotaoBuscaConsultaRevista.setEnabled(false);
         BotaoLimpaConsultaRevista.setEnabled(false);
         BotaoLiberaCamposAlterarRevistas.setEnabled(false);
+    }
+
+    private void inicioRegistro() {
+        atualizarConsultaRegistro();
+        ComboBoxConsultaAreaRegistro();
+        ConsultaAreaRegistro.setSelectedItem(null);
+        atualizarBuscaRegistro();
+        ComboBoxAlteraAreaRegistro();
+        ComboBoxBuscaAreaRegistro();
+        ComboBoxAlteraEditoraRegistro();
+
+        /*ComboBoxAreaNovaRevista();
+        ComboBoxEspecificacaoNovaRevista();
+        BuscaAreaMenuRevistas();
+        BuscaEspecificacaoMenuRevistas();
+        atualizarTabelaRevista();
+        AlteraAreaMenuRevistas();
+        AlteraEspecificacaoMenuRevistas();
+        ResetaCamposAlterarRevistas();
+        TravaCamposDoNovaRevista();
+        limpaCamposNovaRevista();
+        IDTravadoAlteraRevista.setVisible(false);
+        lblIDAlteraRevista.setVisible(false);
+        LimpaCamposAlteraRevista();
+        TravaCamposAlteraRevista();
+        TravaBotoeAlteraRevista();
+        atualizarConsultaRevista();
+        ConsultaEspecificacaoRevistas();
+        ConsultaAreaMenuRevistas();
+        LimpaCamposConsultaRevista();
+        TravaCamposConsultaRevista();
+        TravaBotoesCadRevista();
+        TravaCamposDoPesquisarRevistasParaAlteracao();
+        BotaoBuscaConsultaRevista.setEnabled(false);
+        BotaoLimpaConsultaRevista.setEnabled(false);
+        BotaoLiberaCamposAlterarRevistas.setEnabled(false);*/
     }
 
     private void TravaBotoesCadRevista() {
@@ -396,6 +431,7 @@ public class Board extends javax.swing.JFrame {
     private void LimpaCamposConsultaEditoraAlterarOuRemover() {
         BuscaTituloMenuEditora.setText("");
     }
+
     //------------------------------------------------------------------------------------
     private void limpaCamposRegistro() {
         campoRegistroRegistro.setText("");
@@ -442,6 +478,19 @@ public class Board extends javax.swing.JFrame {
     }
 
     //-----------------Esvazia as combobox + chamada de combobox -------------------------
+    public void ClearComboBoxArea() {
+        //combobox revista
+        ComboBoxAreaNovaRevista.removeAllItems();
+        BuscaAreaMenuRevistas.removeAllItems();
+        AlteraAreaMenuRevistas.removeAllItems();
+        ConsultaAreaMenuRevistas.removeAllItems();
+        //combobox registro
+        ComboBoxAreaRegistro.removeAllItems();
+        ConsultaAreaRegistro.removeAllItems();
+        BuscaAreaRegistro.removeAllItems();
+        AlteraAreaRegistro.removeAllItems();
+    }
+
     public void ClearComboBoxEspecificacao() {
         ComboBoxEspecificacaoNovaRevista.removeAllItems();
         BuscaEspecificacaoMenuRevistas.removeAllItems();
@@ -449,12 +498,9 @@ public class Board extends javax.swing.JFrame {
         ConsultaEspecificacaoMenuRevistas.removeAllItems();
     }
 
-    public void ClearComboBoxArea() {
-        ComboBoxAreaNovaRevista.removeAllItems();
-        BuscaAreaMenuRevistas.removeAllItems();
-        AlteraAreaMenuRevistas.removeAllItems();
-        ConsultaAreaMenuRevistas.removeAllItems();
-
+    public void ClearComboboxEditora() {
+        ComboBoxEditoraRegistro.removeAllItems();
+        AlteraEditoraRegistro.removeAllItems();
     }
 
     public void ComboboxArea() {
@@ -465,9 +511,9 @@ public class Board extends javax.swing.JFrame {
         ConsultaAreaMenuRevistas();
         //registro
         ComboBoxAreaRegistro();
-        //ConsultaAreaRegistro();
-        //AlteraAreaMenuRegistro();
-        //BuscaAreaRegistro();
+        ComboBoxConsultaAreaRegistro();
+        ComboBoxBuscaAreaRegistro();
+        ComboBoxAlteraAreaRegistro();
     }
 
     public void ComboboxEspecificacao() {
@@ -477,9 +523,14 @@ public class Board extends javax.swing.JFrame {
         ConsultaEspecificacaoRevistas();
     }
 
+    public void ComboboxEditora() {
+        ComboBoxEditoraRegistro();
+        ComboBoxAlteraEditoraRegistro();
+    }
+
     public void AutoComplete() {
         RegistroDAO registroDAO = new RegistroDAO();
-        //Preenche o combobox com as razões sociais
+        //Preenche o combobox com os registros
         ArrayList<String> listaRegistro = new ArrayList<>();
 
         try {
@@ -633,8 +684,7 @@ public class Board extends javax.swing.JFrame {
         }
     }
 
-    
-        private void ComboBoxEditoraRegistro() { //ok
+    private void ComboBoxEditoraRegistro() { //ok
         try {
             String SQL = "Select * from revista.editora order by id asc";
             PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
@@ -643,6 +693,23 @@ public class Board extends javax.swing.JFrame {
             while (rs.next()) {
                 String Nome = rs.getString("Nome");
                 ComboBoxEditoraRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+
+    private void ComboBoxAlteraEditoraRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.editora order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                AlteraEditoraRegistro.addItem(Nome);
 
             }
 
@@ -684,6 +751,41 @@ public class Board extends javax.swing.JFrame {
             System.out.println("problema na combobox");
         }
     }
+
+    private void ComboBoxBuscaAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                BuscaAreaRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+
+    private void ComboBoxAlteraAreaRegistro() { //ok
+        try {
+            String SQL = "Select * from revista.area order by id asc";
+            PreparedStatement stmt = Conexao.getConexaoMySQL().prepareStatement(SQL);
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                String Nome = rs.getString("Nome");
+                AlteraAreaRegistro.addItem(Nome);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("problema na combobox");
+        }
+    }
+
     //Tava do PaneRevista, referente a aba PaneGuiaAlteraRevista
     public void atualizarTabelaRevista() {
         Revistas rev = new Revistas();
@@ -1436,15 +1538,15 @@ public class Board extends javax.swing.JFrame {
     public void ResetaTabelaAlterarOuRemoverRevista() {
         ((DefaultTableModel) TabelaAlterarOuRemoverRevista.getModel()).setRowCount(0);
     }
-    
-    public void ResetaTabelaConsultaRegistro(){
+
+    public void ResetaTabelaConsultaRegistro() {
         ((DefaultTableModel) TabelaConsultaRegistro.getModel()).setRowCount(0);
     }
-    
-    public void ResetaTabelaAlterarOuRemoverRegistro(){
+
+    public void ResetaTabelaAlterarOuRemoverRegistro() {
         ((DefaultTableModel) TabelaAlterarOuRemoverRegistro.getModel()).setRowCount(0);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -4501,7 +4603,7 @@ public class Board extends javax.swing.JFrame {
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
-        LimpaCombos();
+        //LimpaCombos();
     }//GEN-LAST:event_BotaoNovaBuscaConsultaRevistaActionPerformed
 
     private void BotaoBuscaConsultaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoBuscaConsultaRevistaActionPerformed
@@ -4560,7 +4662,7 @@ public class Board extends javax.swing.JFrame {
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
-        LimpaCombos();
+        //LimpaCombos();
     }//GEN-LAST:event_BotaoResetaPesquisaAlterarOuRemoverRevistaActionPerformed
 
 
@@ -4719,7 +4821,7 @@ public class Board extends javax.swing.JFrame {
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
-        LimpaCombos();
+        //LimpaCombos();
         AutoComplete();
     }//GEN-LAST:event_BotaoAdicionarNovaRevistaActionPerformed
 
@@ -4789,7 +4891,7 @@ public class Board extends javax.swing.JFrame {
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
-        LimpaCombos();
+        //LimpaCombos();
     }//GEN-LAST:event_BotaoLimpaConsultaRevistaActionPerformed
 
     private void BotaoLimpaBuscaRevistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimpaBuscaRevistaActionPerformed
@@ -4802,7 +4904,7 @@ public class Board extends javax.swing.JFrame {
         ComboboxEspecificacao();
         ClearComboBoxArea();
         ComboboxArea();
-        LimpaCombos();
+        //LimpaCombos();
     }//GEN-LAST:event_BotaoLimpaBuscaRevistaActionPerformed
 
     private void BotaoLiberaCamposAlterarRevistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLiberaCamposAlterarRevistasActionPerformed
@@ -4953,7 +5055,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxArea();
                     ComboboxArea();
-                    LimpaCombos();
+                    //LimpaCombos();
                     BotaoLiberaCamposAlterarArea.setEnabled(false);
                     JOptionPane.showMessageDialog(null, "Área alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
@@ -4998,7 +5100,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxArea();
                     ComboboxArea();
-                    LimpaCombos();
+                    //LimpaCombos();
                     JOptionPane.showMessageDialog(null, "Área removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
 
                 } catch (Exception ex) {
@@ -5075,7 +5177,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxArea();
                     ComboboxArea();
-                    LimpaCombos();
+                    //LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Área adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
@@ -5106,7 +5208,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxEspecificacao();
                     ComboboxEspecificacao();
-                    LimpaCombos();
+                    //LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Especificação adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
@@ -5133,9 +5235,9 @@ public class Board extends javax.swing.JFrame {
                     TravaCamposNovoTipo();
                     BotaoAdicionarNovoTipo.setEnabled(true);
 
-                    ClearComboBoxEspecificacao();
-                    ComboboxEspecificacao();
-                    LimpaCombos();
+                    ClearComboboxEditora();
+                    ComboboxEditora();
+                    //LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Especificação adicionada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
@@ -5199,7 +5301,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxEspecificacao();
                     ComboboxEspecificacao();
-                    LimpaCombos();
+                    //LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Especificação removida com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception ex) {
@@ -5239,7 +5341,7 @@ public class Board extends javax.swing.JFrame {
 
                     ClearComboBoxEspecificacao();
                     ComboboxEspecificacao();
-                    LimpaCombos();
+                    //LimpaCombos();
 
                     JOptionPane.showMessageDialog(null, "Especificação alterada com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
 
@@ -5307,23 +5409,23 @@ public class Board extends javax.swing.JFrame {
 
                 stmt.setString(1, campoTitulo.getText());
                 ResultSet rs = stmt.executeQuery();
-                
+
                 while (rs.next()) {
-                //campoTitulo.setText(rs.getString("Titulo"));
-                ComboBoxAreaNovaRevista.getModel().setSelectedItem(rs.getString("Area"));
-                campoData.setText(rs.getString("Ano"));
-                ComboBoxOrigem.getModel().setSelectedItem(rs.getString("Origem"));
-                campoTitulo.setEnabled(false);
-                ComboBoxAreaNovaRevista.setEnabled(false);
-                campoData.setEnabled(false);
-                ComboBoxOrigem.setEnabled(false);
-                BotaoSalvarNovaRevista.setEnabled(true);
-                ComboBoxEspecificacaoNovaRevista.setEnabled(true);
-                campoQuantidade.setEnabled(true);
-                
-            }
+                    //campoTitulo.setText(rs.getString("Titulo"));
+                    ComboBoxAreaNovaRevista.getModel().setSelectedItem(rs.getString("Area"));
+                    campoData.setText(rs.getString("Ano"));
+                    ComboBoxOrigem.getModel().setSelectedItem(rs.getString("Origem"));
+                    campoTitulo.setEnabled(false);
+                    ComboBoxAreaNovaRevista.setEnabled(false);
+                    campoData.setEnabled(false);
+                    ComboBoxOrigem.setEnabled(false);
+                    BotaoSalvarNovaRevista.setEnabled(true);
+                    ComboBoxEspecificacaoNovaRevista.setEnabled(true);
+                    campoQuantidade.setEnabled(true);
+
+                }
             } catch (SQLException e) {
-                
+
             }
         }
     }//GEN-LAST:event_campoTituloKeyPressed
